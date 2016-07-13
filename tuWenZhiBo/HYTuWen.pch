@@ -6,9 +6,13 @@
 //  Copyright © 2016年 jntv. All rights reserved.
 //
 
-#pragma mark ---------头文件----------
-#pragma mark - category
+#pragma mark - ---------头文件----------
 
+#pragma mark category
 #import "UIView+HYFrame.h"
+#import "UIBarButtonItem+HYItem.h"
 
+#pragma mark - ---------颜色------------
 
+#pragma mark navigation
+#define HYNavItemFontColor [UIColor colorWithRed:100/255.0 green:151/255.0 blue:255/255.0 alpha:1] // 蓝色

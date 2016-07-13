@@ -17,7 +17,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 设置导航条
+    [self setUpNavigationContent];
+}
+
+/**
+ *  设置导航条
+ */
+- (void)setUpNavigationContent
+{
+    self.navigationItem.title = @"项目创建";
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"02-a-项目创建-1"] style:UIBarButtonItemStyleDone target:self action:@selector(user)];
     
+    self.navigationItem.rightBarButtonItems = @[item];
+}
+
+/**
+ *  用户信息
+ */
+- (void)user
+{
     
 }
 
