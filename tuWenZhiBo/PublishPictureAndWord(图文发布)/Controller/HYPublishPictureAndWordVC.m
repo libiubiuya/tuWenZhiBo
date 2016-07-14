@@ -7,6 +7,7 @@
 //
 
 #import "HYPublishPictureAndWordVC.h"
+#import "HYUserController.h"
 
 @interface HYPublishPictureAndWordVC ()
 
@@ -37,7 +38,11 @@
  */
 - (void)user
 {
+    HYUserController *user = [[HYUserController alloc] init];
+    // 隐藏tabBar
+    user.hidesBottomBarWhenPushed = YES;
     
+    [self.navigationController pushViewController:user animated:YES];
 }
 
 @end

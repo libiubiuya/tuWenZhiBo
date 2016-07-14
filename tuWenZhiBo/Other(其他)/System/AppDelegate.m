@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "HYTabBarController.h"
+#import "HYLoginController.h"
 
 @interface AppDelegate ()
 
@@ -21,8 +22,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     // 主界面
-    HYTabBarController *tabBarVC = [[HYTabBarController alloc] init];
-    self.window.rootViewController = tabBarVC;
+//    HYTabBarController *tabBarVC = [[HYTabBarController alloc] init];
+//    self.window.rootViewController = tabBarVC;
+    
+    // 登录界面
+    HYLoginController *loginVC = [[HYLoginController alloc] init];
+    self.window.rootViewController = loginVC;
     
     [self.window makeKeyAndVisible];
     

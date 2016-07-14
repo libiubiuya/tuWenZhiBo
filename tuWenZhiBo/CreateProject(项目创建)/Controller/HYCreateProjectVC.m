@@ -7,6 +7,7 @@
 //
 
 #import "HYCreateProjectVC.h"
+#import "HYUserController.h"
 
 @interface HYCreateProjectVC ()
 
@@ -17,10 +18,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     // 设置导航条
     [self setUpNavigationContent];
+    
+    // 设置界面内容
+    [self setUpInterfaceContent];
 }
 
+#pragma mark - -------设置导航条--------
 /**
  *  设置导航条
  */
@@ -37,6 +44,25 @@
  */
 - (void)user
 {
+    HYUserController *user = [[HYUserController alloc] init];
+    // 隐藏tabBar
+    user.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:user animated:YES];
+}
+
+#pragma mark - -------设置界面内容--------
+/**
+ *  设置界面内容
+ */
+- (void)setUpInterfaceContent
+{
+    // 项目创建view
+    UIView *creProView = [[UIView alloc] init];
+    creProView.frame = CGRectMake(0, HYStatesBarH + HYNavH, HYScreenW, HYScreenH - HYTabBarH - HYStatesBarH - HYNavH);
+    creProView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:creProView];
+    
     
 }
 
