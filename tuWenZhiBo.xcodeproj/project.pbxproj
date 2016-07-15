@@ -17,15 +17,22 @@
 		C564BDC41D363C950043E12B /* HYUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = C564BDC31D363C950043E12B /* HYUserController.m */; };
 		C5707ED11D37246000A4CA95 /* HYLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5707ECF1D37246000A4CA95 /* HYLoginController.m */; };
 		C5707ED21D37246000A4CA95 /* HYLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5707ED01D37246000A4CA95 /* HYLoginController.xib */; };
+		C5707EDA1D37779E00A4CA95 /* MBProgressHUD+HYHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C5707ED61D37779E00A4CA95 /* MBProgressHUD+HYHUD.m */; };
+		C5707EDB1D37779E00A4CA95 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C5707ED71D37779E00A4CA95 /* MBProgressHUD.bundle */; };
+		C5707EDC1D37779E00A4CA95 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C5707ED91D37779E00A4CA95 /* MBProgressHUD.m */; };
+		C5707EDF1D377B1500A4CA95 /* HYUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C5707EDE1D377B1500A4CA95 /* HYUserInfo.m */; };
 		C5FCDDB31D35D80400E283F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FCDDB11D35D80400E283F9 /* AppDelegate.m */; };
 		C5FCDDB61D35D82D00E283F9 /* UIView+HYFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FCDDB51D35D82D00E283F9 /* UIView+HYFrame.m */; };
 		C5FCDDBA1D36182600E283F9 /* UIBarButtonItem+HYItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FCDDB91D36182600E283F9 /* UIBarButtonItem+HYItem.m */; };
 		C5FD249B1D333FE900A7CA89 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FD249A1D333FE900A7CA89 /* main.m */; };
 		C5FD24A61D333FE900A7CA89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5FD24A51D333FE900A7CA89 /* Assets.xcassets */; };
 		C5FD24A91D333FE900A7CA89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5FD24A71D333FE900A7CA89 /* LaunchScreen.storyboard */; };
+		DE356081FE266C713AC672EA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 511F9BC4C6DE1DF47FB5BEB9 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		511F9BC4C6DE1DF47FB5BEB9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEC9F7E651003E1DFA009687 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C510882A1D34E821006EF7C1 /* HYTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTabBarController.h; sourceTree = "<group>"; };
 		C510882B1D34E821006EF7C1 /* HYTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTabBarController.m; sourceTree = "<group>"; };
 		C510882D1D34E97A006EF7C1 /* HYCreateProjectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYCreateProjectVC.h; sourceTree = "<group>"; };
@@ -45,6 +52,13 @@
 		C5707ECE1D37246000A4CA95 /* HYLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYLoginController.h; sourceTree = "<group>"; };
 		C5707ECF1D37246000A4CA95 /* HYLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYLoginController.m; sourceTree = "<group>"; };
 		C5707ED01D37246000A4CA95 /* HYLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HYLoginController.xib; sourceTree = "<group>"; };
+		C5707ED51D37779E00A4CA95 /* MBProgressHUD+HYHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+HYHUD.h"; sourceTree = "<group>"; };
+		C5707ED61D37779E00A4CA95 /* MBProgressHUD+HYHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+HYHUD.m"; sourceTree = "<group>"; };
+		C5707ED71D37779E00A4CA95 /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
+		C5707ED81D37779E00A4CA95 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		C5707ED91D37779E00A4CA95 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		C5707EDD1D377B1500A4CA95 /* HYUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYUserInfo.h; sourceTree = "<group>"; };
+		C5707EDE1D377B1500A4CA95 /* HYUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUserInfo.m; sourceTree = "<group>"; };
 		C5FCDDB01D35D80400E283F9 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C5FCDDB11D35D80400E283F9 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C5FCDDB41D35D82D00E283F9 /* UIView+HYFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HYFrame.h"; sourceTree = "<group>"; };
@@ -57,6 +71,7 @@
 		C5FD24A51D333FE900A7CA89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5FD24A81D333FE900A7CA89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C5FD24AA1D333FE900A7CA89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDC1A0621585C82F81B552B3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,12 +79,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE356081FE266C713AC672EA /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19046E66E7C53F8F0612C3CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				511F9BC4C6DE1DF47FB5BEB9 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		96048B4D5DD28C37E7837489 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EDC1A0621585C82F81B552B3 /* Pods.debug.xcconfig */,
+				BEC9F7E651003E1DFA009687 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C510880F1D34E439006EF7C1 /* Main(主要) */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +336,26 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		C5707ED31D37779E00A4CA95 /* Three */ = {
+			isa = PBXGroup;
+			children = (
+				C5707ED41D37779E00A4CA95 /* MBProgressHUD */,
+			);
+			path = Three;
+			sourceTree = "<group>";
+		};
+		C5707ED41D37779E00A4CA95 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				C5707ED51D37779E00A4CA95 /* MBProgressHUD+HYHUD.h */,
+				C5707ED61D37779E00A4CA95 /* MBProgressHUD+HYHUD.m */,
+				C5707ED71D37779E00A4CA95 /* MBProgressHUD.bundle */,
+				C5707ED81D37779E00A4CA95 /* MBProgressHUD.h */,
+				C5707ED91D37779E00A4CA95 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		C5FCDDAD1D35D80400E283F9 /* Other(其他) */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +389,7 @@
 		C5FCDDB21D35D80400E283F9 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				C5707ED31D37779E00A4CA95 /* Three */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -345,6 +399,8 @@
 			children = (
 				C5FD24981D333FE900A7CA89 /* tuWenZhiBo */,
 				C5FD24971D333FE900A7CA89 /* Products */,
+				96048B4D5DD28C37E7837489 /* Pods */,
+				19046E66E7C53F8F0612C3CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -408,6 +464,8 @@
 		C5FD24C11D33450700A7CA89 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C5707EDD1D377B1500A4CA95 /* HYUserInfo.h */,
+				C5707EDE1D377B1500A4CA95 /* HYUserInfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -426,9 +484,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C5FD24AD1D333FE900A7CA89 /* Build configuration list for PBXNativeTarget "tuWenZhiBo" */;
 			buildPhases = (
+				E0AB6013AA74F9E04598506A /* Check Pods Manifest.lock */,
 				C5FD24921D333FE900A7CA89 /* Sources */,
 				C5FD24931D333FE900A7CA89 /* Frameworks */,
 				C5FD24941D333FE900A7CA89 /* Resources */,
+				FCF02DC743132F779AEAF0F6 /* Embed Pods Frameworks */,
+				92A88EA4538F83B0D71E25F9 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -479,12 +540,61 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5FD24A91D333FE900A7CA89 /* LaunchScreen.storyboard in Resources */,
+				C5707EDB1D37779E00A4CA95 /* MBProgressHUD.bundle in Resources */,
 				C5707ED21D37246000A4CA95 /* HYLoginController.xib in Resources */,
 				C5FD24A61D333FE900A7CA89 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		92A88EA4538F83B0D71E25F9 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E0AB6013AA74F9E04598506A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FCF02DC743132F779AEAF0F6 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C5FD24921D333FE900A7CA89 /* Sources */ = {
@@ -494,9 +604,12 @@
 				C510883B1D34EA01006EF7C1 /* HYManageProjectVC.m in Sources */,
 				C510882C1D34E821006EF7C1 /* HYTabBarController.m in Sources */,
 				C5FD249B1D333FE900A7CA89 /* main.m in Sources */,
+				C5707EDF1D377B1500A4CA95 /* HYUserInfo.m in Sources */,
 				C51088351D34E9D1006EF7C1 /* HYPreviewProjectVC.m in Sources */,
+				C5707EDA1D37779E00A4CA95 /* MBProgressHUD+HYHUD.m in Sources */,
 				C5FCDDB31D35D80400E283F9 /* AppDelegate.m in Sources */,
 				C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */,
+				C5707EDC1D37779E00A4CA95 /* MBProgressHUD.m in Sources */,
 				C5FCDDB61D35D82D00E283F9 /* UIView+HYFrame.m in Sources */,
 				C510882F1D34E97A006EF7C1 /* HYCreateProjectVC.m in Sources */,
 				C5707ED11D37246000A4CA95 /* HYLoginController.m in Sources */,
@@ -605,6 +718,7 @@
 		};
 		C5FD24AE1D333FE900A7CA89 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EDC1A0621585C82F81B552B3 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -621,6 +735,7 @@
 		};
 		C5FD24AF1D333FE900A7CA89 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEC9F7E651003E1DFA009687 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
