@@ -11,6 +11,7 @@
 #import "HYTabBarController.h"
 
 #import "MBProgressHUD+HYHUD.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface HYLoginController () <UITextFieldDelegate>
 /** 登录内容view */
@@ -61,23 +62,25 @@
         // 隐藏蒙版
         [MBProgressHUD hideHUD];
         
-        // 用户信息
-        HYUserInfo *userInfo = [[HYUserInfo alloc] init];
-        
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/login.php?username=%%E6%%97%%A0%%E7%%BA%%BF%%E6%%B5%%8E%%E5%%8D%%97&password=newmedia"]];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
             
-            NSLog(@"%@", data);
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+
+//            NSLog(@"%@", dict);
             
+            HYUserInfo *userInfo = [[HYUserInfo alloc] init];
             userInfo.state = dict[@"state"];
-            userInfo.userID = dict[@"id"];
-            userInfo.userjpg = dict[@"userjpg"];
-            userInfo.name = dict[@"name"];
+            userInfo.reason = dict[@"reason"];
+            userInfo.userID = dict[@"userinfo"][@"id"];
+            userInfo.username = dict[@"userinfo"][@"username"];
+            userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
             
-            NSLog(@"%@\n%@\n%@\n%@", userInfo.state, userInfo.userID, userInfo.userjpg, userInfo.name);
+            self.userInfo = userInfo;
+            
+//            NSLog(@"%@\n%@\n%@\n%@\n%@\n", userInfo.state, userInfo.reason,userInfo.userID, userInfo.username, userInfo.userjpg);
             
             if ([userInfo.state isEqualToString:@"success"]) {
                 
@@ -188,54 +191,52 @@
 #pragma mark - -------------test-------------
 - (void)loginTest
 {
-    if ([self.userNameTextField.text isEqualToString:@"无线济南"] && [self.passwordTextField.text isEqualToString:@"newmedia"]) {
-        
-        // 隐藏蒙版
-        [MBProgressHUD hideHUD];
-        
-        // 用户信息
-        HYUserInfo *userInfo = [[HYUserInfo alloc] init];
-        
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/login.php?username=%%E6%%97%%A0%%E7%%BA%%BF%%E6%%B5%%8E%%E5%%8D%%97&password=newmedia"]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-            
-            NSLog(@"%@", data);
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            
-            userInfo.state = dict[@"state"];
-            userInfo.userID = dict[@"id"];
-            userInfo.userjpg = dict[@"userjpg"];
-            userInfo.name = dict[@"name"];
-            
-            NSLog(@"%@\n%@\n%@\n%@", userInfo.state, userInfo.userID, userInfo.userjpg, userInfo.name);
-            
-            if ([userInfo.state isEqualToString:@"success"]) {
-                
-                // 登录成功
-                [MBProgressHUD showSuccess:@"登录成功"];
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
-                    // 进入到主界面
-                    HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
-                    [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
-                    
-                });
-                
-            } else {
-                
-                // 登录失败
-                [MBProgressHUD showError:@"登录失败"];
-                
-            }
-            
-        }];
-        
-    } else {
-        // 提示用户输入账户或者密码错误
-        [MBProgressHUD showError:@"账户或者密码错误"];
-    }
+//    if ([self.userNameTextField.text isEqualToString:@"无线济南"] && [self.passwordTextField.text isEqualToString:@"newmedia"]) {
+//        
+//        // 隐藏蒙版
+//        [MBProgressHUD hideHUD];
+//        
+//        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/login.php?username=%%E6%%97%%A0%%E7%%BA%%BF%%E6%%B5%%8E%%E5%%8D%%97&password=newmedia"]];
+//        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//        
+//        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+//            
+//            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//            
+//            NSLog(@"%@", dict);
+//            
+//            self.user.state = dict[@"state"];
+//            self.user.reason = dict[@"reason"];
+//            self.user.userinfo = dict[@"userinfo"];
+//            
+//            NSLog(@"%@\n%@\n%@\n", self.user.state, self.user.reason, self.user.userinfo);
+//            
+//            if ([self.user.state isEqualToString:@"success"]) {
+//                
+//                // 登录成功
+//                [MBProgressHUD showSuccess:@"登录成功"];
+//                
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    
+//                    // 进入到主界面
+//                    HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
+//                    [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
+//                    
+//                });
+//                
+//            } else {
+//                
+//                // 登录失败
+//                [MBProgressHUD showError:@"登录失败"];
+//                
+//            }
+//            
+//        }];
+//        
+//    } else {
+//        // 提示用户输入账户或者密码错误
+//        [MBProgressHUD showError:@"账户或者密码错误"];
+//    }
 }
+
 @end

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class HYUserInfo;
 @interface HYLoginController : UIViewController
+
+/** userInfoma */
+@property (strong, nonatomic) HYUserInfo *userInfo;
 
 @end

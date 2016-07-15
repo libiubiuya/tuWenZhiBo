@@ -13,11 +13,14 @@
 /** 状态 */
 @property (nonatomic, strong) NSString *state;
 
-/** 状态 */
+/** 原因 */
+@property (nonatomic, strong) NSString *reason;
+
+/** 用户id */
 @property (nonatomic, strong) NSString *userID;
 
-/** 名称 */
-@property (nonatomic, strong) NSString *name;
+/** 用户名 */
+@property (nonatomic, strong) NSString *username;
 
 /** 图片 */
 @property (nonatomic, strong) NSString *userjpg;
