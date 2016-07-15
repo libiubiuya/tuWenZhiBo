@@ -58,10 +58,10 @@
 - (void)setUpInterfaceContent
 {
     // 项目创建view
-    UIView *creProView = [[UIView alloc] init];
-    creProView.frame = CGRectMake(0, HYStatesBarH + HYNavH, HYScreenW, HYScreenH - HYTabBarH - HYStatesBarH - HYNavH);
-    creProView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:creProView];
+//    UIView *creProView = [[UIView alloc] init];
+//    creProView.frame = CGRectMake(0, HYStatesBarH + HYNavH, HYScreenW, HYScreenH - HYTabBarH - HYStatesBarH - HYNavH);
+//    creProView.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:creProView];
     
     
 }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVv-DQ-kdh">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dk9-ej-qJU">
+                            <rect key="frame" x="0.0" y="64" width="375" height="210"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="02-a-项目创建-5" translatesAutoresizingMaskIntoConstraints="NO" id="G2Q-r3-fLp">
+                                    <rect key="frame" x="10" y="10" width="100" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="SqW-XW-3If"/>
+                                        <constraint firstAttribute="width" constant="100" id="dse-Ua-I0O"/>
+                                    </constraints>
+                                </imageView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rY-kc-jU2">
+                                    <rect key="frame" x="0.0" y="40" width="375" height="170"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="02-a-项目创建-7" translatesAutoresizingMaskIntoConstraints="NO" id="8Ge-43-9jC">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDb-VA-icf">
+                                            <rect key="frame" x="165" y="63" width="45" height="45"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="45" id="BPz-ut-4Y0"/>
+                                                <constraint firstAttribute="height" constant="45" id="NNN-JJ-QRv"/>
+                                            </constraints>
+                                            <state key="normal" image="02-a-项目创建-2"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="wDb-VA-icf" firstAttribute="centerY" secondItem="3rY-kc-jU2" secondAttribute="centerY" id="Oe3-MH-mc1"/>
+                                        <constraint firstItem="8Ge-43-9jC" firstAttribute="leading" secondItem="3rY-kc-jU2" secondAttribute="leading" id="WCc-gH-TBD"/>
+                                        <constraint firstItem="wDb-VA-icf" firstAttribute="centerX" secondItem="3rY-kc-jU2" secondAttribute="centerX" id="Z2C-zP-zb3"/>
+                                        <constraint firstAttribute="trailing" secondItem="8Ge-43-9jC" secondAttribute="trailing" id="cMZ-vS-j8S"/>
+                                        <constraint firstAttribute="bottom" secondItem="8Ge-43-9jC" secondAttribute="bottom" id="feE-JZ-2pg"/>
+                                        <constraint firstItem="8Ge-43-9jC" firstAttribute="top" secondItem="3rY-kc-jU2" secondAttribute="top" id="kHR-R9-BXX"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="3rY-kc-jU2" secondAttribute="trailing" id="9uF-dU-bsa"/>
+                                <constraint firstAttribute="height" constant="210" id="GPU-HW-V1B"/>
+                                <constraint firstItem="G2Q-r3-fLp" firstAttribute="top" secondItem="Dk9-ej-qJU" secondAttribute="top" constant="10" id="XbJ-4a-5hN"/>
+                                <constraint firstItem="3rY-kc-jU2" firstAttribute="top" secondItem="G2Q-r3-fLp" secondAttribute="bottom" constant="10" id="Zyh-xW-rek"/>
+                                <constraint firstItem="G2Q-r3-fLp" firstAttribute="leading" secondItem="Dk9-ej-qJU" secondAttribute="leading" constant="10" id="hbi-IR-DJw"/>
+                                <constraint firstItem="3rY-kc-jU2" firstAttribute="leading" secondItem="Dk9-ej-qJU" secondAttribute="leading" id="pt2-C9-oi7"/>
+                                <constraint firstAttribute="bottom" secondItem="3rY-kc-jU2" secondAttribute="bottom" id="vFi-b3-EiD"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JNr-RO-gt4">
+                            <rect key="frame" x="0.0" y="274" width="375" height="200"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="02-a-项目创建-6" translatesAutoresizingMaskIntoConstraints="NO" id="Ypa-Oh-lbb">
+                                    <rect key="frame" x="10" y="10" width="100" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="P4j-Wi-XNA"/>
+                                        <constraint firstAttribute="width" constant="100" id="xj9-Ai-oXn"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="Ypa-Oh-lbb" firstAttribute="top" secondItem="JNr-RO-gt4" secondAttribute="top" constant="10" id="56w-Ze-4ne"/>
+                                <constraint firstAttribute="height" constant="200" id="dik-ms-grT"/>
+                                <constraint firstItem="Ypa-Oh-lbb" firstAttribute="leading" secondItem="JNr-RO-gt4" secondAttribute="leading" constant="10" id="ybc-IW-Eev"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="JNr-RO-gt4" secondAttribute="trailing" id="JII-hZ-E6C"/>
+                        <constraint firstItem="Dk9-ej-qJU" firstAttribute="leading" secondItem="eVv-DQ-kdh" secondAttribute="leading" id="XMx-Ah-IVd"/>
+                        <constraint firstItem="JNr-RO-gt4" firstAttribute="top" secondItem="Dk9-ej-qJU" secondAttribute="bottom" id="e8r-ym-nIn"/>
+                        <constraint firstAttribute="trailing" secondItem="Dk9-ej-qJU" secondAttribute="trailing" id="gy1-0R-m9d"/>
+                        <constraint firstItem="Dk9-ej-qJU" firstAttribute="top" secondItem="eVv-DQ-kdh" secondAttribute="top" constant="64" id="lOZ-Yx-fKP"/>
+                        <constraint firstItem="JNr-RO-gt4" firstAttribute="leading" secondItem="eVv-DQ-kdh" secondAttribute="leading" id="uUj-Y4-rtV"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="eVv-DQ-kdh" secondAttribute="trailing" id="2Yx-k3-OL0"/>
+                <constraint firstItem="eVv-DQ-kdh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JqJ-jr-1f8"/>
+                <constraint firstItem="eVv-DQ-kdh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="bEA-pl-iSO"/>
+                <constraint firstAttribute="bottom" secondItem="eVv-DQ-kdh" secondAttribute="bottom" id="zRh-vp-chq"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="02-a-项目创建-2" width="55" height="65"/>
+        <image name="02-a-项目创建-5" width="100" height="20"/>
+        <image name="02-a-项目创建-6" width="100" height="20"/>
+        <image name="02-a-项目创建-7" width="340" height="170"/>
+    </resources>
+</document>

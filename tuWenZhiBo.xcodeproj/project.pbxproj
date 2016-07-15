@@ -14,6 +14,7 @@
 		C51088381D34E9E6006EF7C1 /* HYManageCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088371D34E9E6006EF7C1 /* HYManageCommentVC.m */; };
 		C510883B1D34EA01006EF7C1 /* HYManageProjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C510883A1D34EA01006EF7C1 /* HYManageProjectVC.m */; };
 		C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088401D34ECB8006EF7C1 /* HYNavigationController.m */; };
+		C55D7BE51D38D208002F2BC7 /* HYCreateProjectVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55D7BE41D38D208002F2BC7 /* HYCreateProjectVC.xib */; };
 		C564BDC41D363C950043E12B /* HYUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = C564BDC31D363C950043E12B /* HYUserController.m */; };
 		C5707ED11D37246000A4CA95 /* HYLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5707ECF1D37246000A4CA95 /* HYLoginController.m */; };
 		C5707ED21D37246000A4CA95 /* HYLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5707ED01D37246000A4CA95 /* HYLoginController.xib */; };
@@ -48,6 +49,7 @@
 		C510883A1D34EA01006EF7C1 /* HYManageProjectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYManageProjectVC.m; sourceTree = "<group>"; };
 		C510883F1D34ECB8006EF7C1 /* HYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYNavigationController.h; sourceTree = "<group>"; };
 		C51088401D34ECB8006EF7C1 /* HYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNavigationController.m; sourceTree = "<group>"; };
+		C55D7BE41D38D208002F2BC7 /* HYCreateProjectVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HYCreateProjectVC.xib; sourceTree = "<group>"; };
 		C564BDC21D363C950043E12B /* HYUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYUserController.h; sourceTree = "<group>"; };
 		C564BDC31D363C950043E12B /* HYUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUserController.m; sourceTree = "<group>"; };
 		C5707ECE1D37246000A4CA95 /* HYLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYLoginController.h; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			children = (
 				C510882D1D34E97A006EF7C1 /* HYCreateProjectVC.h */,
 				C510882E1D34E97A006EF7C1 /* HYCreateProjectVC.m */,
+				C55D7BE41D38D208002F2BC7 /* HYCreateProjectVC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5FD24A91D333FE900A7CA89 /* LaunchScreen.storyboard in Resources */,
+				C55D7BE51D38D208002F2BC7 /* HYCreateProjectVC.xib in Resources */,
 				C5707EDB1D37779E00A4CA95 /* MBProgressHUD.bundle in Resources */,
 				C5707ED21D37246000A4CA95 /* HYLoginController.xib in Resources */,
 				C5FD24A61D333FE900A7CA89 /* Assets.xcassets in Resources */,
