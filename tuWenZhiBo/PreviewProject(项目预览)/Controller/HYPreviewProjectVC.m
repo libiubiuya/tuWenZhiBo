@@ -7,6 +7,7 @@
 //
 
 #import "HYPreviewProjectVC.h"
+#import "HYUserController.h"
 
 @interface HYPreviewProjectVC ()
 
@@ -26,7 +27,22 @@
  */
 - (void)setUpNavigationContent
 {
-    self.navigationItem.title = @"项目预览";
+    self.navigationItem.title = @"图文发布";
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"02-a-项目创建-1"] style:UIBarButtonItemStyleDone target:self action:@selector(user)];
+    
+    self.navigationItem.rightBarButtonItems = @[item];
+}
+
+/**
+ *  用户信息
+ */
+- (void)user
+{
+    HYUserController *user = [[HYUserController alloc] init];
+    // 隐藏tabBar
+    user.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:user animated:YES];
 }
 
 @end
