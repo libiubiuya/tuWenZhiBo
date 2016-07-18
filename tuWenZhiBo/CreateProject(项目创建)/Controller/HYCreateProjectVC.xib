@@ -75,7 +75,7 @@
                                         <constraint firstAttribute="width" constant="100" id="xj9-Ai-oXn"/>
                                     </constraints>
                                 </imageView>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="请输入标题" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pBa-7E-EZM">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入标题" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pBa-7E-EZM">
                                     <rect key="frame" x="10" y="40" width="355" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="DNN-hX-C1R"/>
