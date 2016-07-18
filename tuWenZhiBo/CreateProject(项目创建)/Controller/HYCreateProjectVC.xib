@@ -145,7 +145,7 @@
                 <constraint firstAttribute="bottom" secondItem="eVv-DQ-kdh" secondAttribute="bottom" id="zRh-vp-chq"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
     <resources>

@@ -149,7 +149,7 @@
                 <constraint firstItem="jTm-my-Tm0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="300" id="y2w-a9-IVM"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="poQ-Fp-Kzg"/>
