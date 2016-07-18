@@ -27,7 +27,7 @@
  */
 - (void)setUpNavigationContent
 {
-    self.navigationItem.title = @"图文发布";
+    self.navigationItem.title = @"项目预览";
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"02-a-项目创建-1"] style:UIBarButtonItemStyleDone target:self action:@selector(user)];
     
     self.navigationItem.rightBarButtonItems = @[item];

@@ -24,6 +24,7 @@
 		C5707EDF1D377B1500A4CA95 /* HYUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C5707EDE1D377B1500A4CA95 /* HYUserInfo.m */; };
 		C5A70B721D3C6ECF00900D0F /* HYPublishPictureAndWordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A70B711D3C6ECF00900D0F /* HYPublishPictureAndWordVC.xib */; };
 		C5A70B741D3CB8D900900D0F /* HYPreviewProjectVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A70B731D3CB8D900900D0F /* HYPreviewProjectVC.xib */; };
+		C5A70B761D3CBEDF00900D0F /* HYManageCommentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A70B751D3CBEDF00900D0F /* HYManageCommentVC.xib */; };
 		C5B2AF991D387896003F8B3A /* HYGlobeConst.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B2AF981D387896003F8B3A /* HYGlobeConst.m */; };
 		C5FCDDB31D35D80400E283F9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FCDDB11D35D80400E283F9 /* AppDelegate.m */; };
 		C5FCDDB61D35D82D00E283F9 /* UIView+HYFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FCDDB51D35D82D00E283F9 /* UIView+HYFrame.m */; };
@@ -66,6 +67,7 @@
 		C5707EDE1D377B1500A4CA95 /* HYUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUserInfo.m; sourceTree = "<group>"; };
 		C5A70B711D3C6ECF00900D0F /* HYPublishPictureAndWordVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HYPublishPictureAndWordVC.xib; sourceTree = "<group>"; };
 		C5A70B731D3CB8D900900D0F /* HYPreviewProjectVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HYPreviewProjectVC.xib; sourceTree = "<group>"; };
+		C5A70B751D3CBEDF00900D0F /* HYManageCommentVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HYManageCommentVC.xib; sourceTree = "<group>"; };
 		C5B2AF971D387896003F8B3A /* HYGlobeConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYGlobeConst.h; sourceTree = "<group>"; };
 		C5B2AF981D387896003F8B3A /* HYGlobeConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYGlobeConst.m; sourceTree = "<group>"; };
 		C5FCDDB01D35D80400E283F9 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 			children = (
 				C51088361D34E9E6006EF7C1 /* HYManageCommentVC.h */,
 				C51088371D34E9E6006EF7C1 /* HYManageCommentVC.m */,
+				C5A70B751D3CBEDF00900D0F /* HYManageCommentVC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				C55D7BE51D38D208002F2BC7 /* HYCreateProjectVC.xib in Resources */,
 				C5A70B721D3C6ECF00900D0F /* HYPublishPictureAndWordVC.xib in Resources */,
 				C5A70B741D3CB8D900900D0F /* HYPreviewProjectVC.xib in Resources */,
+				C5A70B761D3CBEDF00900D0F /* HYManageCommentVC.xib in Resources */,
 				C5707EDB1D37779E00A4CA95 /* MBProgressHUD.bundle in Resources */,
 				C5707ED21D37246000A4CA95 /* HYLoginController.xib in Resources */,
 				C5FD24A61D333FE900A7CA89 /* Assets.xcassets in Resources */,
