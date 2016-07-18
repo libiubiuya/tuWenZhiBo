@@ -121,9 +121,6 @@
     self.passwordTextField.tintColor = self.passwordTextField.textColor;
     self.userNameLogoBtn.userInteractionEnabled = NO;
     self.passwordLogoBtn.userInteractionEnabled = NO;
-    [self.userNameTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.passwordTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    
 }
 
 /**
