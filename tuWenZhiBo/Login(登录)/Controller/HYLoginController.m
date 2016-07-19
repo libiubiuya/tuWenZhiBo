@@ -78,8 +78,6 @@
             userInfo.username = dict[@"userinfo"][@"username"];
             userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
             
-            self.userInfo = userInfo;
-            
 //            NSLog(@"%@\n%@\n%@\n%@\n%@\n", userInfo.state, userInfo.reason,userInfo.userID, userInfo.username, userInfo.userjpg);
             
             if ([userInfo.state isEqualToString:@"success"]) {
@@ -91,6 +89,9 @@
                     
                     // 进入到主界面
                     HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
+                    
+                    self.userInfo = userInfo;
+                    
                     [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
                     
                 });
