@@ -35,3 +35,9 @@
 
 // tabBar高度
 #define HYTabBarH 49
+
+// 项目选择功能块的高度
+#define HYProjectSelectH 80
+
+// 间距宽度
+#define HYMargin 10

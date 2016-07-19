@@ -9,7 +9,14 @@
 #import "HYPreviewProjectVC.h"
 #import "HYUserController.h"
 
+#import <WebKit/WebKit.h>
+
 @interface HYPreviewProjectVC ()
+
+/** 网页 */
+@property (weak, nonatomic) WKWebView *webView;
+/** 内容view */
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @end
 
@@ -20,6 +27,19 @@
     
     // 设置导航条
     [self setUpNavigationContent];
+    
+    // 加载网页
+    [self setUpLoadHtml];
+}
+
+/**
+ *  重新布局
+ */
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    _webView.frame = self.contentView.bounds;
 }
 
 /**
@@ -43,6 +63,21 @@
     user.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:user animated:YES];
+}
+
+/**
+ *  加载网页
+ */
+- (void)setUpLoadHtml
+{
+    WKWebView *webView = [[WKWebView alloc] init];
+    webView.scrollView.contentInset = UIEdgeInsetsMake(HYStatesBarH + HYNavH + HYProjectSelectH + HYMargin, 0, HYTabBarH, 0);
+    [self.contentView addSubview:webView];
+    _webView = webView;
+    
+    NSURL *url = [NSURL URLWithString:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/mobileview/programview.php?huodongid=1"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
 }
 
 @end

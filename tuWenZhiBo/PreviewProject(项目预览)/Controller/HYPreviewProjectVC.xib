@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYPreviewProjectVC">
             <connections>
+                <outlet property="contentView" destination="AHh-BD-H2q" id="8qa-ec-FiC"/>
                 <outlet property="view" destination="iN0-l3-epB" id="upN-aZ-6Bn"/>
             </connections>
         </placeholder>
@@ -69,11 +70,19 @@
                                 <constraint firstItem="PhK-DQ-SZ5" firstAttribute="leading" secondItem="rH4-Gr-B27" secondAttribute="leading" constant="10" id="uAH-w0-W5n"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AHh-BD-H2q">
+                            <rect key="frame" x="0.0" y="154" width="375" height="464"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="AHh-BD-H2q" secondAttribute="bottom" constant="49" id="ORz-Si-Utx"/>
+                        <constraint firstAttribute="trailing" secondItem="AHh-BD-H2q" secondAttribute="trailing" id="UB6-fi-5Qf"/>
                         <constraint firstItem="rH4-Gr-B27" firstAttribute="top" secondItem="acI-lt-l1D" secondAttribute="top" constant="64" id="dy7-nb-0b1"/>
                         <constraint firstItem="rH4-Gr-B27" firstAttribute="leading" secondItem="acI-lt-l1D" secondAttribute="leading" id="fAC-aG-kSa"/>
+                        <constraint firstItem="AHh-BD-H2q" firstAttribute="top" secondItem="rH4-Gr-B27" secondAttribute="bottom" constant="10" id="nIT-YX-JnU"/>
+                        <constraint firstItem="AHh-BD-H2q" firstAttribute="leading" secondItem="acI-lt-l1D" secondAttribute="leading" id="uAM-aT-OQG"/>
                         <constraint firstAttribute="trailing" secondItem="rH4-Gr-B27" secondAttribute="trailing" id="uHq-gD-wWc"/>
                     </constraints>
                 </view>
