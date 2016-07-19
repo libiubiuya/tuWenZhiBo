@@ -18,5 +18,17 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    // 设置导航条
+    [self setUpNavigationContent];
 }
+
+/**
+ *  设置导航条
+ */
+- (void)setUpNavigationContent
+{
+    self.navigationItem.title = @"用户中心";
+}
+
 @end
