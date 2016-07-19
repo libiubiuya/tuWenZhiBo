@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYManageCommentVC">
             <connections>
+                <outlet property="contentView" destination="3ku-CL-l41" id="IGx-p1-JDf"/>
                 <outlet property="view" destination="iN0-l3-epB" id="4iz-ji-mgX"/>
             </connections>
         </placeholder>
@@ -69,12 +70,20 @@
                                 <constraint firstItem="Idd-Vf-dRc" firstAttribute="leading" secondItem="8zh-D4-Tgj" secondAttribute="trailing" id="z1b-lO-yOe"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ku-CL-l41">
+                            <rect key="frame" x="0.0" y="154" width="375" height="464"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="3ku-CL-l41" firstAttribute="leading" secondItem="1Ax-LM-3he" secondAttribute="leading" id="AQc-1D-dzx"/>
                         <constraint firstItem="ffV-uF-rJd" firstAttribute="top" secondItem="1Ax-LM-3he" secondAttribute="top" constant="64" id="DXn-2a-uUa"/>
+                        <constraint firstItem="3ku-CL-l41" firstAttribute="top" secondItem="ffV-uF-rJd" secondAttribute="bottom" constant="10" id="H3M-lO-d1c"/>
                         <constraint firstItem="ffV-uF-rJd" firstAttribute="leading" secondItem="1Ax-LM-3he" secondAttribute="leading" id="IBm-1g-QbF"/>
                         <constraint firstAttribute="trailing" secondItem="ffV-uF-rJd" secondAttribute="trailing" id="Kbu-nc-dm4"/>
+                        <constraint firstAttribute="trailing" secondItem="3ku-CL-l41" secondAttribute="trailing" id="rz9-r8-ADU"/>
+                        <constraint firstAttribute="bottom" secondItem="3ku-CL-l41" secondAttribute="bottom" constant="49" id="st4-9H-KtL"/>
                     </constraints>
                 </view>
             </subviews>
