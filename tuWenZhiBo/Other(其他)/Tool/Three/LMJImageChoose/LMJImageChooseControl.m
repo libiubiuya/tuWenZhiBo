@@ -1,78 +1,98 @@
 //
-//  HYCreateProjectVC.m
-//  tuWenZhiBo
+//  LMJImageChooseControl.m
+//  LMJImageChoose
 //
-//  Created by jntv on 16/7/12.
-//  Copyright © 2016年 jntv. All rights reserved.
+//  Created by Major on 16/3/9.
+//  Copyright © 2016年 iOS开发者公会. All rights reserved.
+//
+//  iOS开发者公会-技术1群 QQ群号：87440292
+//  iOS开发者公会-技术2群 QQ群号：232702419
+//  iOS开发者公会-议事区  QQ群号：413102158
 //
 
-#import "HYCreateProjectVC.h"
-#import "HYUserController.h"
+
 #import "LMJImageChooseControl.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
 
-#define SettingCenterUrl @"prefs:root=com.ArtPollo.Artpollo"
-
-@interface HYCreateProjectVC ()<LMJImageChooseControlDelegate, UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
-/** 图片选择view */
-@property (weak, nonatomic) IBOutlet LMJImageChooseControl *imageChooseView;
-/** 上传头图按钮 */
-@property (weak, nonatomic) IBOutlet UIButton *uploadHeadPicBtn;
-/** 显示的图片 */
-@property (nonatomic, strong, readonly) UIImage *image;
-
-@end
-
-@implementation HYCreateProjectVC
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    // 设置导航条
-    [self setUpNavigationContent];
+@implementation LMJImageChooseControl
+{
+    UILabel  * _markLabel;
+    UIButton * _imgBtn;
 }
 
-#pragma mark - -------设置导航条--------
-/**
- *  设置导航条
- */
-- (void)setUpNavigationContent
-{
-    self.navigationItem.title = @"项目创建";
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"02-a-项目创建-1"] style:UIBarButtonItemStyleDone target:self action:@selector(user)];
-    
-    self.navigationItem.rightBarButtonItems = @[item];
+- (id)init{
+    self = [super init];
+    if (self) {
+        [self initData];
+        [self buildViews];
+    }
+    return self;
 }
 
-/**
- *  用户信息
- */
-- (void)user
-{
-    HYUserController *user = [[HYUserController alloc] init];
-    // 隐藏tabBar
-    user.hidesBottomBarWhenPushed = YES;
-    
-    [self.navigationController pushViewController:user animated:YES];
+- (id)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self initData];
+        [self buildViews];
+        [self setFrames];
+    }
+    return self;
 }
 
-#pragma mark - -------设置照片--------
+//- (void)setFrame:(CGRect)frame{
+//    [super setFrame:frame];
+//    
+//    [self setFrames];
+//}
 
-- (IBAction)uploadHeadPic
-{
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片"
+- (void)initData{
+    _pickerTitle = @"选择";
+    _image       = nil;
+}
+
+
+- (void)buildViews{
+    
+    self.backgroundColor = [UIColor lightGrayColor];
+    
+    // 图片按钮
+    _imgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _imgBtn.backgroundColor = [UIColor blueColor];
+    [_imgBtn setImage:nil forState:UIControlStateNormal];
+    [_imgBtn addTarget:self action:@selector(clickImgBtnAddImage:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_imgBtn];
+    
+}
+
+- (void)setFrames{
+//    [_imgBtn setFrame:CGRectMake(10, 104, HYScreenW - 2 * HYMargin, 170)];
+}
+
+#pragma mark - ClickBtn Methods
+
+- (void)clickImgBtnAddImage:(UIButton *)button{
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:_pickerTitle
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
                                          destructiveButtonTitle:nil
                                               otherButtonTitles:@"从相册选取", @"拍照", nil];
-    [sheet showInView:self.view];
+    [sheet showInView:self];
 }
+
+- (void)clickClearBtn{
+    [_imgBtn setImage:nil forState:UIControlStateNormal];
+
+    _image = nil;
+    
+    
+    if ([self.delegate respondsToSelector:@selector(imageChooseControl:didClearImage:)]) {
+        [self.delegate imageChooseControl:self didClearImage:nil];
+    }
+}
+
 
 #pragma mark - ActionSheet Delegate
 
@@ -110,27 +130,24 @@
     } else {
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     }
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    [self.superViewController presentViewController:imagePicker animated:YES completion:nil];
     
 }
-
 #pragma mark - ImagePickerController Delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *image =  [info objectForKey:UIImagePickerControllerEditedImage];
     
-    NSLog(@"%@", self.imageChooseView.delegate);
     
-    [self.uploadHeadPicBtn setBackgroundImage:image forState:UIControlStateNormal];
-    
+    [_imgBtn setImage:image forState:UIControlStateNormal];
+
     _image = image;
     
-    
-    if ([self.imageChooseView.delegate respondsToSelector:@selector(imageChooseControl:didChooseFinished:)]) {
-        [self.imageChooseView.delegate imageChooseControl:self.imageChooseView didChooseFinished:image];
+    if ([self.delegate respondsToSelector:@selector(imageChooseControl:didChooseFinished:)]) {
+        [self.delegate imageChooseControl:self didChooseFinished:image];
     }
-    
+
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -138,21 +155,12 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-
-- (void)imageChooseControl:(LMJImageChooseControl *)control didChooseFinished:(UIImage *)image{
-    
-    NSLog(@"Choose Finished!");
-    
-    [self.uploadHeadPicBtn setBackgroundImage:image forState:UIControlStateNormal];
+#pragma mark - UIAlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:SettingCenterUrl]];
+    }
 }
 
-- (void)imageChooseControl:(LMJImageChooseControl *)control didClearImage:(UIImage *)image{
-    
-    NSLog(@"Clear!");
-    
-    
-    [self.uploadHeadPicBtn setBackgroundImage:[UIImage imageNamed:@"02-a-项目创建-7"] forState:UIControlStateNormal];
-}
 
 @end

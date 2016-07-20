@@ -14,6 +14,8 @@
 		C51088381D34E9E6006EF7C1 /* HYManageCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088371D34E9E6006EF7C1 /* HYManageCommentVC.m */; };
 		C510883B1D34EA01006EF7C1 /* HYManageProjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C510883A1D34EA01006EF7C1 /* HYManageProjectVC.m */; };
 		C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088401D34ECB8006EF7C1 /* HYNavigationController.m */; };
+		C5458ECF1D3F19360019830D /* ImageChooseCloseBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = C5458ECC1D3F19360019830D /* ImageChooseCloseBtn.png */; };
+		C5458ED01D3F19360019830D /* LMJImageChooseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C5458ECE1D3F19360019830D /* LMJImageChooseControl.m */; };
 		C547E0EE1D3DCC1E000C0F3A /* HYUserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C547E0ED1D3DCC1E000C0F3A /* HYUserController.xib */; };
 		C55D7BE51D38D208002F2BC7 /* HYCreateProjectVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55D7BE41D38D208002F2BC7 /* HYCreateProjectVC.xib */; };
 		C564BDC41D363C950043E12B /* HYUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = C564BDC31D363C950043E12B /* HYUserController.m */; };
@@ -54,6 +56,9 @@
 		C510883A1D34EA01006EF7C1 /* HYManageProjectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYManageProjectVC.m; sourceTree = "<group>"; };
 		C510883F1D34ECB8006EF7C1 /* HYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYNavigationController.h; sourceTree = "<group>"; };
 		C51088401D34ECB8006EF7C1 /* HYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNavigationController.m; sourceTree = "<group>"; };
+		C5458ECC1D3F19360019830D /* ImageChooseCloseBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageChooseCloseBtn.png; sourceTree = "<group>"; };
+		C5458ECD1D3F19360019830D /* LMJImageChooseControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMJImageChooseControl.h; sourceTree = "<group>"; };
+		C5458ECE1D3F19360019830D /* LMJImageChooseControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMJImageChooseControl.m; sourceTree = "<group>"; };
 		C547E0ED1D3DCC1E000C0F3A /* HYUserController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HYUserController.xib; sourceTree = "<group>"; };
 		C55D7BE41D38D208002F2BC7 /* HYCreateProjectVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HYCreateProjectVC.xib; sourceTree = "<group>"; };
 		C564BDC21D363C950043E12B /* HYUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYUserController.h; sourceTree = "<group>"; };
@@ -323,6 +328,16 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		C5458ECB1D3F19360019830D /* LMJImageChoose */ = {
+			isa = PBXGroup;
+			children = (
+				C5458ECC1D3F19360019830D /* ImageChooseCloseBtn.png */,
+				C5458ECD1D3F19360019830D /* LMJImageChooseControl.h */,
+				C5458ECE1D3F19360019830D /* LMJImageChooseControl.m */,
+			);
+			path = LMJImageChoose;
+			sourceTree = "<group>";
+		};
 		C564BDBE1D363C710043E12B /* User(用户信息) */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +375,7 @@
 		C5707ED31D37779E00A4CA95 /* Three */ = {
 			isa = PBXGroup;
 			children = (
+				C5458ECB1D3F19360019830D /* LMJImageChoose */,
 				C5707ED41D37779E00A4CA95 /* MBProgressHUD */,
 			);
 			path = Three;
@@ -567,6 +583,7 @@
 				C5A70B721D3C6ECF00900D0F /* HYPublishPictureAndWordVC.xib in Resources */,
 				C5A70B741D3CB8D900900D0F /* HYPreviewProjectVC.xib in Resources */,
 				C5A70B781D3CC23C00900D0F /* HYManageProjectVC.xib in Resources */,
+				C5458ECF1D3F19360019830D /* ImageChooseCloseBtn.png in Resources */,
 				C5A70B761D3CBEDF00900D0F /* HYManageCommentVC.xib in Resources */,
 				C5707EDB1D37779E00A4CA95 /* MBProgressHUD.bundle in Resources */,
 				C547E0EE1D3DCC1E000C0F3A /* HYUserController.xib in Resources */,
@@ -636,6 +653,7 @@
 				C5707EDF1D377B1500A4CA95 /* HYUserInfo.m in Sources */,
 				C51088351D34E9D1006EF7C1 /* HYPreviewProjectVC.m in Sources */,
 				C5707EDA1D37779E00A4CA95 /* MBProgressHUD+HYHUD.m in Sources */,
+				C5458ED01D3F19360019830D /* LMJImageChooseControl.m in Sources */,
 				C5FCDDB31D35D80400E283F9 /* AppDelegate.m in Sources */,
 				C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */,
 				C5707EDC1D37779E00A4CA95 /* MBProgressHUD.m in Sources */,

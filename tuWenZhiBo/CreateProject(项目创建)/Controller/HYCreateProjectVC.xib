@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYCreateProjectVC">
             <connections>
+                <outlet property="imageChooseView" destination="3rY-kc-jU2" id="E4Q-R1-lET"/>
+                <outlet property="uploadHeadPicBtn" destination="wDb-VA-icf" id="wyX-WI-al6"/>
                 <outlet property="view" destination="iN0-l3-epB" id="5Yp-et-aEA"/>
             </connections>
         </placeholder>
@@ -29,39 +31,41 @@
                                     </constraints>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rY-kc-jU2">
-                                    <rect key="frame" x="0.0" y="40" width="375" height="170"/>
+                                    <rect key="frame" x="10" y="40" width="355" height="170"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDb-VA-icf">
-                                            <rect key="frame" x="158" y="55" width="60" height="60"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="60" id="BPz-ut-4Y0"/>
-                                                <constraint firstAttribute="height" constant="60" id="NNN-JJ-QRv"/>
-                                            </constraints>
-                                            <state key="normal" image="02-a-项目创建-2"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355" height="170"/>
+                                            <state key="normal" image="02-a-项目创建-2" backgroundImage="02-a-项目创建-7"/>
+                                            <connections>
+                                                <action selector="uploadHeadPic" destination="-1" eventType="touchUpInside" id="ted-T9-1D2"/>
+                                            </connections>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="02-a-项目创建-7" translatesAutoresizingMaskIntoConstraints="NO" id="8Ge-43-9jC">
-                                            <rect key="frame" x="10" y="0.0" width="355" height="170"/>
-                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="wDb-VA-icf" firstAttribute="leading" secondItem="3rY-kc-jU2" secondAttribute="leading" id="N5B-7G-wzV"/>
                                         <constraint firstItem="wDb-VA-icf" firstAttribute="centerY" secondItem="3rY-kc-jU2" secondAttribute="centerY" id="Oe3-MH-mc1"/>
-                                        <constraint firstItem="8Ge-43-9jC" firstAttribute="leading" secondItem="3rY-kc-jU2" secondAttribute="leading" constant="10" id="WCc-gH-TBD"/>
+                                        <constraint firstAttribute="trailing" secondItem="wDb-VA-icf" secondAttribute="trailing" id="TFG-y3-OzD"/>
                                         <constraint firstItem="wDb-VA-icf" firstAttribute="centerX" secondItem="3rY-kc-jU2" secondAttribute="centerX" id="Z2C-zP-zb3"/>
-                                        <constraint firstAttribute="trailing" secondItem="8Ge-43-9jC" secondAttribute="trailing" constant="10" id="cMZ-vS-j8S"/>
-                                        <constraint firstAttribute="bottom" secondItem="8Ge-43-9jC" secondAttribute="bottom" id="feE-JZ-2pg"/>
-                                        <constraint firstItem="8Ge-43-9jC" firstAttribute="top" secondItem="3rY-kc-jU2" secondAttribute="top" id="kHR-R9-BXX"/>
+                                        <constraint firstAttribute="bottom" secondItem="wDb-VA-icf" secondAttribute="bottom" id="af3-xR-ldj"/>
+                                        <constraint firstItem="wDb-VA-icf" firstAttribute="top" secondItem="3rY-kc-jU2" secondAttribute="top" id="cd6-tK-RDy"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="Oe3-MH-mc1"/>
+                                            <exclude reference="Z2C-zP-zb3"/>
+                                        </mask>
+                                    </variation>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="3rY-kc-jU2" secondAttribute="trailing" id="9uF-dU-bsa"/>
+                                <constraint firstAttribute="trailing" secondItem="3rY-kc-jU2" secondAttribute="trailing" constant="10" id="9uF-dU-bsa"/>
                                 <constraint firstAttribute="height" constant="210" id="GPU-HW-V1B"/>
                                 <constraint firstItem="G2Q-r3-fLp" firstAttribute="top" secondItem="Dk9-ej-qJU" secondAttribute="top" constant="10" id="XbJ-4a-5hN"/>
                                 <constraint firstItem="3rY-kc-jU2" firstAttribute="top" secondItem="G2Q-r3-fLp" secondAttribute="bottom" constant="10" id="Zyh-xW-rek"/>
                                 <constraint firstItem="G2Q-r3-fLp" firstAttribute="leading" secondItem="Dk9-ej-qJU" secondAttribute="leading" constant="10" id="hbi-IR-DJw"/>
-                                <constraint firstItem="3rY-kc-jU2" firstAttribute="leading" secondItem="Dk9-ej-qJU" secondAttribute="leading" id="pt2-C9-oi7"/>
+                                <constraint firstItem="3rY-kc-jU2" firstAttribute="leading" secondItem="Dk9-ej-qJU" secondAttribute="leading" constant="10" id="pt2-C9-oi7"/>
                                 <constraint firstAttribute="bottom" secondItem="3rY-kc-jU2" secondAttribute="bottom" id="vFi-b3-EiD"/>
                             </constraints>
                         </view>
@@ -146,6 +150,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="301.5" y="614.5"/>
         </view>
     </objects>
     <resources>
