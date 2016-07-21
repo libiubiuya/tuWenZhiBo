@@ -15,8 +15,6 @@
 
 @class LMJImageChooseControl;
 
-#define SettingCenterUrl @"prefs:root=com.ArtPollo.Artpollo"
-
 @protocol LMJImageChooseControlDelegate <NSObject>
 
 @optional
@@ -28,12 +26,6 @@
 
 @interface LMJImageChooseControl : UIView <UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
-@property (nonatomic,copy) NSString * pickerTitle;
-
-@property (nonatomic,assign) UIViewController * superViewController;
-
 @property (nonatomic,assign) id<LMJImageChooseControlDelegate> delegate;
-
-@property (nonatomic,strong,readonly) UIImage * image;
 
 @end

@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYCreateProjectVC">
             <connections>
                 <outlet property="imageChooseView" destination="3rY-kc-jU2" id="E4Q-R1-lET"/>
+                <outlet property="projectTitle" destination="pBa-7E-EZM" id="wnr-RV-K0N"/>
                 <outlet property="uploadHeadPicBtn" destination="wDb-VA-icf" id="wyX-WI-al6"/>
                 <outlet property="view" destination="iN0-l3-epB" id="5Yp-et-aEA"/>
             </connections>
@@ -30,7 +31,7 @@
                                         <constraint firstAttribute="width" constant="100" id="dse-Ua-I0O"/>
                                     </constraints>
                                 </imageView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rY-kc-jU2">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rY-kc-jU2" customClass="LMJImageChooseControl">
                                     <rect key="frame" x="10" y="40" width="355" height="170"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDb-VA-icf">

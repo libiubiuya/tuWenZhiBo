@@ -14,9 +14,11 @@
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
 
+#import <AFNetworking/AFNetworking.h>
+
 #define SettingCenterUrl @"prefs:root=com.ArtPollo.Artpollo"
 
-@interface HYCreateProjectVC ()<LMJImageChooseControlDelegate, UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface HYCreateProjectVC ()<LMJImageChooseControlDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 /** 图片选择view */
 @property (weak, nonatomic) IBOutlet LMJImageChooseControl *imageChooseView;
@@ -24,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *uploadHeadPicBtn;
 /** 显示的图片 */
 @property (nonatomic, strong, readonly) UIImage *image;
+/** 项目标题 */
+@property (weak, nonatomic) IBOutlet UITextField *projectTitle;
 
 @end
 
@@ -64,6 +68,9 @@
 
 #pragma mark - -------设置照片--------
 
+/**
+ *  点击上传头图按钮
+ */
 - (IBAction)uploadHeadPic
 {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片"
@@ -76,6 +83,12 @@
 
 #pragma mark - ActionSheet Delegate
 
+/**
+ *  sheet的各个按钮
+ *
+ *  @param actionSheet sheet
+ *  @param buttonIndex 按钮顺序
+ */
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 2) {
         return;
@@ -100,13 +113,11 @@
         }
     }
     
-    
-    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate      = self;
-    imagePicker.allowsEditing = YES;
+    imagePicker.allowsEditing = NO;
     if (buttonIndex == 0) {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     } else {
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     }
@@ -118,41 +129,37 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
-    UIImage *image =  [info objectForKey:UIImagePickerControllerEditedImage];
-    
-    NSLog(@"%@", self.imageChooseView.delegate);
+    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
     
     [self.uploadHeadPicBtn setBackgroundImage:image forState:UIControlStateNormal];
+    [self.uploadHeadPicBtn setImage:nil forState:UIControlStateNormal];
     
     _image = image;
     
-    
     if ([self.imageChooseView.delegate respondsToSelector:@selector(imageChooseControl:didChooseFinished:)]) {
         [self.imageChooseView.delegate imageChooseControl:self.imageChooseView didChooseFinished:image];
+        
     }
-    
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - ------------发布------------
 
 
-- (void)imageChooseControl:(LMJImageChooseControl *)control didChooseFinished:(UIImage *)image{
-    
-    NSLog(@"Choose Finished!");
-    
-    [self.uploadHeadPicBtn setBackgroundImage:image forState:UIControlStateNormal];
-}
 
-- (void)imageChooseControl:(LMJImageChooseControl *)control didClearImage:(UIImage *)image{
-    
-    NSLog(@"Clear!");
-    
-    
-    [self.uploadHeadPicBtn setBackgroundImage:[UIImage imageNamed:@"02-a-项目创建-7"] forState:UIControlStateNormal];
+
+#pragma mark - -----------other------------
+/**
+ *  取消第一响应者
+ */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
 }
 
 @end
