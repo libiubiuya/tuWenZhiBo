@@ -13,6 +13,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
+#import <AssetsLibrary/ALAssetRepresentation.h>
 
 #import <AFNetworking/AFNetworking.h>
 
@@ -28,6 +29,10 @@
 @property (nonatomic, strong, readonly) UIImage *image;
 /** 项目标题 */
 @property (weak, nonatomic) IBOutlet UITextField *projectTitle;
+/** 发布按钮 */
+@property (weak, nonatomic) IBOutlet UIButton *publishBtn;
+/** 重置按钮 */
+@property (weak, nonatomic) IBOutlet UIButton *resetBtn;
 
 @end
 
@@ -150,6 +155,38 @@
 
 #pragma mark - ------------发布------------
 
+- (IBAction)publishBtnClick
+{
+    
+    //用post上传文件
+    
+    // 用时间来命名图片名
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *str = [formatter stringFromDate:[NSDate date]];
+    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
+    
+    // 图片上传
+    NSURL *headPicURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/images/%@", fileName]];
+    
+    NSLog(@"filename:%@",fileName);
+    NSLog(@"title:%@", self.projectTitle.text);
+    
+    //url
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/dateinterface/upload1.php"]];
+    
+    //post请求
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url andFileName:fileName andTitle:self.projectTitle.text];
+    
+    //连接(NSURLSession)
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        NSLog(@"%@", response);
+        
+    }];
+    [dataTask resume];
+}
 
 
 

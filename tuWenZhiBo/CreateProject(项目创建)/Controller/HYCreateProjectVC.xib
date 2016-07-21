@@ -9,6 +9,8 @@
             <connections>
                 <outlet property="imageChooseView" destination="3rY-kc-jU2" id="E4Q-R1-lET"/>
                 <outlet property="projectTitle" destination="pBa-7E-EZM" id="wnr-RV-K0N"/>
+                <outlet property="publishBtn" destination="9zD-nX-Ym2" id="Xjn-61-09g"/>
+                <outlet property="resetBtn" destination="dLA-0e-K8z" id="Z5S-UB-VYF"/>
                 <outlet property="uploadHeadPicBtn" destination="wDb-VA-icf" id="wyX-WI-al6"/>
                 <outlet property="view" destination="iN0-l3-epB" id="5Yp-et-aEA"/>
             </connections>
@@ -101,6 +103,9 @@
                                         <constraint firstAttribute="height" constant="35" id="NGX-Fe-iwk"/>
                                     </constraints>
                                     <state key="normal" image="02-a-项目创建-3"/>
+                                    <connections>
+                                        <action selector="publishBtnClick" destination="-1" eventType="touchUpInside" id="4c5-Wd-ihz"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

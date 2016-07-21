@@ -14,6 +14,7 @@
 		C51088381D34E9E6006EF7C1 /* HYManageCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088371D34E9E6006EF7C1 /* HYManageCommentVC.m */; };
 		C510883B1D34EA01006EF7C1 /* HYManageProjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C510883A1D34EA01006EF7C1 /* HYManageProjectVC.m */; };
 		C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088401D34ECB8006EF7C1 /* HYNavigationController.m */; };
+		C52B3C431D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C52B3C421D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m */; };
 		C5458ECF1D3F19360019830D /* ImageChooseCloseBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = C5458ECC1D3F19360019830D /* ImageChooseCloseBtn.png */; };
 		C5458ED01D3F19360019830D /* LMJImageChooseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C5458ECE1D3F19360019830D /* LMJImageChooseControl.m */; };
 		C547E0EE1D3DCC1E000C0F3A /* HYUserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C547E0ED1D3DCC1E000C0F3A /* HYUserController.xib */; };
@@ -56,6 +57,8 @@
 		C510883A1D34EA01006EF7C1 /* HYManageProjectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYManageProjectVC.m; sourceTree = "<group>"; };
 		C510883F1D34ECB8006EF7C1 /* HYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYNavigationController.h; sourceTree = "<group>"; };
 		C51088401D34ECB8006EF7C1 /* HYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNavigationController.m; sourceTree = "<group>"; };
+		C52B3C411D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+HYPostFile.h"; sourceTree = "<group>"; };
+		C52B3C421D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+HYPostFile.m"; sourceTree = "<group>"; };
 		C5458ECC1D3F19360019830D /* ImageChooseCloseBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageChooseCloseBtn.png; sourceTree = "<group>"; };
 		C5458ECD1D3F19360019830D /* LMJImageChooseControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMJImageChooseControl.h; sourceTree = "<group>"; };
 		C5458ECE1D3F19360019830D /* LMJImageChooseControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMJImageChooseControl.m; sourceTree = "<group>"; };
@@ -410,6 +413,8 @@
 				C5FCDDB51D35D82D00E283F9 /* UIView+HYFrame.m */,
 				C5FCDDB81D36182600E283F9 /* UIBarButtonItem+HYItem.h */,
 				C5FCDDB91D36182600E283F9 /* UIBarButtonItem+HYItem.m */,
+				C52B3C411D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.h */,
+				C52B3C421D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -656,6 +661,7 @@
 				C5458ED01D3F19360019830D /* LMJImageChooseControl.m in Sources */,
 				C5FCDDB31D35D80400E283F9 /* AppDelegate.m in Sources */,
 				C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */,
+				C52B3C431D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m in Sources */,
 				C5707EDC1D37779E00A4CA95 /* MBProgressHUD.m in Sources */,
 				C5FCDDB61D35D82D00E283F9 /* UIView+HYFrame.m in Sources */,
 				C510882F1D34E97A006EF7C1 /* HYCreateProjectVC.m in Sources */,
@@ -775,7 +781,7 @@
 				INFOPLIST_FILE = tuWenZhiBo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jntv.lihaoyi.tuWenZhiBo;
+				PRODUCT_BUNDLE_IDENTIFIER = ijntv.lihaoyi.tuWenZhiBo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -792,7 +798,7 @@
 				INFOPLIST_FILE = tuWenZhiBo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jntv.lihaoyi.tuWenZhiBo;
+				PRODUCT_BUNDLE_IDENTIFIER = ijntv.lihaoyi.tuWenZhiBo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
