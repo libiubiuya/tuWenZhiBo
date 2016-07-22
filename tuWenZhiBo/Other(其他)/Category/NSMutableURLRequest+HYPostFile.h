@@ -10,6 +10,6 @@
 
 @interface NSMutableURLRequest (HYPostFile)
 
-+ (instancetype)requestWithURL:(NSURL *)url andFileName:(NSString *)fileName andTitle:(NSString *)title;
++ (instancetype)requestWithURL:(NSURL *)url andFileName:(NSString *)fileName;
 
 @end

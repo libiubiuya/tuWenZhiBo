@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class HYCreateProjectItem;
 @interface HYCreateProjectVC : UIViewController
+
+/** 项目创建item */
+@property (strong, nonatomic) HYCreateProjectItem *creProItem;
 
 @end

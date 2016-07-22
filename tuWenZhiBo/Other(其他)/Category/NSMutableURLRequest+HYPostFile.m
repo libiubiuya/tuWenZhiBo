@@ -12,7 +12,7 @@
 
 static NSString *boundary = @"HYPostRequest";
 
-+ (instancetype)requestWithURL:(NSURL *)url andFileName:(NSString *)fileName andTitle:(NSString *)title
++ (instancetype)requestWithURL:(NSURL *)url andFileName:(NSString *)fileName
 {
     // post请求
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:1 timeoutInterval:2.0f];
@@ -27,10 +27,6 @@ static NSString *boundary = @"HYPostRequest";
     [hyString appendString:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"upfile\"; filename=\"%@\"\r\n\r\n", fileName]];
     [hyString appendString:@"Content-Transfer-Ending: binary\r\n\r\n"];
     [sendData appendData:[hyString dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    // 存标题
-    NSURL *titleURL = [NSURL URLWithString:title];
-    [sendData appendData:[NSData dataWithContentsOfURL:titleURL]];
     
     [sendData appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     

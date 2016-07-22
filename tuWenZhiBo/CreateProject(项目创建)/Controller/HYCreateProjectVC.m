@@ -166,29 +166,51 @@
     NSString *str = [formatter stringFromDate:[NSDate date]];
     NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
     
-    // 图片上传
-    NSURL *headPicURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/images/%@", fileName]];
-    
     NSLog(@"filename:%@",fileName);
     NSLog(@"title:%@", self.projectTitle.text);
     
-    //url
-    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/dateinterface/upload1.php"]];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    //post请求
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url andFileName:fileName andTitle:self.projectTitle.text];
+    NSDictionary *paremeters = @{@"title":self.projectTitle.text, @"jpg":fileName};
     
-    //连接(NSURLSession)
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/dateinterface/upload1.php" parameters:paremeters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        NSLog(@"%@", response);
+        // 把图片转换成NSData类型的数据
+        NSData *data = UIImagePNGRepresentation(self.image);
         
+        /*
+         //拼接二进制文件数据
+         第一个参数：要上传的文件的二进制数据
+         第二个参数：服务器接口规定的名称
+         第三个参数：这个参数上传到服务器之后用什么名字来进行保存
+         第四个参数：上传文件的MIMEType类型
+         */
+        [formData appendPartWithFileData:data name:@"\"upfile\"" fileName:fileName mimeType:@"application/octet-stream"];
+        
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"请求成功---%@",responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"请求失败--%@",error);
     }];
-    [dataTask resume];
+    
+    
+//    //url
+//    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/dateinterface/upload1.php"]];
+//    
+//    //post请求
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url andFileName:fileName];
+//    
+//    //连接(NSURLSession)
+//    NSURLSession *session=[NSURLSession sharedSession];
+//    NSURLSessionDataTask *dataTask=[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        
+//        NSData *imageData = UIImagePNGRepresentation(self.image);
+//        id result=[NSJSONSerialization JSONObjectWithData:imageData options:0 error:nil];
+//        NSLog(@"post==%@",result);
+//        
+//    }];
+//    [dataTask resume];
 }
-
-
 
 #pragma mark - -----------other------------
 /**
