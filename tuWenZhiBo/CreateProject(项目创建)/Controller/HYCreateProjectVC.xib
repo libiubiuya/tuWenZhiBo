@@ -96,6 +96,9 @@
                                         <constraint firstAttribute="height" constant="35" id="BR4-Pd-9OL"/>
                                     </constraints>
                                     <state key="normal" image="02-a-项目创建-4"/>
+                                    <connections>
+                                        <action selector="resetBtnClick" destination="-1" eventType="touchUpInside" id="0v9-TM-6Rh"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9zD-nX-Ym2">
                                     <rect key="frame" x="10" y="110" width="355" height="35"/>

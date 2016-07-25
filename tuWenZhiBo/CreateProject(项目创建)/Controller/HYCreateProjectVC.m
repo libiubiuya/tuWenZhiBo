@@ -143,7 +143,7 @@
     
     if ([self.imageChooseView.delegate respondsToSelector:@selector(imageChooseControl:didChooseFinished:)]) {
         [self.imageChooseView.delegate imageChooseControl:self.imageChooseView didChooseFinished:image];
-        
+    
     }
     
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -173,10 +173,14 @@
     
     NSDictionary *paremeters = @{@"title":self.projectTitle.text, @"jpg":fileName};
     
+    // 把图片转换成NSData类型的数据
+    NSData *data = UIImagePNGRepresentation(self.image);
+    
+    NSLog(@"%@", data);
+    
     [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/dateinterface/upload1.php" parameters:paremeters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        // 把图片转换成NSData类型的数据
-        NSData *data = UIImagePNGRepresentation(self.image);
+        
         
         /*
          //拼接二进制文件数据
@@ -185,7 +189,7 @@
          第三个参数：这个参数上传到服务器之后用什么名字来进行保存
          第四个参数：上传文件的MIMEType类型
          */
-        [formData appendPartWithFileData:data name:@"\"upfile\"" fileName:fileName mimeType:@"application/octet-stream"];
+        [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"application/octet-stream"];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"请求成功---%@",responseObject);
@@ -193,24 +197,22 @@
         NSLog(@"请求失败--%@",error);
     }];
     
-    
-//    //url
-//    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/dateinterface/upload1.php"]];
-//    
-//    //post请求
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url andFileName:fileName];
-//    
-//    //连接(NSURLSession)
-//    NSURLSession *session=[NSURLSession sharedSession];
-//    NSURLSessionDataTask *dataTask=[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        
-//        NSData *imageData = UIImagePNGRepresentation(self.image);
-//        id result=[NSJSONSerialization JSONObjectWithData:imageData options:0 error:nil];
-//        NSLog(@"post==%@",result);
-//        
-//    }];
-//    [dataTask resume];
 }
+
+#pragma mark - ----------重置-------------
+/**
+ *  重置
+ */
+- (IBAction)resetBtnClick
+{
+    [_uploadHeadPicBtn setBackgroundImage:[UIImage imageNamed:@"02-a-项目创建-7"] forState:UIControlStateNormal];
+    [_uploadHeadPicBtn setImage:[UIImage imageNamed:@"02-a-项目创建-2"] forState:UIControlStateNormal];
+    
+    _image = nil;
+    
+    _projectTitle.text = nil;
+}
+
 
 #pragma mark - -----------other------------
 /**
