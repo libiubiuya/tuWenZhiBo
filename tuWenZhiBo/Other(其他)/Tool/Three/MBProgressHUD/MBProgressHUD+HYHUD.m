@@ -26,7 +26,7 @@
     hud.removeFromSuperViewOnHide = YES;
     
     // 1秒之后再消失
-    [hud hide:YES afterDelay:0.7];
+    [hud hide:YES afterDelay:1];
 }
 
 #pragma mark 显示错误信息
@@ -49,6 +49,8 @@
     hud.removeFromSuperViewOnHide = YES;
     // YES代表需要蒙版效果
     hud.dimBackground = YES;
+    
+    hud.minShowTime = 1;
     return hud;
 }
 

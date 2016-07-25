@@ -8,6 +8,7 @@
 
 #import "HYCreateProjectVC.h"
 #import "HYUserController.h"
+#import "MBProgressHUD+HYHUD.h"
 #import "LMJImageChooseControl.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -159,6 +160,7 @@
 {
     
     //用post上传文件
+    [MBProgressHUD showMessage:@"正在上传ing..."];
     
     // 用时间来命名图片名
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -175,12 +177,10 @@
     /**
      *  http://bbs.ijntv.cn/mobilejinan/graphic/images/你的文件名
      *  这是图片上传完成后在浏览器查看是否存在的路径
-     *
-     *
-     *
      */
     
     [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php" parameters:paremeters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
         
         // 把图片转换成NSData类型的数据
         NSData *data = UIImageJPEGRepresentation(self.image, 1);
@@ -197,8 +197,14 @@
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"请求成功---%@",responseObject);
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"上传成功"];
+        [MBProgressHUD hideHUD];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败--%@",error);
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"上传失败"];
+        [MBProgressHUD hideHUD];
     }];
     
 }
