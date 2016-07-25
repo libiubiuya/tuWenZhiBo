@@ -167,20 +167,23 @@
     NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
     
     NSLog(@"filename:%@",fileName);
-    NSLog(@"title:%@", self.projectTitle.text);
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSDictionary *paremeters = @{@"title":self.projectTitle.text, @"jpg":fileName};
     
-    // 把图片转换成NSData类型的数据
-    NSData *data = UIImagePNGRepresentation(self.image);
+    /**
+     *  http://bbs.ijntv.cn/mobilejinan/graphic/images/你的文件名
+     *  这是图片上传完成后在浏览器查看是否存在的路径
+     *
+     *
+     *
+     */
     
-    NSLog(@"%@", data);
-    
-    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/dateinterface/upload1.php" parameters:paremeters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php" parameters:paremeters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        
+        // 把图片转换成NSData类型的数据
+        NSData *data = UIImageJPEGRepresentation(self.image, 1);
         
         /*
          //拼接二进制文件数据
@@ -189,6 +192,7 @@
          第三个参数：这个参数上传到服务器之后用什么名字来进行保存
          第四个参数：上传文件的MIMEType类型
          */
+        
         [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"application/octet-stream"];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
