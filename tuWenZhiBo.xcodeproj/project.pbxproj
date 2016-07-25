@@ -14,6 +14,7 @@
 		C51088381D34E9E6006EF7C1 /* HYManageCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088371D34E9E6006EF7C1 /* HYManageCommentVC.m */; };
 		C510883B1D34EA01006EF7C1 /* HYManageProjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C510883A1D34EA01006EF7C1 /* HYManageProjectVC.m */; };
 		C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088401D34ECB8006EF7C1 /* HYNavigationController.m */; };
+		C52570161D45F150006DEFA1 /* HYPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52570151D45F150006DEFA1 /* HYPickerView.m */; };
 		C527581B1D41AE2400AC0A8E /* HYCreateProjectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C527581A1D41AE2400AC0A8E /* HYCreateProjectItem.m */; };
 		C52B3C431D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C52B3C421D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m */; };
 		C5458ECF1D3F19360019830D /* ImageChooseCloseBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = C5458ECC1D3F19360019830D /* ImageChooseCloseBtn.png */; };
@@ -58,6 +59,8 @@
 		C510883A1D34EA01006EF7C1 /* HYManageProjectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYManageProjectVC.m; sourceTree = "<group>"; };
 		C510883F1D34ECB8006EF7C1 /* HYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYNavigationController.h; sourceTree = "<group>"; };
 		C51088401D34ECB8006EF7C1 /* HYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNavigationController.m; sourceTree = "<group>"; };
+		C52570141D45F150006DEFA1 /* HYPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYPickerView.h; sourceTree = "<group>"; };
+		C52570151D45F150006DEFA1 /* HYPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYPickerView.m; sourceTree = "<group>"; };
 		C52758191D41AE2400AC0A8E /* HYCreateProjectItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYCreateProjectItem.h; sourceTree = "<group>"; };
 		C527581A1D41AE2400AC0A8E /* HYCreateProjectItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYCreateProjectItem.m; sourceTree = "<group>"; };
 		C52B3C411D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+HYPostFile.h"; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 		C51088121D34E439006EF7C1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C52570141D45F150006DEFA1 /* HYPickerView.h */,
+				C52570151D45F150006DEFA1 /* HYPickerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -659,6 +664,7 @@
 			files = (
 				C510883B1D34EA01006EF7C1 /* HYManageProjectVC.m in Sources */,
 				C510882C1D34E821006EF7C1 /* HYTabBarController.m in Sources */,
+				C52570161D45F150006DEFA1 /* HYPickerView.m in Sources */,
 				C5FD249B1D333FE900A7CA89 /* main.m in Sources */,
 				C5707EDF1D377B1500A4CA95 /* HYUserInfo.m in Sources */,
 				C51088351D34E9D1006EF7C1 /* HYPreviewProjectVC.m in Sources */,

@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYPublishPictureAndWordVC">
             <connections>
+                <outlet property="projectSelectBtn" destination="cWR-e0-TZM" id="JNz-eT-4WJ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="7Fw-8E-9iL"/>
             </connections>
         </placeholder>
@@ -37,6 +38,9 @@
                                         <constraint firstAttribute="width" constant="40" id="rv7-kZ-5vW"/>
                                     </constraints>
                                     <state key="normal" image="02-b-图文发布-4"/>
+                                    <connections>
+                                        <action selector="projectSelectBtnClick" destination="-1" eventType="touchUpInside" id="8em-Wd-yaU"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iTY-no-dh8">
                                     <rect key="frame" x="10" y="42" width="310" height="36"/>

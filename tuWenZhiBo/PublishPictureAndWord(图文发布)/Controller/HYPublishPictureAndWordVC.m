@@ -10,6 +10,8 @@
 #import "HYUserController.h"
 
 @interface HYPublishPictureAndWordVC ()
+/** 项目选择按钮 */
+@property (weak, nonatomic) IBOutlet UIButton *projectSelectBtn;
 
 @end
 
@@ -44,5 +46,17 @@
     
     [self.navigationController pushViewController:user animated:YES];
 }
+
+/**
+ *  项目选择按钮点击
+ */
+- (IBAction)projectSelectBtnClick
+{
+    HYPickerView *pv = [[HYPickerView alloc] init];
+    [pv pickerViewAppearWithURL:[NSURL URLWithString:@"faf"]];
+    [self.view addSubview:pv];
+}
+
+
 
 @end
