@@ -12,6 +12,7 @@
 #import "HYPublishPicAndWordItem.h"
 
 #import <AFNetworking/AFNetworking.h>
+#import <MJExtension/MJExtension.h>
 
 @interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource>
 /** 项目选择按钮 */
@@ -21,7 +22,14 @@
 /** 遮罩 */
 @property (nonatomic ,strong) UIView *BGView;
 
+/** 图文发布item */
+@property (nonatomic, strong) NSMutableArray *projectItem;
+
+
+
 @property (nonatomic,strong)NSArray * letter;//保存字母
+
+
 
 @end
 
@@ -78,40 +86,35 @@
 
 #pragma mark - ----------pickerView-----------
 #pragma mark 加载数据
--(void)loadData1
+-(void)loadData
 {
     
     // http://ued.ijntv.cn/manage/huodonglist.php
     // 项目列表url
     
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-//    NSURL *url = [NSURL URLWithString:@"http://ued.ijntv.cn/manage/huodonglist.php"];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//    
-//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-//        
-//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-//        
-//        HYPublishPicAndWordItem *projectItems = [[HYPublishPicAndWordItem alloc] init];
-//        
-//        projectItems.projectID = dict[@"id"];
-//        projectItems.projectTitle = dict[@"title"];
-//        projectItems.projectDateTime = dict[@"datetime"];
-//        projectItems.projectJPG = dict[@"jpg"];
-//        
-//        
-//        _projectItems = projectItems;
-//    
-//        
-//        
-//    }];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"id"] = self.projectItems.projectID;
+    parameters[@"title"] = self.projectItems.projectTitle;
+    parameters[@"datetime"] = self.projectItems.projectDateTime;
+    parameters[@"jpg"] = self.projectItems.projectJPG;
+    
+    [manager GET:@"http://ued.ijntv.cn/manage/huodonglist.php" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        _projectItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
+        
+        NSLog(@"%@", _projectItem);
+        
+        NSLog(@"%ld", _projectItem.count);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        
+    }];
+    
 }
 
-- (void)loadData
-{
-    //需要展示的数据以数组的形式保存
-    self.letter = @[@"aaa",@"bbb",@"ccc",@"ddd"];
-}
 #pragma mark UIPickerView DataSource Method
 //指定pickerview有几个表盘
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -120,28 +123,17 @@
 }
 //指定每个表盘上有几行数据
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    NSInteger result = 0;
-    switch (component) {
-        case 0:
-            result = self.letter.count;
-            break;
-        default:
-            break;
-    }
-    return result;
+    return _projectItem.count;
 }
 #pragma mark UIPickerView Delegate Method
 //指定每行如何展示数据
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    NSString * title = nil;
-    switch (component) {
-        case 0:
-            title = self.letter[row];
-            break;
-        default:
-            break;
-    }
-    return title;
+    
+#warning 如何赋值
+    HYPublishPicAndWordItem *item = _projectItem[row];
+    _projectItems = item;
+    
+    return item;
 }
 
 
