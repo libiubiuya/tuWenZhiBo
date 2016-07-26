@@ -185,6 +185,13 @@
         // 把图片转换成NSData类型的数据
         NSData *data = UIImageJPEGRepresentation(self.image, 1);
         
+        /**
+         *  http://bbs.ijntv.cn/mobilejinan/graphic/images/你的文件名
+         *  用这个路径从浏览器查看图片是否上传成功
+         */
+        
+        NSLog(@"%@", data);
+        
         /*
          //拼接二进制文件数据
          第一个参数：要上传的文件的二进制数据
@@ -192,7 +199,7 @@
          第三个参数：这个参数上传到服务器之后用什么名字来进行保存
          第四个参数：上传文件的MIMEType类型
          */
-        
+
         [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"application/octet-stream"];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
