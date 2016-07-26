@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HYPickerView : UIPickerView
+@class HYPublishPicAndWordItem;
+@interface HYPickerView : UIView
 
-@property (nonatomic ,strong) UIPickerView *pickerView; //底部View
+@property (nonatomic ,strong) UIView *bottomView; //底部View
 @property (nonatomic ,strong) UIView *BGView; //遮罩
 
-@property (nonatomic,strong)NSArray * letter;//保存要展示的字母
+/** 图文发布item */
+@property (strong, nonatomic) HYPublishPicAndWordItem *projectItems;
 
 - (void)pickerViewAppearWithURL:(NSURL *)url;
+
+- (void)pickerViewExitClick;
 
 @end

@@ -68,8 +68,6 @@
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-
-//            NSLog(@"%@", dict);
             
             HYUserInfo *userInfo = [[HYUserInfo alloc] init];
             userInfo.state = dict[@"state"];
@@ -77,8 +75,6 @@
             userInfo.userID = dict[@"userinfo"][@"id"];
             userInfo.username = dict[@"userinfo"][@"username"];
             userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
-            
-//            NSLog(@"%@\n%@\n%@\n%@\n%@\n", userInfo.state, userInfo.reason,userInfo.userID, userInfo.username, userInfo.userjpg);
             
             if ([userInfo.state isEqualToString:@"success"]) {
                 

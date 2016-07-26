@@ -15,7 +15,7 @@
 		C510883B1D34EA01006EF7C1 /* HYManageProjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C510883A1D34EA01006EF7C1 /* HYManageProjectVC.m */; };
 		C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088401D34ECB8006EF7C1 /* HYNavigationController.m */; };
 		C52570161D45F150006DEFA1 /* HYPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52570151D45F150006DEFA1 /* HYPickerView.m */; };
-		C527581B1D41AE2400AC0A8E /* HYCreateProjectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C527581A1D41AE2400AC0A8E /* HYCreateProjectItem.m */; };
+		C52579BE1D46FB81006080D2 /* HYPublishPicAndWordItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C52579BD1D46FB81006080D2 /* HYPublishPicAndWordItem.m */; };
 		C52B3C431D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C52B3C421D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m */; };
 		C5458ECF1D3F19360019830D /* ImageChooseCloseBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = C5458ECC1D3F19360019830D /* ImageChooseCloseBtn.png */; };
 		C5458ED01D3F19360019830D /* LMJImageChooseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C5458ECE1D3F19360019830D /* LMJImageChooseControl.m */; };
@@ -61,8 +61,8 @@
 		C51088401D34ECB8006EF7C1 /* HYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNavigationController.m; sourceTree = "<group>"; };
 		C52570141D45F150006DEFA1 /* HYPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYPickerView.h; sourceTree = "<group>"; };
 		C52570151D45F150006DEFA1 /* HYPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYPickerView.m; sourceTree = "<group>"; };
-		C52758191D41AE2400AC0A8E /* HYCreateProjectItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYCreateProjectItem.h; sourceTree = "<group>"; };
-		C527581A1D41AE2400AC0A8E /* HYCreateProjectItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYCreateProjectItem.m; sourceTree = "<group>"; };
+		C52579BC1D46FB81006080D2 /* HYPublishPicAndWordItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYPublishPicAndWordItem.h; sourceTree = "<group>"; };
+		C52579BD1D46FB81006080D2 /* HYPublishPicAndWordItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYPublishPicAndWordItem.m; sourceTree = "<group>"; };
 		C52B3C411D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+HYPostFile.h"; sourceTree = "<group>"; };
 		C52B3C421D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+HYPostFile.m"; sourceTree = "<group>"; };
 		C5458ECC1D3F19360019830D /* ImageChooseCloseBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageChooseCloseBtn.png; sourceTree = "<group>"; };
@@ -192,8 +192,6 @@
 		C51088151D34E67E006EF7C1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C52758191D41AE2400AC0A8E /* HYCreateProjectItem.h */,
-				C527581A1D41AE2400AC0A8E /* HYCreateProjectItem.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -228,6 +226,8 @@
 		C51088191D34E68A006EF7C1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C52579BC1D46FB81006080D2 /* HYPublishPicAndWordItem.h */,
+				C52579BD1D46FB81006080D2 /* HYPublishPicAndWordItem.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -672,13 +672,13 @@
 				C5458ED01D3F19360019830D /* LMJImageChooseControl.m in Sources */,
 				C5FCDDB31D35D80400E283F9 /* AppDelegate.m in Sources */,
 				C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */,
+				C52579BE1D46FB81006080D2 /* HYPublishPicAndWordItem.m in Sources */,
 				C52B3C431D406CA8005F20FE /* NSMutableURLRequest+HYPostFile.m in Sources */,
 				C5707EDC1D37779E00A4CA95 /* MBProgressHUD.m in Sources */,
 				C5FCDDB61D35D82D00E283F9 /* UIView+HYFrame.m in Sources */,
 				C510882F1D34E97A006EF7C1 /* HYCreateProjectVC.m in Sources */,
 				C5707ED11D37246000A4CA95 /* HYLoginController.m in Sources */,
 				C51088381D34E9E6006EF7C1 /* HYManageCommentVC.m in Sources */,
-				C527581B1D41AE2400AC0A8E /* HYCreateProjectItem.m in Sources */,
 				C564BDC41D363C950043E12B /* HYUserController.m in Sources */,
 				C5FCDDBA1D36182600E283F9 /* UIBarButtonItem+HYItem.m in Sources */,
 				C5B2AF991D387896003F8B3A /* HYGlobeConst.m in Sources */,
