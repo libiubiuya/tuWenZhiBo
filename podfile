@@ -1,3 +1,4 @@
+pod 'HMImagePicker', '~> 1.0.4'
 pod 'SDWebImage', '~> 3.8.1'
 pod 'MJExtension', '~> 3.0.11'
 pod 'AFNetworking', '~> 3.1.0'
