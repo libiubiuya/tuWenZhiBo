@@ -55,7 +55,7 @@
     
     // ------底部弹出的View
     self.bottomView                 = [[UIView alloc] init];
-    self.bottomView.frame           = CGRectMake(0, HYScreenW, HYScreenW, HYScreenW);
+    self.bottomView.frame           = CGRectMake(0, HYScreenH - HYScreenW, HYScreenW, HYScreenW);
     self.bottomView.backgroundColor = [UIColor whiteColor];
     [appWindow addSubview:self.bottomView];
     

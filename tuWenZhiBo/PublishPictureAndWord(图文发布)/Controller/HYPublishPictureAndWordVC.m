@@ -11,25 +11,27 @@
 #import "HYPickerView.h"
 #import "HYPublishPicAndWordItem.h"
 
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AVFoundation/AVCaptureDevice.h>
+#import <AVFoundation/AVMediaFormat.h>
+//#import <AssetsLibrary/ALAssetRepresentation.h>
+
 #import <AFNetworking/AFNetworking.h>
 #import <MJExtension/MJExtension.h>
 
-@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 /** 项目选择按钮 */
 @property (weak, nonatomic) IBOutlet UIButton *projectSelectBtn;
 /** 底部pickerview */
 @property (nonatomic ,strong) UIPickerView *pickerView;
-/** 遮罩 */
-@property (nonatomic ,strong) UIView *BGView;
 
 /** 图文发布item */
 @property (nonatomic, strong) NSMutableArray *projectItem;
 
-
-
-@property (nonatomic,strong)NSArray * letter;//保存字母
-
-
+/** 添加图片按钮 */
+@property (weak, nonatomic) IBOutlet UIButton *addPicBtn;
+/** 项目选择label */
+@property (weak, nonatomic) IBOutlet UILabel *projectSelectLabel;
 
 @end
 
@@ -40,7 +42,6 @@
     
     // 设置导航条
     [self setUpNavigationContent];
-    
     
     [self loadData];
 }
@@ -68,6 +69,7 @@
     [self.navigationController pushViewController:user animated:YES];
 }
 
+#pragma mark - -------------click------------
 /**
  *  项目选择按钮点击
  */
@@ -77,12 +79,86 @@
     [pv pickerViewAppearWithURL:[NSURL URLWithString:@"faf"]];
     [self.view addSubview:pv];
     
-    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, HYScreenW, HYScreenW)];
+    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(HYMargin, 30 + 2 * HYMargin, HYScreenW - 2 * HYMargin, pv.bottomView.height - 30 + 4 * HYMargin)];
     pickerView.dataSource = self;
     pickerView.delegate = self;
     [pv.bottomView addSubview:pickerView];
     self.pickerView = pickerView;
 }
+
+- (IBAction)addPicBtnClick
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:@"从相册选取", @"拍照", nil];
+    [sheet showInView:self.view];
+}
+
+#pragma mark - ActionSheet Delegate
+
+/**
+ *  sheet的各个按钮
+ *
+ *  @param actionSheet sheet
+ *  @param buttonIndex 按钮顺序
+ */
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 2) {
+        return;
+    }
+    
+    if (buttonIndex == 0) {
+        ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+        if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+            //无权限
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权访问相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
+            [alertView show];
+            return;
+        }
+    }else if (buttonIndex == 1) {
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied)
+        {
+            //无权限
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权使用摄像头" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
+            [alertView show];
+            return;
+        }
+    }
+    
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate      = self;
+    imagePicker.allowsEditing = NO;
+    if (buttonIndex == 0) {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    } else {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    [self presentViewController:imagePicker animated:YES completion:nil];
+    
+}
+
+#pragma mark - ImagePickerController Delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [self.addPicBtn setBackgroundImage:image forState:UIControlStateNormal];
+    [self.addPicBtn setImage:nil forState:UIControlStateNormal];
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 #pragma mark - ----------pickerView-----------
 #pragma mark 加载数据
@@ -95,21 +171,12 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"id"] = self.projectItems.projectID;
-    parameters[@"title"] = self.projectItems.projectTitle;
-    parameters[@"datetime"] = self.projectItems.projectDateTime;
-    parameters[@"jpg"] = self.projectItems.projectJPG;
     
     [manager GET:@"http://ued.ijntv.cn/manage/huodonglist.php" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         _projectItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
         
-        NSLog(@"%@", _projectItem);
-        
-        NSLog(@"%ld", _projectItem.count);
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
         
     }];
     
@@ -122,18 +189,23 @@
     return 1;
 }
 //指定每个表盘上有几行数据
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
     return _projectItem.count;
 }
 #pragma mark UIPickerView Delegate Method
 //指定每行如何展示数据
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    
-#warning 如何赋值
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
     HYPublishPicAndWordItem *item = _projectItem[row];
-    _projectItems = item;
     
-    return item;
+    return item.projectTitle;
+}
+// 选中pickerview
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    HYPublishPicAndWordItem *item = _projectItem[row];
+    self.projectSelectLabel.text = item.projectTitle;
 }
 
 

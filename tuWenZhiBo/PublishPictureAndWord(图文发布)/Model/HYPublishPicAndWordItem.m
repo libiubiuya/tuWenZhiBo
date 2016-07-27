@@ -10,4 +10,13 @@
 
 @implementation HYPublishPicAndWordItem
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{
+             @"projectID":@"id",
+             @"projectTitle":@"title",
+             @"projectDateTime":@"datetime",
+             @"projectJPG":@"jpg"
+             };
+}
+
 @end
