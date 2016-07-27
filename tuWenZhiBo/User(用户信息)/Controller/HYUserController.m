@@ -8,12 +8,18 @@
 
 #import "HYUserController.h"
 #import "HYUserInfo.h"
+#import "HYUserManager.h"
+
+#import <UIImageView+WebCache.h>
 
 @interface HYUserController ()
 /** 用户头像 */
 @property (weak, nonatomic) IBOutlet UIImageView *twHeadImageView;
 /** 用户名 */
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+
+/** 用户信息item */
+@property (nonatomic, strong) NSMutableArray *userInfo;
 
 @end
 
@@ -27,8 +33,7 @@
     // 设置导航条
     [self setUpNavigationContent];
     
-    // 设置数据
-    [self setUpUserInfo];
+    [self setUpUserInfoItem];
 }
 
 /**
@@ -39,20 +44,19 @@
     self.navigationItem.title = @"用户中心";
 }
 
-- (void)setUpUserInfo
+/**
+ *  设置数据
+ */
+- (void)setUpUserInfoItem
 {
-    HYUserInfo *userInfo = [[HYUserInfo alloc] init];
-    _userInfo = userInfo;
-}
-
-- (void)setUserInfo:(HYUserInfo *)userInfo
-{
-    _userInfo = userInfo;
+    HYUserInfo *userInfoItem = [HYUserManager sharedManager].userInfo;
+    _userInfoItem = userInfoItem;
     
-    // 用户名
-    _userNameLabel.text = userInfo.username;
-//    _userNameLabel.text = @"hello";
-    NSLog(@"%@", userInfo.username);
+    _userNameLabel.text = userInfoItem.username;
+    
+    [_twHeadImageView sd_setImageWithURL:[NSURL URLWithString:userInfoItem.userjpg]];
+    
+    NSLog(@"%@\n%@\n", userInfoItem.username, userInfoItem.userjpg);
 }
 
 @end

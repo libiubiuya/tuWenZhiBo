@@ -11,7 +11,6 @@
 #pragma mark category
 #import "UIView+HYFrame.h"
 #import "UIBarButtonItem+HYItem.h"
-#import "NSMutableURLRequest+HYPostFile.h"
 #import "HYPickerView.h"
 
 #pragma mark - ---------颜色------------

@@ -9,6 +9,7 @@
 #import "HYLoginController.h"
 #import "HYUserInfo.h"
 #import "HYTabBarController.h"
+#import "HYUserManager.h"
 
 #import "MBProgressHUD+HYHUD.h"
 #import <AFNetworking/AFNetworking.h>
@@ -86,7 +87,7 @@
                     // 进入到主界面
                     HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
                     
-                    self.userInfo = userInfo;
+                    [HYUserManager sharedManager].userInfo = userInfo;
                     
                     [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
                     

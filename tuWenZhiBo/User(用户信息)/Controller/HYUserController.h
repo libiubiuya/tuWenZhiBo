@@ -12,6 +12,6 @@
 @interface HYUserController : UIViewController
 
 /** 用户信息 */
-@property (strong, nonatomic) HYUserInfo *userInfo;
+@property (strong, nonatomic) HYUserInfo *userInfoItem;
 
 @end

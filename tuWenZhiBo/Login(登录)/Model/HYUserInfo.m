@@ -10,4 +10,14 @@
 
 @implementation HYUserInfo
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{
+             @"state":@"state",
+             @"reason":@"reason",
+             @"userID":@"userinfo.id",
+             @"username":@"userinfo.username",
+             @"userjpg":@"userinfo.userjpg"
+             };
+}
+
 @end
