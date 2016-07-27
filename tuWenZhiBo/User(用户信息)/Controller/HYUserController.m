@@ -9,6 +9,7 @@
 #import "HYUserController.h"
 #import "HYUserInfo.h"
 #import "HYUserManager.h"
+#import "HYLoginController.h"
 
 #import <UIImageView+WebCache.h>
 
@@ -17,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *twHeadImageView;
 /** 用户名 */
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
-
 /** 用户信息item */
 @property (nonatomic, strong) NSMutableArray *userInfo;
 
@@ -33,6 +33,7 @@
     // 设置导航条
     [self setUpNavigationContent];
     
+    // 设置数据
     [self setUpUserInfoItem];
 }
 
@@ -55,8 +56,17 @@
     _userNameLabel.text = userInfoItem.username;
     
     [_twHeadImageView sd_setImageWithURL:[NSURL URLWithString:userInfoItem.userjpg]];
+}
+
+/**
+ *  退出登录
+ */
+- (IBAction)loginOutBtnClick
+{
+    // 进入到登录界面
+    HYLoginController *userC = [[HYLoginController alloc] init];
     
-    NSLog(@"%@\n%@\n", userInfoItem.username, userInfoItem.userjpg);
+    [UIApplication sharedApplication].keyWindow.rootViewController = userC;
 }
 
 @end
