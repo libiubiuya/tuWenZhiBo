@@ -17,7 +17,7 @@
 /** 图文发布item */
 @property (strong, nonatomic) HYPublishPicAndWordItem *projectItems;
 
-- (void)pickerViewAppearWithURL:(NSURL *)url;
+- (void)pickerViewAppear;
 
 - (void)pickerViewExitClick;
 

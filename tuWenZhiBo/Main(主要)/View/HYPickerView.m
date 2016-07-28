@@ -16,7 +16,7 @@
 
 @implementation HYPickerView
 
-- (void)pickerViewAppearWithURL:(NSURL *)url
+- (void)pickerViewAppear
 {
     [self appearClick];
 }

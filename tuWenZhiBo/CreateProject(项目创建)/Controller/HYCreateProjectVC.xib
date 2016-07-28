@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYCreateProjectVC">
             <connections>
-                <outlet property="imageChooseView" destination="3rY-kc-jU2" id="E4Q-R1-lET"/>
                 <outlet property="projectTitle" destination="pBa-7E-EZM" id="wnr-RV-K0N"/>
                 <outlet property="publishBtn" destination="9zD-nX-Ym2" id="Xjn-61-09g"/>
                 <outlet property="resetBtn" destination="dLA-0e-K8z" id="Z5S-UB-VYF"/>
@@ -33,7 +32,7 @@
                                         <constraint firstAttribute="width" constant="100" id="dse-Ua-I0O"/>
                                     </constraints>
                                 </imageView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rY-kc-jU2" customClass="LMJImageChooseControl">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rY-kc-jU2">
                                     <rect key="frame" x="10" y="40" width="355" height="170"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDb-VA-icf">

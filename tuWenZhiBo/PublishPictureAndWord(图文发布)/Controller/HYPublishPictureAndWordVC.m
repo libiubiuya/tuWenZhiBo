@@ -14,10 +14,10 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
-//#import <AssetsLibrary/ALAssetRepresentation.h>
 
 #import <AFNetworking/AFNetworking.h>
 #import <MJExtension/MJExtension.h>
+#import "HMImageGridViewController.h"
 
 @interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 /** 项目选择按钮 */
@@ -43,7 +43,8 @@
     // 设置导航条
     [self setUpNavigationContent];
     
-    [self loadData];
+    // 加载列表数据
+    [self loadDataWithURL:@"http://ued.ijntv.cn/manage/huodonglist.php"];
 }
 
 /**
@@ -76,7 +77,7 @@
 - (IBAction)projectSelectBtnClick
 {
     HYPickerView *pv = [[HYPickerView alloc] init];
-    [pv pickerViewAppearWithURL:[NSURL URLWithString:@"faf"]];
+    [pv pickerViewAppear];
     [self.view addSubview:pv];
     
     UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(HYMargin, 30 + 2 * HYMargin, HYScreenW - 2 * HYMargin, pv.bottomView.height - 30 + 4 * HYMargin)];
@@ -112,6 +113,7 @@
     
     if (buttonIndex == 0) {
         ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+        
         if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
             //无权限
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权访问相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
@@ -162,7 +164,7 @@
 
 #pragma mark - ----------pickerView-----------
 #pragma mark 加载数据
--(void)loadData
+-(void)loadDataWithURL:(NSString *)url
 {
     
     // http://ued.ijntv.cn/manage/huodonglist.php
@@ -172,7 +174,7 @@
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
-    [manager GET:@"http://ued.ijntv.cn/manage/huodonglist.php" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         _projectItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
         
