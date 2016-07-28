@@ -48,13 +48,13 @@
     [super viewDidAppear:YES];
     
     // 加载下拉列表
-    [self loadDataWithURL:@"http://ued.ijntv.cn/manage/huodonglist.php"];
+    [self loadData];
     
     // 设置项目选择label
     self.projectSelectLabel.text = [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectTitle;
     
     // 加载网页
-    [self setUpLoadHtmlWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/mobileview/programview.php?huodongid=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]]];
+    [self setUpLoadHtml];
 }
 
 /**
@@ -93,14 +93,14 @@
 /**
  *  加载网页
  */
-- (void)setUpLoadHtmlWithURL:(NSURL *)url
+- (void)setUpLoadHtml
 {
     WKWebView *webView = [[WKWebView alloc] init];
     webView.scrollView.contentInset = UIEdgeInsetsMake(HYStatesBarH + HYNavH + HYProjectSelectH + HYMargin, 0, HYTabBarH, 0);
     [self.contentView addSubview:webView];
     _webView = webView;
     
-    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/mobileview/programview.php?huodongid=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
 }
@@ -120,7 +120,7 @@
 
 #pragma mark - ----------pickerView-----------
 #pragma mark 加载数据
--(void)loadDataWithURL:(NSString *)url
+-(void)loadData
 {
     
     // http://ued.ijntv.cn/manage/huodonglist.php
@@ -130,7 +130,7 @@
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
-    [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:@"http://ued.ijntv.cn/manage/huodonglist.php" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         _projectItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
         
@@ -167,7 +167,7 @@
     
     [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
     
-    [self setUpLoadHtmlWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/mobileview/programview.php?huodongid=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]]];
+    [self setUpLoadHtml];
 }
 
 @end
