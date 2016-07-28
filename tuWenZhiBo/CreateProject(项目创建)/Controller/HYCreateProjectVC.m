@@ -9,21 +9,17 @@
 #import "HYCreateProjectVC.h"
 #import "HYUserController.h"
 #import "MBProgressHUD+HYHUD.h"
-#import "LMJImageChooseControl.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
-#import <AssetsLibrary/ALAssetRepresentation.h>
 
 #import <AFNetworking/AFNetworking.h>
 
 #define SettingCenterUrl @"prefs:root=com.ArtPollo.Artpollo"
 
-@interface HYCreateProjectVC ()<LMJImageChooseControlDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface HYCreateProjectVC ()<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-/** 图片选择view */
-@property (weak, nonatomic) IBOutlet LMJImageChooseControl *imageChooseView;
 /** 上传头图按钮 */
 @property (weak, nonatomic) IBOutlet UIButton *uploadHeadPicBtn;
 /** 显示的图片 */
@@ -141,11 +137,6 @@
     [self.uploadHeadPicBtn setImage:nil forState:UIControlStateNormal];
     
     _image = image;
-    
-    if ([self.imageChooseView.delegate respondsToSelector:@selector(imageChooseControl:didChooseFinished:)]) {
-        [self.imageChooseView.delegate imageChooseControl:self.imageChooseView didChooseFinished:image];
-    
-    }
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

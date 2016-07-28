@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>HMImagePicker.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>MJExtension.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -38,6 +43,21 @@
 			<true/>
 		</dict>
 		<key>44D10418C8DAD2BA4AF56B1BA4F5477F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>596E1BE65EAE91966274163CCC6EEE8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6EEB1E61F3887F0489046EA82D75B2E4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8EBB4735F59A323FF9B3B80456BBCA89</key>
 		<dict>
 			<key>primary</key>
 			<true/>
