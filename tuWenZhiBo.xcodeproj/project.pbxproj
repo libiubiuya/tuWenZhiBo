@@ -17,6 +17,7 @@
 		C52570161D45F150006DEFA1 /* HYPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52570151D45F150006DEFA1 /* HYPickerView.m */; };
 		C52579BE1D46FB81006080D2 /* HYPublishPicAndWordItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C52579BD1D46FB81006080D2 /* HYPublishPicAndWordItem.m */; };
 		C547E0EE1D3DCC1E000C0F3A /* HYUserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C547E0ED1D3DCC1E000C0F3A /* HYUserController.xib */; };
+		C55108BC1D49E67E0087407A /* HYPickerViewInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C55108BB1D49E67E0087407A /* HYPickerViewInfoManager.m */; };
 		C55D7BE51D38D208002F2BC7 /* HYCreateProjectVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55D7BE41D38D208002F2BC7 /* HYCreateProjectVC.xib */; };
 		C564BDC41D363C950043E12B /* HYUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = C564BDC31D363C950043E12B /* HYUserController.m */; };
 		C5707ED11D37246000A4CA95 /* HYLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5707ECF1D37246000A4CA95 /* HYLoginController.m */; };
@@ -62,6 +63,8 @@
 		C52579BC1D46FB81006080D2 /* HYPublishPicAndWordItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYPublishPicAndWordItem.h; sourceTree = "<group>"; };
 		C52579BD1D46FB81006080D2 /* HYPublishPicAndWordItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYPublishPicAndWordItem.m; sourceTree = "<group>"; };
 		C547E0ED1D3DCC1E000C0F3A /* HYUserController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HYUserController.xib; sourceTree = "<group>"; };
+		C55108BA1D49E67E0087407A /* HYPickerViewInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYPickerViewInfoManager.h; sourceTree = "<group>"; };
+		C55108BB1D49E67E0087407A /* HYPickerViewInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYPickerViewInfoManager.m; sourceTree = "<group>"; };
 		C55D7BE41D38D208002F2BC7 /* HYCreateProjectVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HYCreateProjectVC.xib; sourceTree = "<group>"; };
 		C564BDC21D363C950043E12B /* HYUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYUserController.h; sourceTree = "<group>"; };
 		C564BDC31D363C950043E12B /* HYUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUserController.m; sourceTree = "<group>"; };
@@ -230,6 +233,8 @@
 		C510881A1D34E68A006EF7C1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C55108BA1D49E67E0087407A /* HYPickerViewInfoManager.h */,
+				C55108BB1D49E67E0087407A /* HYPickerViewInfoManager.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -658,6 +663,7 @@
 				C52579BE1D46FB81006080D2 /* HYPublishPicAndWordItem.m in Sources */,
 				C5707EDC1D37779E00A4CA95 /* MBProgressHUD.m in Sources */,
 				C5FCDDB61D35D82D00E283F9 /* UIView+HYFrame.m in Sources */,
+				C55108BC1D49E67E0087407A /* HYPickerViewInfoManager.m in Sources */,
 				C510882F1D34E97A006EF7C1 /* HYCreateProjectVC.m in Sources */,
 				C5707ED11D37246000A4CA95 /* HYLoginController.m in Sources */,
 				C51088381D34E9E6006EF7C1 /* HYManageCommentVC.m in Sources */,

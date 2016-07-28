@@ -8,6 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYPreviewProjectVC">
             <connections>
                 <outlet property="contentView" destination="AHh-BD-H2q" id="8qa-ec-FiC"/>
+                <outlet property="projectSelectBtn" destination="8cW-5s-vcC" id="Hs4-TS-vU3"/>
+                <outlet property="projectSelectLabel" destination="PhK-DQ-SZ5" id="U7h-IY-eqF"/>
                 <outlet property="view" destination="iN0-l3-epB" id="upN-aZ-6Bn"/>
             </connections>
         </placeholder>
@@ -41,15 +43,17 @@
                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="baU-FR-iBe"/>
                                     </constraints>
                                     <state key="normal" image="02-b-图文发布-4"/>
+                                    <connections>
+                                        <action selector="projectSelectBtnClick" destination="-1" eventType="touchUpInside" id="aVn-8Y-7Am"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PhK-DQ-SZ5">
-                                    <rect key="frame" x="10" y="42" width="310" height="36"/>
+                                    <rect key="frame" x="20" y="42" width="290" height="36"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="36" id="Iu9-jD-Cb9"/>
-                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="P5H-82-nRn"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -65,9 +69,9 @@
                                 <constraint firstItem="PhK-DQ-SZ5" firstAttribute="top" secondItem="WkO-10-mae" secondAttribute="bottom" constant="12" id="fKH-WT-Kki"/>
                                 <constraint firstAttribute="trailing" secondItem="8cW-5s-vcC" secondAttribute="trailing" constant="15" id="h1q-FZ-CsW"/>
                                 <constraint firstAttribute="bottom" secondItem="xrt-TY-pGw" secondAttribute="bottom" id="jud-F2-Zmx"/>
-                                <constraint firstItem="8cW-5s-vcC" firstAttribute="leading" secondItem="PhK-DQ-SZ5" secondAttribute="trailing" id="olQ-3c-C7l"/>
+                                <constraint firstItem="8cW-5s-vcC" firstAttribute="leading" secondItem="PhK-DQ-SZ5" secondAttribute="trailing" constant="10" id="olQ-3c-C7l"/>
                                 <constraint firstAttribute="bottom" secondItem="8cW-5s-vcC" secondAttribute="bottom" id="qCK-DM-WDk"/>
-                                <constraint firstItem="PhK-DQ-SZ5" firstAttribute="leading" secondItem="rH4-Gr-B27" secondAttribute="leading" constant="10" id="uAH-w0-W5n"/>
+                                <constraint firstItem="PhK-DQ-SZ5" firstAttribute="leading" secondItem="rH4-Gr-B27" secondAttribute="leading" constant="20" id="uAH-w0-W5n"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AHh-BD-H2q">

@@ -10,6 +10,7 @@
 #import "HYUserController.h"
 #import "HYPickerView.h"
 #import "HYPublishPicAndWordItem.h"
+#import "HYPickerViewInfoManager.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
@@ -45,6 +46,13 @@
     
     // 加载列表数据
     [self loadDataWithURL:@"http://ued.ijntv.cn/manage/huodonglist.php"];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    
+    self.projectSelectLabel.text = [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectTitle;
 }
 
 /**
@@ -208,6 +216,8 @@
 {
     HYPublishPicAndWordItem *item = _projectItem[row];
     self.projectSelectLabel.text = item.projectTitle;
+    
+    [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
 }
 
 

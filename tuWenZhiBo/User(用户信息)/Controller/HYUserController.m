@@ -50,7 +50,7 @@
  */
 - (void)setUpUserInfoItem
 {
-    HYUserInfo *userInfoItem = [HYUserManager sharedManager].userInfo;
+    HYUserInfo *userInfoItem = [HYUserManager sharedUserInfoManager].userInfo;
     _userInfoItem = userInfoItem;
     
     _userNameLabel.text = userInfoItem.username;

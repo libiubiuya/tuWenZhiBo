@@ -11,7 +11,7 @@
 @class HYUserInfo;
 @interface HYUserManager : NSObject
 
-+ (instancetype)sharedManager;
++ (instancetype)sharedUserInfoManager;
 
 /** 用户信息 */
 @property (strong, nonatomic) HYUserInfo *userInfo;

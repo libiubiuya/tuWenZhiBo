@@ -87,7 +87,7 @@
                     // 进入到主界面
                     HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
                     
-                    [HYUserManager sharedManager].userInfo = userInfo;
+                    [HYUserManager sharedUserInfoManager].userInfo = userInfo;
                     
                     [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
                     

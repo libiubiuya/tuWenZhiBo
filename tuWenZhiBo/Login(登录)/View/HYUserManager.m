@@ -10,7 +10,7 @@
 
 @implementation HYUserManager
 
-+ (instancetype)sharedManager
++ (instancetype)sharedUserInfoManager
 {
     static HYUserManager *_manager = nil;
     static dispatch_once_t onceToken;
