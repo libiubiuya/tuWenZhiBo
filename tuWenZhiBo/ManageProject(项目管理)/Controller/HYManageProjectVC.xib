@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYManageProjectVC">
             <connections>
+                <outlet property="projectSelectBtn" destination="D7Z-cq-8Ij" id="wvC-bf-IVc"/>
+                <outlet property="projectSelectLabel" destination="vmF-Qs-Wuc" id="d0E-EK-r2R"/>
                 <outlet property="view" destination="iN0-l3-epB" id="f48-g8-63y"/>
             </connections>
         </placeholder>
@@ -36,14 +38,16 @@
                                         <constraint firstAttribute="width" constant="40" id="Cio-t0-1uu"/>
                                     </constraints>
                                     <state key="normal" image="02-b-图文发布-4"/>
+                                    <connections>
+                                        <action selector="projectSelectBtnClick" destination="-1" eventType="touchUpInside" id="DH1-tW-MCt"/>
+                                    </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="02-b-图文发布-5" translatesAutoresizingMaskIntoConstraints="NO" id="fCw-4Y-lSe">
                                     <rect key="frame" x="10" y="40" width="310" height="40"/>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmF-Qs-Wuc">
-                                    <rect key="frame" x="10" y="42" width="310" height="36"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmF-Qs-Wuc">
+                                    <rect key="frame" x="20" y="42" width="290" height="36"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="21O-3N-7YT"/>
                                         <constraint firstAttribute="height" constant="36" id="T69-eE-PXg"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -57,11 +61,12 @@
                                 <constraint firstItem="D7Z-cq-8Ij" firstAttribute="leading" secondItem="fCw-4Y-lSe" secondAttribute="trailing" id="8wM-PN-wII"/>
                                 <constraint firstItem="fCw-4Y-lSe" firstAttribute="top" secondItem="GZX-yz-4sl" secondAttribute="bottom" constant="10" id="DoZ-P2-bNg"/>
                                 <constraint firstAttribute="trailing" secondItem="D7Z-cq-8Ij" secondAttribute="trailing" constant="15" id="Flb-U8-mMd"/>
-                                <constraint firstItem="vmF-Qs-Wuc" firstAttribute="leading" secondItem="fOz-9e-KA3" secondAttribute="leading" constant="10" id="HfV-nb-wYL"/>
+                                <constraint firstItem="vmF-Qs-Wuc" firstAttribute="leading" secondItem="fOz-9e-KA3" secondAttribute="leading" constant="20" id="HfV-nb-wYL"/>
                                 <constraint firstAttribute="bottom" secondItem="D7Z-cq-8Ij" secondAttribute="bottom" constant="10" id="PhR-kO-BD3"/>
                                 <constraint firstItem="GZX-yz-4sl" firstAttribute="leading" secondItem="fOz-9e-KA3" secondAttribute="leading" constant="10" id="RHo-0x-YGh"/>
                                 <constraint firstAttribute="bottom" secondItem="fCw-4Y-lSe" secondAttribute="bottom" constant="10" id="ieR-pY-leF"/>
                                 <constraint firstAttribute="height" constant="90" id="mOl-AB-EKz"/>
+                                <constraint firstItem="D7Z-cq-8Ij" firstAttribute="leading" secondItem="vmF-Qs-Wuc" secondAttribute="trailing" constant="10" id="oKE-qB-4hT"/>
                                 <constraint firstItem="GZX-yz-4sl" firstAttribute="top" secondItem="fOz-9e-KA3" secondAttribute="top" constant="10" id="pcL-Oe-wbm"/>
                                 <constraint firstItem="vmF-Qs-Wuc" firstAttribute="top" secondItem="GZX-yz-4sl" secondAttribute="bottom" constant="12" id="qr4-ae-Th8"/>
                                 <constraint firstItem="D7Z-cq-8Ij" firstAttribute="top" secondItem="fOz-9e-KA3" secondAttribute="top" constant="40" id="sNA-cb-D4h"/>
@@ -237,7 +242,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="454.5" y="594.5"/>
+            <point key="canvasLocation" x="502.5" y="779.5"/>
         </view>
         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QSE-GN-iFZ">
             <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
