@@ -7,7 +7,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYPublishPictureAndWordVC">
             <connections>
-                <outlet property="addPicBtn" destination="GbC-II-Rt0" id="f1x-Qo-1Z4"/>
+                <outlet property="addPicBtn" destination="GbC-II-Rt0" id="IiF-3D-1na"/>
+                <outlet property="bgView" destination="79i-Qp-buD" id="0qS-8O-uTh"/>
+                <outlet property="btnLeftConstraint" destination="SCK-Qe-RPp" id="pwt-CY-rus"/>
                 <outlet property="projectSelectBtn" destination="cWR-e0-TZM" id="JNz-eT-4WJ"/>
                 <outlet property="projectSelectLabel" destination="iTY-no-dh8" id="b8j-vm-bG4"/>
                 <outlet property="view" destination="iN0-l3-epB" id="7Fw-8E-9iL"/>
@@ -115,7 +117,7 @@
                                     </constraints>
                                     <state key="normal" backgroundImage="02-b-图文发布-1"/>
                                     <connections>
-                                        <action selector="addPicBtnClick" destination="-1" eventType="touchUpInside" id="Tad-4J-krO"/>
+                                        <action selector="addPicBtnClick:" destination="-1" eventType="touchUpInside" id="lcy-Ns-e5H"/>
                                     </connections>
                                 </button>
                             </subviews>

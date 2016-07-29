@@ -18,21 +18,27 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import <MJExtension/MJExtension.h>
-#import "HMImageGridViewController.h"
+#import <HMImagePickerController.h>
 
-@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, HMImagePickerControllerDelegate>
+/** 项目文字功能view */
+@property (weak, nonatomic) IBOutlet UIView *bgView;
+/** 添加图片按钮左边约束 */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btnLeftConstraint;
 /** 项目选择按钮 */
 @property (weak, nonatomic) IBOutlet UIButton *projectSelectBtn;
 /** 底部pickerview */
 @property (nonatomic ,strong) UIPickerView *pickerView;
-
 /** 图文发布item */
 @property (nonatomic, strong) NSMutableArray *projectItem;
-
 /** 添加图片按钮 */
 @property (weak, nonatomic) IBOutlet UIButton *addPicBtn;
 /** 项目选择label */
 @property (weak, nonatomic) IBOutlet UILabel *projectSelectLabel;
+
+@property (nonatomic, strong) NSMutableArray *selectedImageArray;
+@property (nonatomic, assign) NSInteger selectedBtnTag;
+@property (nonatomic, assign) NSInteger currentMaxBtnTag;
 
 @end
 
@@ -45,7 +51,9 @@
     [self setUpNavigationContent];
     
     // 加载列表数据
-    [self loadDataWithURL:@"http://ued.ijntv.cn/manage/huodonglist.php"];
+    [self loadData];
+    
+    _currentMaxBtnTag = 99;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -95,8 +103,9 @@
     self.pickerView = pickerView;
 }
 
-- (IBAction)addPicBtnClick
+- (IBAction)addPicBtnClick:(UIButton *)button
 {
+    _selectedBtnTag = button.tag;
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片"
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
@@ -127,6 +136,14 @@
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权访问相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
             [alertView show];
             return;
+        } else {
+            HMImagePickerController *pickerVc = [[HMImagePickerController alloc] initWithSelectedAssets:nil];
+            pickerVc.maxPickerCount = _selectedBtnTag == 0 ? 3 - _selectedImageArray.count : 1;
+            pickerVc.pickerDelegate = self;
+            pickerVc.targetSize = CGSizeMake(120, 120);
+            [self presentViewController:pickerVc animated:YES completion:^{
+                
+            }];
         }
     }else if (buttonIndex == 1) {
         AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
@@ -138,41 +155,11 @@
             return;
         }
     }
-    
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate      = self;
-    imagePicker.allowsEditing = NO;
-    if (buttonIndex == 0) {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    } else {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }
-    [self presentViewController:imagePicker animated:YES completion:nil];
-    
 }
-
-#pragma mark - ImagePickerController Delegate
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    
-    UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    [self.addPicBtn setBackgroundImage:image forState:UIControlStateNormal];
-    [self.addPicBtn setImage:nil forState:UIControlStateNormal];
-    
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
 
 #pragma mark - ----------pickerView-----------
 #pragma mark 加载数据
--(void)loadDataWithURL:(NSString *)url
+-(void)loadData
 {
     
     // http://ued.ijntv.cn/manage/huodonglist.php
@@ -182,7 +169,7 @@
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
-    [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:@"http://ued.ijntv.cn/manage/huodonglist.php" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         _projectItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
         
@@ -220,5 +207,41 @@
     [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
 }
 
+#pragma mark - HMPickerDelegate
+/**
+ *  给三张图片布局
+ */
+- (void)imagePickerController:(HMImagePickerController *)picker didFinishSelectedImages:(NSArray<UIImage *> *)images selectedAssets:(NSArray<PHAsset *> *)selectedAssets {
+    if (_selectedBtnTag != 0) {
+        UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
+        PHAsset *asset = [selectedAssets firstObject];
+        [self imageWithAsset:asset button:selectedBtn];
+        [self dismissViewControllerAnimated:YES completion:^{}];
+        return;
+    }
+    if (!_selectedImageArray) {
+        _selectedImageArray = [NSMutableArray array];
+    }
+    [_selectedImageArray addObjectsFromArray:selectedAssets];
+    CGRect startFrame = _addPicBtn.frame;
+    UIButton *btn = nil;
+    for (int i = 0; i < selectedAssets.count; i++) {
+        btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.tag = ++_currentMaxBtnTag;
+        [btn addTarget:self action:@selector(addPicBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_bgView addSubview:btn];
+        btn.frame = CGRectMake(startFrame.origin.x + i * startFrame.size.width + i * 10, startFrame.origin.y, startFrame.size.width, startFrame.size.height);
+        [self imageWithAsset:selectedAssets[i] button:btn];
+    }
+    _btnLeftConstraint.constant = CGRectGetMaxX(btn.frame) + 10;
+    [_bgView layoutIfNeeded];
+    _addPicBtn.hidden = _selectedImageArray.count == 3;
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+- (void)imageWithAsset:(PHAsset *)asset button:(UIButton *)btn {
+    [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(120, 120) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [btn setImage:result forState:UIControlStateNormal];
+    }];
+}
 
 @end
