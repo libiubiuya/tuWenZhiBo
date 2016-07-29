@@ -22,4 +22,16 @@
 /** 图片 */
 @property (nonatomic, strong) NSString *projectJPG;
 
+/** 用户评论框 */
+@property (strong, nonatomic) NSString *projectAnswer;
+
+/** 图文直播状态 */
+@property (strong, nonatomic) NSString *projectState;
+
+/** 浮窗图片URL */
+@property (strong, nonatomic) NSString *projectFloatURL;
+
+/** 浮窗图片 */
+@property (strong, nonatomic) NSString *projectFloatJPG;
+
 @end
