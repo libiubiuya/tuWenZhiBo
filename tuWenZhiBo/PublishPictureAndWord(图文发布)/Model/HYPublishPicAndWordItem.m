@@ -15,7 +15,11 @@
              @"projectID":@"id",
              @"projectTitle":@"title",
              @"projectDateTime":@"datetime",
-             @"projectJPG":@"jpg"
+             @"projectJPG":@"jpg",
+             @"projectAnswer":@"answer",
+             @"projectState":@"state",
+             @"projectFloatURL":@"floaturl",
+             @"projectFloatJPG":@"floatjpg"
              };
 }
 

@@ -26,6 +26,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *projectSelectLabel;
 /** 底部pickerview */
 @property (nonatomic ,strong) UIPickerView *pickerView;
+/** 图文直播状态开关 */
+@property (weak, nonatomic) IBOutlet UISwitch *livingStateSwitch;
+/** 用户评论框开关 */
+@property (weak, nonatomic) IBOutlet UISwitch *userCommentSwitch;
 
 @end
 
@@ -72,6 +76,10 @@
     [self.navigationController pushViewController:user animated:YES];
 }
 
+#pragma mark - ----------click----------------
+/**
+ *  下拉列表
+ */
 - (IBAction)projectSelectBtnClick
 {
     HYPickerView *pv = [[HYPickerView alloc] init];
@@ -83,6 +91,86 @@
     pickerView.delegate = self;
     [pv.bottomView addSubview:pickerView];
     self.pickerView = pickerView;
+}
+
+/**
+ *  图文直播状态开关点击
+ */
+- (IBAction)livingStateSwitchClick
+{
+    if (self.livingStateSwitch.on == NO) {
+        [self.userCommentSwitch setOn:NO animated:YES];
+        
+        [self userCommentSwitchClickOFF];
+    } else {
+        [self.userCommentSwitch setOn:YES animated:YES];
+        
+        [self userCommentSwitchClickON];
+    }
+}
+
+/**
+ *  用户评论框开关点击
+ */
+- (IBAction)userCommentSwitchClick
+{
+    if (self.userCommentSwitch.on == NO) {
+        [self userCommentSwitchClickOFF];
+    } else {
+        [self userCommentSwitchClickON];
+    }
+}
+
+/**
+ *  图文直播状态开
+ */
+- (void)livingStateSwitchClickON
+{
+    [self.userCommentSwitch setOn:YES animated:YES];
+    
+    [self userCommentSwitchClickON];
+}
+
+/**
+ *  图文直播状态关
+ */
+- (void)livingStateSwitchClickOFF
+{
+    [self.userCommentSwitch setOn:NO animated:YES];
+    
+    [self userCommentSwitchClickOFF];
+}
+
+/**
+ *  用户评论框开
+ */
+- (void)userCommentSwitchClickON
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    [manager GET:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=answer1", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        //            NSLog(@"%@", responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        //            NSLog(@"%@", error);
+    }];
+}
+
+/**
+ *  用户评论框关
+ */
+- (void)userCommentSwitchClickOFF
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    [manager GET:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=answer0", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        //            NSLog(@"%@", responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        //            NSLog(@"%@", error);
+    }];
 }
 
 #pragma mark - ----------pickerView-----------
@@ -135,5 +223,6 @@
     [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
 }
 
+#pragma mark -
 
 @end

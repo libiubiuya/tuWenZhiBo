@@ -7,8 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYManageProjectVC">
             <connections>
+                <outlet property="livingStateSwitch" destination="ZGp-5t-YA7" id="N3o-lB-wsl"/>
                 <outlet property="projectSelectBtn" destination="D7Z-cq-8Ij" id="wvC-bf-IVc"/>
                 <outlet property="projectSelectLabel" destination="vmF-Qs-Wuc" id="d0E-EK-r2R"/>
+                <outlet property="userCommentSwitch" destination="kju-hl-i9u" id="OJN-JD-7ex"/>
                 <outlet property="view" destination="iN0-l3-epB" id="f48-g8-63y"/>
             </connections>
         </placeholder>
@@ -94,6 +96,9 @@
                                         <constraint firstAttribute="height" constant="31" id="0AK-RF-HYn"/>
                                         <constraint firstAttribute="width" constant="49" id="WgN-Ew-ugo"/>
                                     </constraints>
+                                    <connections>
+                                        <action selector="livingStateSwitchClick" destination="-1" eventType="valueChanged" id="cZG-CS-bjO"/>
+                                    </connections>
                                 </switch>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -127,6 +132,9 @@
                                         <constraint firstAttribute="width" constant="49" id="MCT-M3-rEo"/>
                                         <constraint firstAttribute="height" constant="31" id="Vmf-ic-jdW"/>
                                     </constraints>
+                                    <connections>
+                                        <action selector="userCommentSwitchClick" destination="-1" eventType="valueChanged" id="TlM-Ho-uXD"/>
+                                    </connections>
                                 </switch>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
