@@ -7,9 +7,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYManageProjectVC">
             <connections>
+                <outlet property="floatViewURLTextField" destination="t7m-PD-4SK" id="huI-Le-c7v"/>
                 <outlet property="livingStateSwitch" destination="ZGp-5t-YA7" id="N3o-lB-wsl"/>
                 <outlet property="projectSelectBtn" destination="D7Z-cq-8Ij" id="wvC-bf-IVc"/>
                 <outlet property="projectSelectLabel" destination="vmF-Qs-Wuc" id="d0E-EK-r2R"/>
+                <outlet property="publishBtn" destination="idK-gk-H7x" id="kM9-P8-ehx"/>
+                <outlet property="uploadFloatViewPicBtn" destination="kKb-qs-3Rg" id="PZP-im-Atu"/>
                 <outlet property="userCommentSwitch" destination="kju-hl-i9u" id="OJN-JD-7ex"/>
                 <outlet property="view" destination="iN0-l3-epB" id="f48-g8-63y"/>
             </connections>
@@ -53,7 +56,7 @@
                                         <constraint firstAttribute="height" constant="36" id="T69-eE-PXg"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -162,6 +165,9 @@
                                         <constraint firstAttribute="height" constant="35" id="BVk-Hf-bU2"/>
                                     </constraints>
                                     <state key="normal" image="02-e-项目管理-2"/>
+                                    <connections>
+                                        <action selector="publishBtnClick" destination="-1" eventType="touchUpInside" id="Uac-cU-zcg"/>
+                                    </connections>
                                 </button>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t7m-PD-4SK">
                                     <rect key="frame" x="10" y="290" width="355" height="35"/>
@@ -181,27 +187,29 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AHj-ev-QLx">
                                     <rect key="frame" x="10" y="40" width="355" height="210"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="02-a-项目创建-7" translatesAutoresizingMaskIntoConstraints="NO" id="B9R-XK-vOq">
-                                            <rect key="frame" x="0.0" y="0.0" width="355" height="210"/>
-                                        </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKb-qs-3Rg">
-                                            <rect key="frame" x="140" y="72" width="75" height="65"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="65" id="GuL-5F-Lv2"/>
-                                                <constraint firstAttribute="width" constant="75" id="Tug-fC-EkS"/>
-                                            </constraints>
-                                            <state key="normal" image="02-e-项目管理-1"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355" height="210"/>
+                                            <state key="normal" image="02-e-项目管理-1" backgroundImage="02-a-项目创建-7"/>
+                                            <connections>
+                                                <action selector="uploadFloatViewPicBtnClick" destination="-1" eventType="touchUpInside" id="uXb-op-TyP"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="kKb-qs-3Rg" firstAttribute="centerY" secondItem="AHj-ev-QLx" secondAttribute="centerY" id="7tB-LD-aef"/>
-                                        <constraint firstItem="B9R-XK-vOq" firstAttribute="top" secondItem="AHj-ev-QLx" secondAttribute="top" id="F1l-PW-wcR"/>
-                                        <constraint firstAttribute="trailing" secondItem="B9R-XK-vOq" secondAttribute="trailing" id="Ulu-um-O3a"/>
-                                        <constraint firstItem="B9R-XK-vOq" firstAttribute="leading" secondItem="AHj-ev-QLx" secondAttribute="leading" id="b5T-PV-sjR"/>
-                                        <constraint firstAttribute="bottom" secondItem="B9R-XK-vOq" secondAttribute="bottom" id="dUe-UE-qpz"/>
+                                        <constraint firstItem="kKb-qs-3Rg" firstAttribute="top" secondItem="AHj-ev-QLx" secondAttribute="top" id="RBh-yi-dx9"/>
+                                        <constraint firstAttribute="bottom" secondItem="kKb-qs-3Rg" secondAttribute="bottom" id="RgL-j7-Kia"/>
+                                        <constraint firstAttribute="trailing" secondItem="kKb-qs-3Rg" secondAttribute="trailing" id="TK8-f9-60i"/>
                                         <constraint firstItem="kKb-qs-3Rg" firstAttribute="centerX" secondItem="AHj-ev-QLx" secondAttribute="centerX" id="hAL-Rf-XfA"/>
+                                        <constraint firstItem="kKb-qs-3Rg" firstAttribute="leading" secondItem="AHj-ev-QLx" secondAttribute="leading" id="vn1-A2-cey"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="7tB-LD-aef"/>
+                                            <exclude reference="hAL-Rf-XfA"/>
+                                        </mask>
+                                    </variation>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -250,7 +258,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="502.5" y="779.5"/>
+            <point key="canvasLocation" x="519.5" y="888.5"/>
         </view>
         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QSE-GN-iFZ">
             <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>

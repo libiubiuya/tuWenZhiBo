@@ -16,8 +16,6 @@
 
 #import <AFNetworking/AFNetworking.h>
 
-#define SettingCenterUrl @"prefs:root=com.ArtPollo.Artpollo"
-
 @interface HYCreateProjectVC ()<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 /** 上传头图按钮 */
@@ -175,11 +173,6 @@
         
         // 把图片转换成NSData类型的数据
         NSData *data = UIImageJPEGRepresentation(self.image, 1);
-        
-        /**
-         *  http://bbs.ijntv.cn/mobilejinan/graphic/images/你的文件名
-         *  用这个路径从浏览器查看图片是否上传成功
-         */
         
         /*
          //拼接二进制文件数据
