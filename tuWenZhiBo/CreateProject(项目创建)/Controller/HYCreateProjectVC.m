@@ -147,7 +147,6 @@
 
 - (IBAction)publishBtnClick
 {
-    
     //用post上传文件
     [MBProgressHUD showMessage:@"正在上传ing..."];
     
@@ -161,18 +160,21 @@
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    NSDictionary *paremeters = @{@"title":self.projectTitle.text, @"jpg":fileName};
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSDictionary *paremeters1 = @{@"jpg":fileName};
     
     /**
      *  http://bbs.ijntv.cn/mobilejinan/graphic/images/你的文件名
      *  这是图片上传完成后在浏览器查看是否存在的路径
      */
     
-    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php" parameters:paremeters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        
+    // http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php
+    // http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twcj.php
+    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php" parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         // 把图片转换成NSData类型的数据
-        NSData *data = UIImageJPEGRepresentation(self.image, 1);
+        NSData *data = UIImageJPEGRepresentation(self.image, 1.0);
         
         /*
          //拼接二进制文件数据
@@ -185,12 +187,19 @@
         [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"application/octet-stream"];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"请求成功---%@",responseObject);
+        
         [MBProgressHUD hideHUD];
         [MBProgressHUD showMessage:@"上传成功"];
+        
+        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twcj.php?title=%@&jpg=%@", self.projectTitle.text, fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"成功---%@", responseObject);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"失败---%@", error);
+        }];
+        
         [MBProgressHUD hideHUD];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"请求失败--%@",error);
+        
         [MBProgressHUD hideHUD];
         [MBProgressHUD showMessage:@"上传失败"];
         [MBProgressHUD hideHUD];
