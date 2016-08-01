@@ -12,6 +12,7 @@
                 <outlet property="btnLeftConstraint" destination="SCK-Qe-RPp" id="pwt-CY-rus"/>
                 <outlet property="projectSelectBtn" destination="cWR-e0-TZM" id="JNz-eT-4WJ"/>
                 <outlet property="projectSelectLabel" destination="iTY-no-dh8" id="b8j-vm-bG4"/>
+                <outlet property="projectTitle" destination="f5Z-Wq-HbK" id="9Cj-sn-oAH"/>
                 <outlet property="view" destination="iN0-l3-epB" id="7Fw-8E-9iL"/>
             </connections>
         </placeholder>
@@ -89,6 +90,9 @@
                                         <constraint firstAttribute="height" constant="35" id="pU2-iL-yrg"/>
                                     </constraints>
                                     <state key="normal" image="02-a-项目创建-3"/>
+                                    <connections>
+                                        <action selector="publishBtnClick" destination="-1" eventType="touchUpInside" id="mEb-2o-UB5"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ggL-4n-v5T">
                                     <rect key="frame" x="10" y="335" width="355" height="35"/>

@@ -11,6 +11,9 @@
 #import "HYPickerView.h"
 #import "HYPublishPicAndWordItem.h"
 #import "HYPickerViewInfoManager.h"
+#import "MBProgressHUD+HYHUD.h"
+#import "HYUserManager.h"
+#import "HYUserInfo.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
@@ -35,6 +38,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *addPicBtn;
 /** 项目选择label */
 @property (weak, nonatomic) IBOutlet UILabel *projectSelectLabel;
+/** 显示的图片 */
+@property (nonatomic, strong, readonly) UIImage *image;
+/** 项目文字 */
+@property (weak, nonatomic) IBOutlet UITextField *projectTitle;
 
 @property (nonatomic, strong) NSMutableArray *selectedImageArray;
 @property (nonatomic, assign) NSInteger selectedBtnTag;
@@ -112,6 +119,70 @@
                                          destructiveButtonTitle:nil
                                               otherButtonTitles:@"从相册选取", @"拍照", nil];
     [sheet showInView:self.view];
+}
+
+/**
+ *  发布按钮点击
+ */
+- (IBAction)publishBtnClick
+{
+    //用post上传文件
+    [MBProgressHUD showMessage:@"正在上传ing..."];
+    
+    // 用时间来命名图片名
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *str = [formatter stringFromDate:[NSDate date]];
+    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
+    
+    NSLog(@"filename:%@",fileName);
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSDictionary *paremeters1 = @{@"jpg":fileName};
+    
+    /**
+     *  http://bbs.ijntv.cn/mobilejinan/graphic/images/你的文件名
+     *  这是图片上传完成后在浏览器查看是否存在的路径
+     */
+    
+    // http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php
+    // http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php
+    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php" parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+        // 把图片转换成NSData类型的数据
+        NSData *data = UIImageJPEGRepresentation(self.image, 1.0);
+        
+        /*
+         //拼接二进制文件数据
+         第一个参数：要上传的文件的二进制数据
+         第二个参数：服务器接口规定的名称
+         第三个参数：这个参数上传到服务器之后用什么名字来进行保存
+         第四个参数：上传文件的MIMEType类型
+         */
+        
+        [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"application/octet-stream"];
+        
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"上传成功"];
+        
+        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, self.projectTitle.text, fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"成功---%@", responseObject);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"失败---%@", error);
+        }];
+        
+        [MBProgressHUD hideHUD];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"上传失败"];
+        [MBProgressHUD hideHUD];
+    }];
 }
 
 #pragma mark - ActionSheet Delegate
