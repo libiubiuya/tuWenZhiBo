@@ -156,8 +156,6 @@
     NSString *str = [formatter stringFromDate:[NSDate date]];
     NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
     
-    NSLog(@"filename:%@",fileName);
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -188,15 +186,14 @@
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传成功"];
-        
         [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twcj.php?title=%@&jpg=%@", self.projectTitle.text, fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"成功---%@", responseObject);
+            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"失败---%@", error);
+            
         }];
         
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"上传成功"];
         [MBProgressHUD hideHUD];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
