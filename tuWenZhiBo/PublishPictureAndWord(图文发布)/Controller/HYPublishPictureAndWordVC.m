@@ -39,7 +39,11 @@
 /** 项目选择label */
 @property (weak, nonatomic) IBOutlet UILabel *projectSelectLabel;
 /** 显示的图片 */
-@property (nonatomic, strong, readonly) UIImage *image;
+@property (nonatomic, strong) NSArray *images;
+/** 显示的图片数组 */
+@property (nonatomic, strong, readonly) NSMutableArray *fileNames;
+/** 拼接的图片参数 */
+@property (nonatomic, strong) NSString *spliceFilename;
 /** 项目文字 */
 @property (weak, nonatomic) IBOutlet UITextField *projectTitle;
 
@@ -129,60 +133,83 @@
     //用post上传文件
     [MBProgressHUD showMessage:@"正在上传ing..."];
     
-    // 用时间来命名图片名
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyyMMddHHmmss";
-    NSString *str = [formatter stringFromDate:[NSDate date]];
-    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
-    
-    NSLog(@"filename:%@",fileName);
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    NSDictionary *paremeters1 = @{@"jpg":fileName};
+    NSString *fileName;
+    NSMutableArray *fileNames = [[NSMutableArray alloc] init];
     
-    /**
-     *  http://bbs.ijntv.cn/mobilejinan/graphic/images/你的文件名
-     *  这是图片上传完成后在浏览器查看是否存在的路径
-     */
+    // 把图片都重新命名
+    for (int i = 0; i < _images.count; i++) {
+        
+        // 用时间来命名图片名
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"yyyyMMddHHmmssSSS";
+        NSString *str = [formatter stringFromDate:[NSDate date]];
+        fileName = [NSString stringWithFormat:@"%@%d.jpg", str, i];
+        
+        NSLog(@"%@", fileName);
+        
+        [fileNames addObject:fileName];
+        _fileNames = fileNames;
+        
+        NSLog(@"%ld", _fileNames.count);
+        
+    }
     
-    // http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php
-    // http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php
+    NSString *spliceFilename;
+    
+    switch (_fileNames.count) {
+        case 1:
+            spliceFilename = [NSString stringWithFormat:@"%@", _fileNames[0]];
+            _spliceFilename = spliceFilename;
+            break;
+        case 2:
+            spliceFilename = [NSString stringWithFormat:@"%@:%@", _fileNames[0], _fileNames[1]];
+            _spliceFilename = spliceFilename;
+            break;
+        case 3:
+            spliceFilename = [NSString stringWithFormat:@"%@:%@:%@", _fileNames[0], _fileNames[1], _fileNames[2]];
+            _spliceFilename = spliceFilename;
+            break;
+        default:
+            break;
+    }
+    
+    NSLog(@"%@", _spliceFilename);
+    
+    NSDictionary *paremeters1 = @{@"jpg":_spliceFilename};
+    
     [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php" parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        // 把图片转换成NSData类型的数据
-        NSData *data = UIImageJPEGRepresentation(self.image, 1.0);
+        NSLog(@"%@", _images);
+        NSMutableData *datas;
+        NSData *data;
+        for (int i = 0; i < _images.count; i++) {
+            
+            data = UIImageJPEGRepresentation(_images[i], 1.0);
+            [datas appendData:data];
+        }
         
-        /*
-         //拼接二进制文件数据
-         第一个参数：要上传的文件的二进制数据
-         第二个参数：服务器接口规定的名称
-         第三个参数：这个参数上传到服务器之后用什么名字来进行保存
-         第四个参数：上传文件的MIMEType类型
-         */
-        
-        [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"application/octet-stream"];
+        [formData appendPartWithFileData:datas name:@"upfile" fileName:fileName mimeType:@"application/octet-stream"];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传成功"];
         
-        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, self.projectTitle.text, fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"成功---%@", responseObject);
+        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, self.projectTitle.text, _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传成功"];
+            [MBProgressHUD hideHUD];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"失败---%@", error);
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传失败"];
+            [MBProgressHUD hideHUD];
         }];
-        
-        [MBProgressHUD hideHUD];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传失败"];
-        [MBProgressHUD hideHUD];
     }];
+    
 }
 
 #pragma mark - ActionSheet Delegate
@@ -283,6 +310,7 @@
  *  给三张图片布局
  */
 - (void)imagePickerController:(HMImagePickerController *)picker didFinishSelectedImages:(NSArray<UIImage *> *)images selectedAssets:(NSArray<PHAsset *> *)selectedAssets {
+    _images = images;
     if (_selectedBtnTag != 0) {
         UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
         PHAsset *asset = [selectedAssets firstObject];
@@ -312,6 +340,7 @@
 - (void)imageWithAsset:(PHAsset *)asset button:(UIButton *)btn {
     [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(120, 120) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         [btn setImage:result forState:UIControlStateNormal];
+        
     }];
 }
 
