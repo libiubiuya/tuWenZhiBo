@@ -23,7 +23,7 @@
 #import <MJExtension/MJExtension.h>
 #import <HMImagePickerController.h>
 
-@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, HMImagePickerControllerDelegate>
+@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, HMImagePickerControllerDelegate>
 /** 项目文字功能view */
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 /** 添加图片按钮左边约束 */
@@ -45,7 +45,9 @@
 /** 拼接的图片参数 */
 @property (nonatomic, strong) NSString *spliceFilename;
 /** 项目文字 */
-@property (weak, nonatomic) IBOutlet UITextField *projectTitle;
+@property (weak, nonatomic) IBOutlet UITextView *projectTitleTextView;
+/** 项目文字占位文字label */
+@property (weak, nonatomic) IBOutlet UITextField *placeholderLabel;
 
 @property (nonatomic, strong) NSMutableArray *selectedImageArray;
 @property (nonatomic, assign) NSInteger selectedBtnTag;
@@ -175,7 +177,7 @@
     
     for (int i = 0; i < _images.count; i++) {
         
-        NSLog(@"%@", _fileNames[i]);
+        NSLog(@"%d----%@", i, _fileNames[i]);
         
         NSDictionary *paremeters1 = @{@"jpg":_fileNames[i]};
         
@@ -192,7 +194,7 @@
         }];
     }
     
-    [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, self.projectTitle.text, _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, self.projectTitleTextView.text, _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [MBProgressHUD hideHUD];
         [MBProgressHUD showMessage:@"上传成功"];
         [MBProgressHUD hideHUD];
@@ -201,6 +203,27 @@
         [MBProgressHUD showMessage:@"上传失败"];
         [MBProgressHUD hideHUD];
     }];
+}
+
+/**
+ *  重置
+ */
+- (IBAction)reset
+{
+    self.projectTitleTextView.text = nil;
+    
+    [_selectedImageArray removeAllObjects];
+    _currentMaxBtnTag = 99;
+    _btnLeftConstraint.constant = 15;
+    for (UIView *btn in _bgView.subviews) {
+        if (btn.tag != 0) {
+            [btn removeFromSuperview];
+        }
+        else {
+            btn.hidden = NO;
+        }
+    }
+    [_bgView layoutIfNeeded];
 }
 
 #pragma mark - ActionSheet Delegate
@@ -229,7 +252,8 @@
             HMImagePickerController *pickerVc = [[HMImagePickerController alloc] initWithSelectedAssets:nil];
             pickerVc.maxPickerCount = _selectedBtnTag == 0 ? 3 - _selectedImageArray.count : 1;
             pickerVc.pickerDelegate = self;
-            pickerVc.targetSize = CGSizeMake(120, 120);
+#warning 图片大小是固定死的
+            pickerVc.targetSize = CGSizeMake(400, 400);
             [self presentViewController:pickerVc animated:YES completion:^{
                 
             }];
@@ -334,5 +358,25 @@
         
     }];
 }
+
+#pragma mark - -----------other------------
+/**
+ *  取消第一响应者
+ */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+#pragma mark - --------UITextViewDelegate-------
+
+/**
+ * 占位文字label是否隐藏
+ */
+- (void)textViewDidChange:(UITextView *)textView
+{
+    self.placeholderLabel.hidden = textView.text.length;
+}
+
 
 @end
