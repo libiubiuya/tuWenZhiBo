@@ -66,6 +66,9 @@
     // 加载列表数据
     [self loadData];
     
+    // 设置代理
+    [self setUpTextViewDelegate];
+    
     _currentMaxBtnTag = 99;
 }
 
@@ -375,8 +378,14 @@
  */
 - (void)textViewDidChange:(UITextView *)textView
 {
-    self.placeholderLabel.hidden = textView.text.length;
+    if (textView.text.length > 0) {
+        self.placeholderLabel.hidden = YES;
+    }
 }
 
+- (void)setUpTextViewDelegate
+{
+    self.projectTitleTextView.delegate = self;
+}
 
 @end
