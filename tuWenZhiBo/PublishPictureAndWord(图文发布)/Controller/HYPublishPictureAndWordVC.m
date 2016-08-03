@@ -145,16 +145,12 @@
         
         // 用时间来命名图片名
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyyMMddHHmmssSSS";
+        formatter.dateFormat = @"yyyyMMddHHmmss";
         NSString *str = [formatter stringFromDate:[NSDate date]];
         fileName = [NSString stringWithFormat:@"%@%d.jpg", str, i];
         
-        NSLog(@"%@", fileName);
-        
         [fileNames addObject:fileName];
         _fileNames = fileNames;
-        
-        NSLog(@"%ld", _fileNames.count);
         
     }
     
@@ -177,39 +173,34 @@
             break;
     }
     
-    NSLog(@"%@", _spliceFilename);
-    
-    NSDictionary *paremeters1 = @{@"jpg":_spliceFilename};
-    
-    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php" parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    for (int i = 0; i < _images.count; i++) {
         
-        NSLog(@"%@", _images);
-        NSMutableData *datas;
-        NSData *data;
-        for (int i = 0; i < _images.count; i++) {
+        NSLog(@"%@", _fileNames[i]);
+        
+        NSDictionary *paremeters1 = @{@"jpg":_fileNames[i]};
+        
+        [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload.php" parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             
-            data = UIImageJPEGRepresentation(_images[i], 1.0);
-            [datas appendData:data];
-        }
-        
-        [formData appendPartWithFileData:datas name:@"upfile" fileName:fileName mimeType:@"application/octet-stream"];
-        
-    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        
-        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, self.projectTitle.text, _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传成功"];
-            [MBProgressHUD hideHUD];
+            NSData *data = UIImageJPEGRepresentation(_images[i], 1.0);
+            
+            [formData appendPartWithFileData:data name:@"upfile" fileName:_fileNames[i] mimeType:@"image/jpeg"];
+            
+        } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传失败"];
-            [MBProgressHUD hideHUD];
+            
         }];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+    }
     
+    [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, self.projectTitle.text, _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"上传成功"];
+        [MBProgressHUD hideHUD];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"上传失败"];
+        [MBProgressHUD hideHUD];
+    }];
 }
 
 #pragma mark - ActionSheet Delegate
