@@ -94,18 +94,24 @@
                     
                 });
                 
+                [MBProgressHUD hideHUD];
+                
             } else {
                 
+                [MBProgressHUD hideHUD];
                 // 登录失败
                 [MBProgressHUD showError:@"登录失败"];
-                
+                [MBProgressHUD hideHUD];
             }
             
         }];
         
     } else {
+        
+        [MBProgressHUD hideHUD];
         // 提示用户输入账户或者密码错误
         [MBProgressHUD showError:@"账户或者密码错误"];
+        [MBProgressHUD hideHUD];
     }
 }
 
