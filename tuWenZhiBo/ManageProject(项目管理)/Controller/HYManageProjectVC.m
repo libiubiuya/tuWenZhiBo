@@ -375,4 +375,13 @@
     [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
 }
 
+#pragma mark - -----------other------------
+/**
+ *  取消第一响应者
+ */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
 @end
