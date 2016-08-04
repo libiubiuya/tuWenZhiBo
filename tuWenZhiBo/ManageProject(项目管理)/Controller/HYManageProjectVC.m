@@ -94,6 +94,9 @@
  */
 - (IBAction)projectSelectBtnClick
 {
+    // 取消第一响应者
+    [self.floatViewURLTextField endEditing:YES];
+    
     HYPickerView *pv = [[HYPickerView alloc] init];
     [pv pickerViewAppear];
     [self.view addSubview:pv];
@@ -163,9 +166,9 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
     [manager GET:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=answer1", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //            NSLog(@"%@", responseObject);
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        //            NSLog(@"%@", error);
+        
     }];
 }
 
@@ -179,9 +182,9 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
     [manager GET:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=answer0", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //            NSLog(@"%@", responseObject);
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        //            NSLog(@"%@", error);
+        
     }];
 }
 
@@ -190,6 +193,9 @@
  */
 - (IBAction)uploadFloatViewPicBtnClick
 {
+    // 取消第一响应者
+    [self.floatViewURLTextField endEditing:YES];
+    
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片"
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
