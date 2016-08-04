@@ -73,12 +73,16 @@
  */
 - (IBAction)uploadHeadPic
 {
+    // 取消第一响应者
+    [self.projectTitle endEditing:YES];
+    
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片"
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
                                          destructiveButtonTitle:nil
                                               otherButtonTitles:@"从相册选取", @"拍照", nil];
     [sheet showInView:self.view];
+    
 }
 
 #pragma mark - ActionSheet Delegate
