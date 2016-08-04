@@ -105,8 +105,14 @@
     [self.webView loadRequest:request];
 }
 
+/**
+ *  点击显示下拉列表
+ */
 - (IBAction)projectSelectBtnClick
 {
+    // 加载下拉列表
+    [self loadData];
+    
     HYPickerView *pv = [[HYPickerView alloc] init];
     [pv pickerViewAppear];
     [self.view addSubview:pv];
@@ -120,7 +126,7 @@
 
 #pragma mark - ----------pickerView-----------
 #pragma mark 加载数据
--(void)loadData
+- (void)loadData
 {
     
     // http://ued.ijntv.cn/manage/huodonglist.php
