@@ -48,6 +48,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *projectTitleTextView;
 /** 项目文字占位文字label */
 @property (weak, nonatomic) IBOutlet UITextField *placeholderLabel;
+/** 返回responseObject的数组 */
+@property (nonatomic, assign) int responseObjects;
 
 @property (nonatomic, strong) NSMutableArray *selectedImageArray;
 @property (nonatomic, assign) NSInteger selectedBtnTag;
@@ -187,9 +189,8 @@
             break;
     }
     
+    __block int responseObjects = 0;
     for (int i = 0; i < _images.count; i++) {
-        
-        NSLog(@"%d----%@", i, _fileNames[i]);
         
         NSDictionary *paremeters1 = @{@"jpg":_fileNames[i]};
         
@@ -201,24 +202,26 @@
             
         } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
+            responseObjects++;
+            
+            _responseObjects = responseObjects;
+            
+            if (_responseObjects == _images.count) {
+                
+                [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID,  [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                    [MBProgressHUD hideHUD];
+                    [MBProgressHUD showMessage:@"上传成功"];
+                    [MBProgressHUD hideHUD];
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    [MBProgressHUD hideHUD];
+                    [MBProgressHUD showMessage:@"上传失败"];
+                    [MBProgressHUD hideHUD];
+                }];
+            }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
     }
-    
-    [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID,  [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [MBProgressHUD hideHUD];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [MBProgressHUD showMessage:@"上传成功"];
-            [MBProgressHUD hideHUD];
-        });
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [MBProgressHUD hideHUD];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [MBProgressHUD showMessage:@"上传失败"];
-            [MBProgressHUD hideHUD];
-        });
-    }];
 }
 
 /**
@@ -340,12 +343,13 @@
  *  给三张图片布局
  */
 - (void)imagePickerController:(HMImagePickerController *)picker didFinishSelectedImages:(NSArray<UIImage *> *)images selectedAssets:(NSArray<PHAsset *> *)selectedAssets {
-    _images = images;
+    
     if (_selectedBtnTag != 0) {
         UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
         PHAsset *asset = [selectedAssets firstObject];
         [self imageWithAsset:asset button:selectedBtn];
         [self dismissViewControllerAnimated:YES completion:^{}];
+        _selectedImageArray[_selectedBtnTag - 100] = asset;
         return;
     }
     if (!_selectedImageArray) {
@@ -364,8 +368,10 @@
     }
     _btnLeftConstraint.constant = CGRectGetMaxX(btn.frame) + 10;
     [_bgView layoutIfNeeded];
-    _addPicBtn.hidden = _selectedImageArray.count == 3;
+    _images = images;
+    _addPicBtn.hidden = _images.count == 3;
     [self dismissViewControllerAnimated:YES completion:^{}];
+    
 }
 - (void)imageWithAsset:(PHAsset *)asset button:(UIButton *)btn {
     [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(120, 120) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
