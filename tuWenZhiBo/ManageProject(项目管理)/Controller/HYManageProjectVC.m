@@ -229,6 +229,8 @@
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
     NSDictionary *paremeters1 = @{@"jpg":fileName};
     
     /**
@@ -253,13 +255,15 @@
             [MBProgressHUD hideHUD];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传失败"];
+            [MBProgressHUD showMessage:@"上传失败1"];
             [MBProgressHUD hideHUD];
         }];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
+        NSLog(@"%@", error);
+        
         [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传失败"];
+        [MBProgressHUD showMessage:@"上传失败2"];
         [MBProgressHUD hideHUD];
     }];
 }
