@@ -108,6 +108,9 @@
  */
 - (IBAction)projectSelectBtnClick
 {
+    // 取消第一响应者
+    [self.projectTitleTextView endEditing:YES];
+    
     HYPickerView *pv = [[HYPickerView alloc] init];
     [pv pickerViewAppear];
     [self.view addSubview:pv];
@@ -121,6 +124,9 @@
 
 - (IBAction)addPicBtnClick:(UIButton *)button
 {
+    // 取消第一响应者
+    [self.projectTitleTextView endEditing:YES];
+    
     _selectedBtnTag = button.tag;
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片"
                                                        delegate:self
