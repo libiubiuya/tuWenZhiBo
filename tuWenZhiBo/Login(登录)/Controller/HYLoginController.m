@@ -60,9 +60,6 @@
     
     if ([self.userNameTextField.text isEqualToString:@"无线济南"] && [self.passwordTextField.text isEqualToString:@"newmedia"]) {
         
-        // 隐藏蒙版
-        [MBProgressHUD hideHUD];
-        
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/login.php?username=%%E6%%97%%A0%%E7%%BA%%BF%%E6%%B5%%8E%%E5%%8D%%97&password=newmedia"]];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
@@ -79,29 +76,31 @@
             
             if ([userInfo.state isEqualToString:@"success"]) {
                 
-                [MBProgressHUD hideHUD];
-                // 登录成功
-                [MBProgressHUD showSuccess:@"登录成功"];
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     
-                    // 进入到主界面
-                    HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
+                    [MBProgressHUD hideHUD];
+                    // 登录成功
+                    [MBProgressHUD showSuccess:@"登录成功"];
                     
-                    [HYUserManager sharedUserInfoManager].userInfo = userInfo;
-                    
-                    [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
-                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        
+                        // 进入到主界面
+                        HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
+                        
+                        [HYUserManager sharedUserInfoManager].userInfo = userInfo;
+                        
+                        [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
+                        
+                    });
                 });
                 
-                [MBProgressHUD hideHUD];
                 
             } else {
                 
                 [MBProgressHUD hideHUD];
                 // 登录失败
                 [MBProgressHUD showError:@"登录失败"];
-                [MBProgressHUD hideHUD];
+                
             }
             
         }];
@@ -111,7 +110,7 @@
         [MBProgressHUD hideHUD];
         // 提示用户输入账户或者密码错误
         [MBProgressHUD showError:@"账户或者密码错误"];
-        [MBProgressHUD hideHUD];
+        
     }
 }
 
