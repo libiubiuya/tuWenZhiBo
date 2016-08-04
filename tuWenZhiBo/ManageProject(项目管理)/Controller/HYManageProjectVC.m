@@ -210,7 +210,7 @@
 - (IBAction)publishBtnClick
 {
     //用post上传文件
-    [MBProgressHUD showMessage:@"正在上传ing..."];
+    [MBProgressHUD showMessage:@"正在上传"];
     
     // 用时间来命名图片名
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

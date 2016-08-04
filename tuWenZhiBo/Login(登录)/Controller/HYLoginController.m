@@ -56,7 +56,7 @@
  */
 - (IBAction)loginClick
 {
-    [MBProgressHUD showMessage:@"正在登录ing..."];
+    [MBProgressHUD showMessage:@"正在登录"];
     
     if ([self.userNameTextField.text isEqualToString:@"无线济南"] && [self.passwordTextField.text isEqualToString:@"newmedia"]) {
         

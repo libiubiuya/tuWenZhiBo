@@ -111,6 +111,9 @@
     // 取消第一响应者
     [self.projectTitleTextView endEditing:YES];
     
+    // 加载列表数据
+    [self loadData];
+    
     HYPickerView *pv = [[HYPickerView alloc] init];
     [pv pickerViewAppear];
     [self.view addSubview:pv];
@@ -142,7 +145,7 @@
 - (IBAction)publishBtnClick
 {
     //用post上传文件
-    [MBProgressHUD showMessage:@"正在上传ing..."];
+    [MBProgressHUD showMessage:@"正在上传"];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
@@ -205,12 +208,16 @@
     
     [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID,  [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传成功"];
-        [MBProgressHUD hideHUD];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [MBProgressHUD showMessage:@"上传成功"];
+            [MBProgressHUD hideHUD];
+        });
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传失败"];
-        [MBProgressHUD hideHUD];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [MBProgressHUD showMessage:@"上传失败"];
+            [MBProgressHUD hideHUD];
+        });
     }];
 }
 
@@ -281,9 +288,8 @@
 
 #pragma mark - ----------pickerView-----------
 #pragma mark 加载数据
--(void)loadData
+- (void)loadData
 {
-    
     // http://ued.ijntv.cn/manage/huodonglist.php
     // 项目列表url
     
