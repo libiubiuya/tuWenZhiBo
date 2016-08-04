@@ -231,35 +231,31 @@
     
     NSDictionary *paremeters1 = @{@"jpg":fileName};
     
-    NSDictionary *paremeters2 = @{@"huodongid":[HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, @"set":@"f", @"jpg":fileName, @"url":self.floatViewURLTextField.text};
-    
-    
     /**
      *  http://bbs.ijntv.cn/mobilejinan/graphic/images/你的文件名
      *  这是图片上传完成后在浏览器查看是否存在的路径
      */
     
     // http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php
-    // http://ued.ijntv.cn/manage/set.php
+    
     [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php" parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         // 把图片转换成NSData类型的数据
         NSData *data = UIImageJPEGRepresentation(self.image, 1);
         
-        [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"application/octet-stream"];
+        [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"image/jpeg"];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传成功"];
-        
-        [manager POST:@"http://ued.ijntv.cn/manage/set.php" parameters:paremeters2 progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"请求成功---%@",responseObject);
+        [manager GET:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=f&jpg=%@&url=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, fileName, self.floatViewURLTextField.text] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传成功"];
+            [MBProgressHUD hideHUD];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"请求失败--%@",error);
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传失败"];
+            [MBProgressHUD hideHUD];
         }];
-        
-        [MBProgressHUD hideHUD];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         [MBProgressHUD hideHUD];
@@ -333,7 +329,7 @@
 
 #pragma mark - ----------pickerView-----------
 #pragma mark 加载数据
--(void)loadData
+- (void)loadData
 {
     
     // http://ued.ijntv.cn/manage/huodonglist.php
