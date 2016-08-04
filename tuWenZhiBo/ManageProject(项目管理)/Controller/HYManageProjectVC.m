@@ -63,6 +63,11 @@
     
     // 设置项目选择label
     self.projectSelectLabel.text = [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectTitle;
+    
+    // 改变直播状态开关和用户评论框开关状态
+    [self changeLivingStateSwitchAndUserCommentSwitch];
+    
+    NSLog(@"直播%@-----评论%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectState, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectAnswer);
 }
 
 /**
@@ -115,11 +120,11 @@
 {
     if (self.livingStateSwitch.on == NO) {
         [self.userCommentSwitch setOn:NO animated:YES];
-        
+        [self livingStateSwitchClickOFF];
         [self userCommentSwitchClickOFF];
     } else {
         [self.userCommentSwitch setOn:YES animated:YES];
-        
+        [self livingStateSwitchClickON];
         [self userCommentSwitchClickON];
     }
 }
@@ -143,6 +148,16 @@
 {
     [self.userCommentSwitch setOn:YES animated:YES];
     
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    [manager GET:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=state1", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+    
     [self userCommentSwitchClickON];
 }
 
@@ -152,6 +167,16 @@
 - (void)livingStateSwitchClickOFF
 {
     [self.userCommentSwitch setOn:NO animated:YES];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    [manager GET:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=state0", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
     
     [self userCommentSwitchClickOFF];
 }
@@ -186,6 +211,26 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
+}
+
+/**
+ *  改变直播状态开关和用户评论框开关状态
+ */
+- (void)changeLivingStateSwitchAndUserCommentSwitch
+{
+    // 图文直播状态
+    if ([[HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectState isEqualToString:@"0"]) {
+        [self.livingStateSwitch setOn:NO animated:YES];
+    } else {
+        [self.livingStateSwitch setOn:YES animated:YES];
+    }
+    
+    // 用户评论框状态
+    if ([[HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectAnswer isEqualToString:@"0"]) {
+        [self.userCommentSwitch setOn:NO animated:YES];
+    } else {
+        [self.userCommentSwitch setOn:YES animated:YES];
+    }
 }
 
 /**
@@ -377,6 +422,9 @@
 {
     HYPublishPicAndWordItem *item = _projectItem[row];
     self.projectSelectLabel.text = item.projectTitle;
+    
+    // 改变直播状态开关和用户评论框开关状态
+    [self changeLivingStateSwitchAndUserCommentSwitch];
     
     [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
 }
