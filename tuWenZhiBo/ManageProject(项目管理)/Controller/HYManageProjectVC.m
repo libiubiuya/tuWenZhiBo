@@ -261,15 +261,6 @@
     NSString *str = [formatter stringFromDate:[NSDate date]];
     NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
     
-    NSLog(@"filename:%@",fileName);
-    
-    // 判断URL中是否包含http://
-    if ([self.floatViewURLTextField.text hasPrefix:@"http://"]) {
-        return;
-    } else {
-        self.floatViewURLTextField.text = [NSString stringWithFormat:@"http://%@", self.floatViewURLTextField.text];
-    }
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
