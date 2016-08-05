@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYManageCommentVC">
             <connections>
-                <outlet property="contentView" destination="3ku-CL-l41" id="IGx-p1-JDf"/>
+                <outlet property="contentHtmlView" destination="3ku-CL-l41" id="NIh-58-LEf"/>
                 <outlet property="projectSelectBtn" destination="Idd-Vf-dRc" id="wAc-Lq-Miu"/>
                 <outlet property="projectSelectLabel" destination="UMh-O9-NWW" id="fgl-13-2Vm"/>
                 <outlet property="view" destination="iN0-l3-epB" id="4iz-ji-mgX"/>

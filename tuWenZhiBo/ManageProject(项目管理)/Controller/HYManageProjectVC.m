@@ -66,8 +66,6 @@
     
     // 改变直播状态开关和用户评论框开关状态
     [self changeLivingStateSwitchAndUserCommentSwitch];
-    
-    NSLog(@"直播%@-----评论%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectState, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectAnswer);
 }
 
 /**
@@ -423,10 +421,10 @@
     HYPublishPicAndWordItem *item = _projectItem[row];
     self.projectSelectLabel.text = item.projectTitle;
     
+    [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
+    
     // 改变直播状态开关和用户评论框开关状态
     [self changeLivingStateSwitchAndUserCommentSwitch];
-    
-    [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
 }
 
 #pragma mark - -----------other------------

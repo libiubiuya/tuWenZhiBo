@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYPreviewProjectVC">
             <connections>
-                <outlet property="contentView" destination="AHh-BD-H2q" id="8qa-ec-FiC"/>
+                <outlet property="contentHtmlView" destination="AHh-BD-H2q" id="yXF-fb-miu"/>
                 <outlet property="projectSelectBtn" destination="8cW-5s-vcC" id="Hs4-TS-vU3"/>
                 <outlet property="projectSelectLabel" destination="PhK-DQ-SZ5" id="U7h-IY-eqF"/>
                 <outlet property="view" destination="iN0-l3-epB" id="upN-aZ-6Bn"/>

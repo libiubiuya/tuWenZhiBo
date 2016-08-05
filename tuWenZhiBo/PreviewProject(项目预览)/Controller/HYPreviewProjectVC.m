@@ -22,7 +22,7 @@
 /** 网页 */
 @property (weak, nonatomic) WKWebView *webView;
 /** 内容view */
-@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIView *contentHtmlView;
 /** 项目选择按钮 */
 @property (weak, nonatomic) IBOutlet UIButton *projectSelectBtn;
 /** 项目预览item */
@@ -41,6 +41,9 @@
     
     // 设置导航条
     [self setUpNavigationContent];
+    
+    // 加载网页
+    [self setUpLoadHtml];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -53,8 +56,7 @@
     // 设置项目选择label
     self.projectSelectLabel.text = [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectTitle;
     
-    // 加载网页
-    [self setUpLoadHtml];
+    [self.webView reload];
 }
 
 /**
@@ -64,7 +66,7 @@
 {
     [super viewDidLayoutSubviews];
     
-    _webView.frame = self.contentView.bounds;
+    _webView.frame = self.contentHtmlView.bounds;
 }
 
 /**
@@ -96,8 +98,8 @@
 - (void)setUpLoadHtml
 {
     WKWebView *webView = [[WKWebView alloc] init];
-    webView.scrollView.contentInset = UIEdgeInsetsMake(HYStatesBarH + HYNavH + HYProjectSelectH + HYMargin, 0, HYTabBarH, 0);
-    [self.contentView addSubview:webView];
+    webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.contentHtmlView addSubview:webView];
     _webView = webView;
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/mobileview/programview.php?huodongid=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
@@ -173,7 +175,7 @@
     
     [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
     
-    [self setUpLoadHtml];
+    [self.webView reload];
 }
 
 @end
