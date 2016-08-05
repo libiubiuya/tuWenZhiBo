@@ -43,7 +43,7 @@
     [self setUpNavigationContent];
     
     // 加载网页
-    [self setUpLoadHtml];
+    [self setUpHtml];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -56,7 +56,7 @@
     // 设置项目选择label
     self.projectSelectLabel.text = [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectTitle;
     
-    [self.webView reload];
+    [self loadHtml];
 }
 
 /**
@@ -92,17 +92,26 @@
     [self.navigationController pushViewController:user animated:YES];
 }
 
+
+// http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@
 /**
  *  加载网页
  */
-- (void)setUpLoadHtml
+- (void)setUpHtml
 {
     WKWebView *webView = [[WKWebView alloc] init];
     webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.contentHtmlView addSubview:webView];
     _webView = webView;
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];;
+    [self loadHtml];
+}
+
+/**
+ *  加载网页数据
+ */
+- (void)loadHtml
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
 }
@@ -174,7 +183,7 @@
     
     [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
     
-    [self.webView reload];
+    [self loadHtml];
 }
 
 @end
