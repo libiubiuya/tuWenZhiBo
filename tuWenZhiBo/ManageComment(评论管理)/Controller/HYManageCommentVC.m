@@ -17,7 +17,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <MJExtension/MJExtension.h>
 
-@interface HYManageCommentVC () <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface HYManageCommentVC () <UIPickerViewDelegate, UIPickerViewDataSource, WKUIDelegate>
 
 /** 网页 */
 @property (weak, nonatomic) WKWebView *webView;
@@ -104,6 +104,9 @@
     [self.contentHtmlView addSubview:webView];
     _webView = webView;
     [self loadHtml];
+    
+    // 与webview UI交互代理
+    self.webView.UIDelegate = self;
 }
 
 /**
@@ -114,6 +117,26 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
+}
+
+#pragma mark - iOS给js传数据
+// JS端调用confirm函数时，会触发此方法
+// 通过message可以拿到JS端所传的数据
+// 在iOS端显示原生alert得到YES/NO后
+// 通过completionHandler回调给JS端
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
+    NSLog(@"%s", __FUNCTION__);
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"⚠️" message:@"确定将此记录删除？" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(YES);
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(NO);
+    }]];
+    [self presentViewController:alert animated:YES completion:NULL];
+    
+    NSLog(@"%@", message);
 }
 
 /**
