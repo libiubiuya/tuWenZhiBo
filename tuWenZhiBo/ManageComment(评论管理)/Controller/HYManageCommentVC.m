@@ -170,6 +170,19 @@
 }
 
 #pragma mark - iOS给js传数据
+// 在JS端调用alert函数时，会触发此代理方法。
+// JS端调用alert时所传的数据可以通过message拿到
+// 在原生得到结果后，需要回调JS，是通过completionHandler回调
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+    NSLog(@"%s", __FUNCTION__);
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"审核" message:@"审核成功" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler();
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:NULL];
+    NSLog(@"%@", message);
+}
 
 // JS端调用confirm函数时，会触发此方法
 // 通过message可以拿到JS端所传的数据
