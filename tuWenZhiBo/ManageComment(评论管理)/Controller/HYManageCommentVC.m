@@ -21,6 +21,8 @@
 
 /** 网页 */
 @property (weak, nonatomic) WKWebView *webView;
+/** 进度条 */
+@property (weak, nonatomic) UIProgressView *progressView;
 /** 内容view */
 @property (weak, nonatomic) IBOutlet UIView *contentHtmlView;
 /** 项目选择按钮 */
@@ -42,8 +44,14 @@
     // 设置导航条
     [self setUpNavigationContent];
     
+    // 添加进度条
+    [self setUpProgressView];
+    
     // 加载网页
     [self setUpHtml];
+    
+    // 添加监听
+    [self setUpObserver];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -92,7 +100,49 @@
     [self.navigationController pushViewController:user animated:YES];
 }
 
+#pragma mark - 进度条相关
+/**
+ *  添加进度条
+ */
+- (void)setUpProgressView
+{
+    UIProgressView *progressView = [[UIProgressView alloc] init];
+    progressView.frame = CGRectMake(0, 0, HYScreenW, 1);
+    progressView.progressTintColor = [UIColor blueColor];
+    _progressView = progressView;
+    [self.contentHtmlView addSubview:progressView];
+}
 
+/**
+ *  添加监听
+ */
+- (void)setUpObserver
+{
+    // 进度条
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+/**
+ *  监听
+ */
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    // 进度条
+    self.progressView.progress = self.webView.estimatedProgress;
+    if (self.progressView.progress == 1.0) {
+        self.progressView.hidden = YES;
+    }
+}
+
+/**
+ *  移除监听
+ */
+- (void)dealloc
+{
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+}
+
+#pragma mark - 加载网页
 // http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@
 /**
  *  加载网页
@@ -120,6 +170,7 @@
 }
 
 #pragma mark - iOS给js传数据
+
 // JS端调用confirm函数时，会触发此方法
 // 通过message可以拿到JS端所传的数据
 // 在iOS端显示原生alert得到YES/NO后
@@ -139,6 +190,7 @@
     NSLog(@"%@", message);
 }
 
+#pragma mark - 点击显示下拉列表
 /**
  *  点击显示下拉列表
  */
