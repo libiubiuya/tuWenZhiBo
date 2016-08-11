@@ -133,11 +133,11 @@
     [self.projectTitleTextView endEditing:YES];
     
     _selectedBtnTag = button.tag;
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片"
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片或视频"
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
                                          destructiveButtonTitle:nil
-                                              otherButtonTitles:@"从相册选取", @"拍照", nil];
+                                              otherButtonTitles:@"拍照", @"选择照片", @"选择视频", nil];
     [sheet showInView:self.view];
 }
 
@@ -150,6 +150,9 @@
     [MBProgressHUD showMessage:@"正在上传"];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    //设置请求超时时间：默认为60秒。
+    manager.requestSerializer.timeoutInterval = 10;
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -255,11 +258,11 @@
  */
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 2) {
+    if (buttonIndex == 3) {
         return;
     }
     
-    if (buttonIndex == 0) {
+    if (buttonIndex == 1) {
         ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
         
         if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
@@ -277,7 +280,7 @@
                 
             }];
         }
-    }else if (buttonIndex == 1) {
+    }else if (buttonIndex == 0) {
         AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
         if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied)
         {
@@ -286,6 +289,8 @@
             [alertView show];
             return;
         }
+    }else if (buttonIndex == 2) {
+        
     }
 }
 
