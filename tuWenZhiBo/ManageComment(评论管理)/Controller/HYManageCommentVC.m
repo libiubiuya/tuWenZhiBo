@@ -178,14 +178,15 @@
 // JS端调用alert时所传的数据可以通过message拿到
 // 在原生得到结果后，需要回调JS，是通过completionHandler回调
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
-    NSLog(@"%s", __FUNCTION__);
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"审核" message:@"审核成功" preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         completionHandler();
     }]];
     
     [self presentViewController:alert animated:YES completion:NULL];
-    NSLog(@"%@", message);
+    
+    [self loadHtml];
 }
 
 // JS端调用confirm函数时，会触发此方法
@@ -193,7 +194,6 @@
 // 在iOS端显示原生alert得到YES/NO后
 // 通过completionHandler回调给JS端
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
-    NSLog(@"%s", __FUNCTION__);
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"⚠️" message:@"确定将此记录删除？" preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -204,7 +204,7 @@
     }]];
     [self presentViewController:alert animated:YES completion:NULL];
     
-    NSLog(@"%@", message);
+    [self loadHtml];
 }
 
 #pragma mark - 点击显示下拉列表
