@@ -15,6 +15,8 @@
 #import "HYUserManager.h"
 #import "HYUserInfo.h"
 
+#import "TZImagePickerController.h"
+
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
@@ -23,7 +25,7 @@
 #import <MJExtension/MJExtension.h>
 #import <HMImagePickerController.h>
 
-@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, HMImagePickerControllerDelegate>
+@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, HMImagePickerControllerDelegate, TZImagePickerControllerDelegate>
 /** 项目文字功能view */
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 /** 添加图片按钮左边约束 */
@@ -54,6 +56,9 @@
 @property (nonatomic, strong) NSMutableArray *selectedImageArray;
 @property (nonatomic, assign) NSInteger selectedBtnTag;
 @property (nonatomic, assign) NSInteger currentMaxBtnTag;
+
+@property (nonatomic, strong) UIImagePickerController *imagePickerVc;
+@property (nonatomic, strong) UICollectionView *collectionView;
 
 @end
 
@@ -137,7 +142,7 @@
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
                                          destructiveButtonTitle:nil
-                                              otherButtonTitles:@"拍照", @"选择照片", @"选择视频", nil];
+                                              otherButtonTitles:@"拍照", @"去相册选择", nil];
     [sheet showInView:self.view];
 }
 
@@ -258,40 +263,131 @@
  */
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 3) {
-        return;
+//    if (buttonIndex == 3) {
+//        return;
+//    }
+//    
+//    if (buttonIndex == 1) {
+//        ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+//        
+//        if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+//            //无权限
+//            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权访问相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
+//            [alertView show];
+//            return;
+//        } else {
+//            HMImagePickerController *pickerVc = [[HMImagePickerController alloc] initWithSelectedAssets:nil];
+//            pickerVc.maxPickerCount = _selectedBtnTag == 0 ? 3 - _selectedImageArray.count : 1;
+//            pickerVc.pickerDelegate = self;
+//#warning 图片大小是固定死的
+//            pickerVc.targetSize = CGSizeMake(400, 400);
+//            [self presentViewController:pickerVc animated:YES completion:^{
+//                
+//            }];
+//        }
+//    }else if (buttonIndex == 0) {
+//        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+//        if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied)
+//        {
+//            //无权限
+//            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权使用摄像头" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
+//            [alertView show];
+//            return;
+//        }
+//    }else if (buttonIndex == 2) {
+//        
+//    }
+    
+    if (buttonIndex == 0) { // take photo / 去拍照
+        [self takePhoto];
+    } else if (buttonIndex == 1) { // 去相册选择
+        [self pushImagePickerController];
     }
     
-    if (buttonIndex == 1) {
-        ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
-        
-        if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
-            //无权限
-            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权访问相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
-            [alertView show];
-            return;
+}
+
+#pragma mark - UIImagePickerController
+
+- (UIImagePickerController *)imagePickerVc {
+    if (_imagePickerVc == nil) {
+        _imagePickerVc = [[UIImagePickerController alloc] init];
+        _imagePickerVc.delegate = self;
+        // set appearance / 改变相册选择页的导航栏外观
+        _imagePickerVc.navigationBar.barTintColor = self.navigationController.navigationBar.barTintColor;
+        _imagePickerVc.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
+        UIBarButtonItem *tzBarItem, *BarItem;
+        if (iOS9Later) {
+            tzBarItem = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[TZImagePickerController class]]];
+            BarItem = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIImagePickerController class]]];
         } else {
-            HMImagePickerController *pickerVc = [[HMImagePickerController alloc] initWithSelectedAssets:nil];
-            pickerVc.maxPickerCount = _selectedBtnTag == 0 ? 3 - _selectedImageArray.count : 1;
-            pickerVc.pickerDelegate = self;
-#warning 图片大小是固定死的
-            pickerVc.targetSize = CGSizeMake(400, 400);
-            [self presentViewController:pickerVc animated:YES completion:^{
-                
-            }];
+            tzBarItem = [UIBarButtonItem appearanceWhenContainedIn:[TZImagePickerController class], nil];
+            BarItem = [UIBarButtonItem appearanceWhenContainedIn:[UIImagePickerController class], nil];
         }
-    }else if (buttonIndex == 0) {
-        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-        if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied)
-        {
-            //无权限
-            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权使用摄像头" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
-            [alertView show];
+        NSDictionary *titleTextAttributes = [tzBarItem titleTextAttributesForState:UIControlStateNormal];
+        [BarItem setTitleTextAttributes:titleTextAttributes forState:UIControlStateNormal];
+    }
+    return _imagePickerVc;
+}
+
+- (void)takePhoto {
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS8Later) {
+        // 无权限 做一个友好的提示
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+        [alert show];
+    } else { // 调用相机
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+            self.imagePickerVc.sourceType = sourceType;
+            if(iOS8Later) {
+                _imagePickerVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+            }
+            [self presentViewController:_imagePickerVc animated:YES completion:nil];
+        } else {
+            NSLog(@"模拟器中无法打开照相机,请在真机中使用");
+        }
+    }
+}
+
+#pragma mark - TZImagePickerController
+
+- (void)pushImagePickerController {
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:3 delegate:self];
+    
+    // You can get the photos by block, the same as by delegate.
+    // 你可以通过block或者代理，来得到用户选择的照片.
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        
+        if (_selectedBtnTag != 0) {
+            UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
+            PHAsset *asset = [assets firstObject];
+            [self imageWithAsset:asset button:selectedBtn];
+            [self dismissViewControllerAnimated:YES completion:^{}];
+            _selectedImageArray[_selectedBtnTag - 100] = asset;
             return;
         }
-    }else if (buttonIndex == 2) {
+        if (!_selectedImageArray) {
+            _selectedImageArray = [NSMutableArray array];
+        }
+        [_selectedImageArray addObjectsFromArray:photos];
+        CGRect startFrame = _addPicBtn.frame;
+        UIButton *btn = nil;
+        for (int i = 0; i < photos.count; i++) {
+            btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            btn.tag = ++_currentMaxBtnTag;
+            [btn addTarget:self action:@selector(addPicBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [_bgView addSubview:btn];
+            btn.frame = CGRectMake(startFrame.origin.x + i * startFrame.size.width + i * 10, startFrame.origin.y, startFrame.size.width, startFrame.size.height);
+            [self imageWithAsset:assets[i] button:btn];
+        }
+        _btnLeftConstraint.constant = CGRectGetMaxX(btn.frame) + 10;
+        [_bgView layoutIfNeeded];
+        _images = photos;
+        _addPicBtn.hidden = _images.count == 3;
         
-    }
+    }];
+    
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
 #pragma mark - ----------pickerView-----------
