@@ -58,7 +58,6 @@
 @property (nonatomic, assign) NSInteger currentMaxBtnTag;
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
-@property (nonatomic, strong) UICollectionView *collectionView;
 
 @end
 
@@ -142,7 +141,7 @@
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
                                          destructiveButtonTitle:nil
-                                              otherButtonTitles:@"拍照", @"去相册选择", nil];
+                                              otherButtonTitles:@"拍照", @"选择照片", @"选择视频", nil];
     [sheet showInView:self.view];
 }
 
@@ -198,13 +197,13 @@
     }
     
     __block int responseObjects = 0;
-    for (int i = 0; i < _images.count; i++) {
+    for (int i = 0; i < _selectedImageArray.count; i++) {
         
         NSDictionary *paremeters1 = @{@"jpg":_fileNames[i]};
         
         [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload.php" parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             
-            NSData *data = UIImageJPEGRepresentation(_images[i], 1.0);
+            NSData *data = UIImageJPEGRepresentation(_selectedImageArray[i], 1.0);
             
             [formData appendPartWithFileData:data name:@"upfile" fileName:_fileNames[i] mimeType:@"image/jpeg"];
             
@@ -214,7 +213,7 @@
             
             _responseObjects = responseObjects;
             
-            if (_responseObjects == _images.count) {
+            if (_responseObjects == _selectedImageArray.count) {
                 
                 [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID,  [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     [MBProgressHUD hideHUD];
@@ -253,7 +252,7 @@
     [_bgView layoutIfNeeded];
 }
 
-#pragma mark - ActionSheet Delegate
+#pragma mark - ------------ActionSheet------------
 
 /**
  *  sheet的各个按钮
@@ -263,52 +262,19 @@
  */
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-//    if (buttonIndex == 3) {
-//        return;
-//    }
-//    
-//    if (buttonIndex == 1) {
-//        ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
-//        
-//        if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
-//            //无权限
-//            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权访问相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
-//            [alertView show];
-//            return;
-//        } else {
-//            HMImagePickerController *pickerVc = [[HMImagePickerController alloc] initWithSelectedAssets:nil];
-//            pickerVc.maxPickerCount = _selectedBtnTag == 0 ? 3 - _selectedImageArray.count : 1;
-//            pickerVc.pickerDelegate = self;
-//#warning 图片大小是固定死的
-//            pickerVc.targetSize = CGSizeMake(400, 400);
-//            [self presentViewController:pickerVc animated:YES completion:^{
-//                
-//            }];
-//        }
-//    }else if (buttonIndex == 0) {
-//        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-//        if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied)
-//        {
-//            //无权限
-//            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"未获得授权使用摄像头" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
-//            [alertView show];
-//            return;
-//        }
-//    }else if (buttonIndex == 2) {
-//        
-//    }
-    
     if (buttonIndex == 0) { // take photo / 去拍照
         [self takePhoto];
-    } else if (buttonIndex == 1) { // 去相册选择
+    } else if (buttonIndex == 1) { // 选择照片
         [self pushImagePickerController];
+    } else if (buttonIndex == 2) {
+        [self pushVideoPickerController];
     }
-    
 }
 
-#pragma mark - UIImagePickerController
+#pragma mark UIImagePickerController
 
-- (UIImagePickerController *)imagePickerVc {
+- (UIImagePickerController *)imagePickerVc
+{
     if (_imagePickerVc == nil) {
         _imagePickerVc = [[UIImagePickerController alloc] init];
         _imagePickerVc.delegate = self;
@@ -329,18 +295,23 @@
     return _imagePickerVc;
 }
 
-- (void)takePhoto {
+#pragma mark takePhoto
+/**
+ *  拍照
+ */
+- (void)takePhoto
+{
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS8Later) {
         // 无权限 做一个友好的提示
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
         [alert show];
     } else { // 调用相机
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        UIImagePickerControllerSourceType sourceTypeCamera = UIImagePickerControllerSourceTypeCamera;
         if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
-            self.imagePickerVc.sourceType = sourceType;
+            self.imagePickerVc.sourceType = sourceTypeCamera;
             if(iOS8Later) {
-                _imagePickerVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+                _imagePickerVc.modalPresentationStyle = UIModalPresentationCustom;
             }
             [self presentViewController:_imagePickerVc animated:YES completion:nil];
         } else {
@@ -349,21 +320,24 @@
     }
 }
 
-#pragma mark - TZImagePickerController
+#pragma mark TZPickerController
 
+/**
+ *  选择照片
+ */
 - (void)pushImagePickerController {
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:3 delegate:self];
+    imagePickerVc.allowPickingVideo = NO;
+    imagePickerVc.allowTakePicture = NO;
     
-    // You can get the photos by block, the same as by delegate.
-    // 你可以通过block或者代理，来得到用户选择的照片.
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         
-        if (_selectedBtnTag != 0) {
+        if (_selectedImageArray != 0) {
             UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
             PHAsset *asset = [assets firstObject];
             [self imageWithAsset:asset button:selectedBtn];
             [self dismissViewControllerAnimated:YES completion:^{}];
-            _selectedImageArray[_selectedBtnTag - 100] = asset;
+            _selectedImageArray[_currentMaxBtnTag - 100] = asset;
             return;
         }
         if (!_selectedImageArray) {
@@ -372,7 +346,8 @@
         [_selectedImageArray addObjectsFromArray:photos];
         CGRect startFrame = _addPicBtn.frame;
         UIButton *btn = nil;
-        for (int i = 0; i < photos.count; i++) {
+        for (int i = 0; i < photos.count; i++)
+        {
             btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.tag = ++_currentMaxBtnTag;
             [btn addTarget:self action:@selector(addPicBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -383,8 +358,30 @@
         _btnLeftConstraint.constant = CGRectGetMaxX(btn.frame) + 10;
         [_bgView layoutIfNeeded];
         _images = photos;
-        _addPicBtn.hidden = _images.count == 3;
         
+        if (_addPicBtn.x >= HYMargin + (HYMargin + _addPicBtn.width) * 3) {
+            _addPicBtn.hidden = YES;
+        }
+        
+    }];
+    
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
+}
+
+/**
+ *  选择视频
+ */
+- (void)pushVideoPickerController
+{
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
+    imagePickerVc.allowPickingImage = NO;
+    imagePickerVc.allowTakePicture = NO;
+    imagePickerVc.allowPickingOriginalPhoto = NO;
+    
+    [imagePickerVc setDidFinishPickingVideoHandle:^(UIImage *coverImage,id asset) {
+        
+        [_addPicBtn setBackgroundImage:coverImage forState:UIControlStateNormal];
+        [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-6"] forState:UIControlStateNormal];
     }];
     
     [self presentViewController:imagePickerVc animated:YES completion:nil];
@@ -443,37 +440,37 @@
 /**
  *  给三张图片布局
  */
-- (void)imagePickerController:(HMImagePickerController *)picker didFinishSelectedImages:(NSArray<UIImage *> *)images selectedAssets:(NSArray<PHAsset *> *)selectedAssets {
-    
-    if (_selectedBtnTag != 0) {
-        UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
-        PHAsset *asset = [selectedAssets firstObject];
-        [self imageWithAsset:asset button:selectedBtn];
-        [self dismissViewControllerAnimated:YES completion:^{}];
-        _selectedImageArray[_selectedBtnTag - 100] = asset;
-        return;
-    }
-    if (!_selectedImageArray) {
-        _selectedImageArray = [NSMutableArray array];
-    }
-    [_selectedImageArray addObjectsFromArray:selectedAssets];
-    CGRect startFrame = _addPicBtn.frame;
-    UIButton *btn = nil;
-    for (int i = 0; i < selectedAssets.count; i++) {
-        btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.tag = ++_currentMaxBtnTag;
-        [btn addTarget:self action:@selector(addPicBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [_bgView addSubview:btn];
-        btn.frame = CGRectMake(startFrame.origin.x + i * startFrame.size.width + i * 10, startFrame.origin.y, startFrame.size.width, startFrame.size.height);
-        [self imageWithAsset:selectedAssets[i] button:btn];
-    }
-    _btnLeftConstraint.constant = CGRectGetMaxX(btn.frame) + 10;
-    [_bgView layoutIfNeeded];
-    _images = images;
-    _addPicBtn.hidden = _images.count == 3;
-    [self dismissViewControllerAnimated:YES completion:^{}];
-    
-}
+//- (void)imagePickerController:(HMImagePickerController *)picker didFinishSelectedImages:(NSArray<UIImage *> *)images selectedAssets:(NSArray<PHAsset *> *)selectedAssets {
+//    
+//    if (_selectedBtnTag != 0) {
+//        UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
+//        PHAsset *asset = [selectedAssets firstObject];
+//        [self imageWithAsset:asset button:selectedBtn];
+//        [self dismissViewControllerAnimated:YES completion:^{}];
+//        _selectedImageArray[_selectedBtnTag - 100] = asset;
+//        return;
+//    }
+//    if (!_selectedImageArray) {
+//        _selectedImageArray = [NSMutableArray array];
+//    }
+//    [_selectedImageArray addObjectsFromArray:selectedAssets];
+//    CGRect startFrame = _addPicBtn.frame;
+//    UIButton *btn = nil;
+//    for (int i = 0; i < selectedAssets.count; i++) {
+//        btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        btn.tag = ++_currentMaxBtnTag;
+//        [btn addTarget:self action:@selector(addPicBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [_bgView addSubview:btn];
+//        btn.frame = CGRectMake(startFrame.origin.x + i * startFrame.size.width + i * 10, startFrame.origin.y, startFrame.size.width, startFrame.size.height);
+//        [self imageWithAsset:selectedAssets[i] button:btn];
+//    }
+//    _btnLeftConstraint.constant = CGRectGetMaxX(btn.frame) + 10;
+//    [_bgView layoutIfNeeded];
+//    _images = images;
+//    _addPicBtn.hidden = _images.count == 3;
+//    [self dismissViewControllerAnimated:YES completion:^{}];
+//    
+//}
 - (void)imageWithAsset:(PHAsset *)asset button:(UIButton *)btn {
     [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(120, 120) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         [btn setImage:result forState:UIControlStateNormal];
