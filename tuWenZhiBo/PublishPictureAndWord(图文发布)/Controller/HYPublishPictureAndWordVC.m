@@ -239,8 +239,11 @@
     self.projectTitleTextView.text = nil;
     
     [_selectedImageArray removeAllObjects];
+    
+    [_addPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
+    [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-1"] forState:UIControlStateNormal];
     _currentMaxBtnTag = 99;
-    _btnLeftConstraint.constant = 15;
+    _btnLeftConstraint.constant = HYMargin;
     for (UIView *btn in _bgView.subviews) {
         if (btn.tag != 0) {
             [btn removeFromSuperview];
@@ -368,6 +371,13 @@
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
+- (void)imageWithAsset:(PHAsset *)asset button:(UIButton *)btn {
+    [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(120, 120) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [btn setImage:result forState:UIControlStateNormal];
+        
+    }];
+}
+
 /**
  *  选择视频
  */
@@ -434,48 +444,6 @@
     self.projectSelectLabel.text = item.projectTitle;
     
     [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
-}
-
-#pragma mark - HMPickerDelegate
-/**
- *  给三张图片布局
- */
-//- (void)imagePickerController:(HMImagePickerController *)picker didFinishSelectedImages:(NSArray<UIImage *> *)images selectedAssets:(NSArray<PHAsset *> *)selectedAssets {
-//    
-//    if (_selectedBtnTag != 0) {
-//        UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
-//        PHAsset *asset = [selectedAssets firstObject];
-//        [self imageWithAsset:asset button:selectedBtn];
-//        [self dismissViewControllerAnimated:YES completion:^{}];
-//        _selectedImageArray[_selectedBtnTag - 100] = asset;
-//        return;
-//    }
-//    if (!_selectedImageArray) {
-//        _selectedImageArray = [NSMutableArray array];
-//    }
-//    [_selectedImageArray addObjectsFromArray:selectedAssets];
-//    CGRect startFrame = _addPicBtn.frame;
-//    UIButton *btn = nil;
-//    for (int i = 0; i < selectedAssets.count; i++) {
-//        btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        btn.tag = ++_currentMaxBtnTag;
-//        [btn addTarget:self action:@selector(addPicBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//        [_bgView addSubview:btn];
-//        btn.frame = CGRectMake(startFrame.origin.x + i * startFrame.size.width + i * 10, startFrame.origin.y, startFrame.size.width, startFrame.size.height);
-//        [self imageWithAsset:selectedAssets[i] button:btn];
-//    }
-//    _btnLeftConstraint.constant = CGRectGetMaxX(btn.frame) + 10;
-//    [_bgView layoutIfNeeded];
-//    _images = images;
-//    _addPicBtn.hidden = _images.count == 3;
-//    [self dismissViewControllerAnimated:YES completion:^{}];
-//    
-//}
-- (void)imageWithAsset:(PHAsset *)asset button:(UIButton *)btn {
-    [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(120, 120) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        [btn setImage:result forState:UIControlStateNormal];
-        
-    }];
 }
 
 #pragma mark - -----------other------------
