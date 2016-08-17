@@ -141,7 +141,7 @@
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
                                          destructiveButtonTitle:nil
-                                              otherButtonTitles:@"拍照", @"选择照片", @"选择视频", nil];
+                                              otherButtonTitles:@"照片", @"视频", nil];
     [sheet showInView:self.view];
 }
 
@@ -265,11 +265,9 @@
  */
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0) { // take photo / 去拍照
-        [self takePhoto];
-    } else if (buttonIndex == 1) { // 选择照片
+    if (buttonIndex == 0) { // 选择照片
         [self pushImagePickerController];
-    } else if (buttonIndex == 2) {
+    } else if (buttonIndex == 1) {
         [self pushVideoPickerController];
     }
 }
@@ -298,31 +296,6 @@
     return _imagePickerVc;
 }
 
-#pragma mark takePhoto
-/**
- *  拍照
- */
-- (void)takePhoto
-{
-    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS8Later) {
-        // 无权限 做一个友好的提示
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
-        [alert show];
-    } else { // 调用相机
-        UIImagePickerControllerSourceType sourceTypeCamera = UIImagePickerControllerSourceTypeCamera;
-        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
-            self.imagePickerVc.sourceType = sourceTypeCamera;
-            if(iOS8Later) {
-                _imagePickerVc.modalPresentationStyle = UIModalPresentationCustom;
-            }
-            [self presentViewController:_imagePickerVc animated:YES completion:nil];
-        } else {
-            NSLog(@"模拟器中无法打开照相机,请在真机中使用");
-        }
-    }
-}
-
 #pragma mark TZPickerController
 
 /**
@@ -331,9 +304,11 @@
 - (void)pushImagePickerController {
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:3 delegate:self];
     imagePickerVc.allowPickingVideo = NO;
-    imagePickerVc.allowTakePicture = NO;
     
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        
+        CGRect startFrame = _addPicBtn.frame;
+        UIButton *btn = nil;
         
         if (_selectedImageArray != 0) {
             UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
@@ -347,8 +322,7 @@
             _selectedImageArray = [NSMutableArray array];
         }
         [_selectedImageArray addObjectsFromArray:photos];
-        CGRect startFrame = _addPicBtn.frame;
-        UIButton *btn = nil;
+        
         for (int i = 0; i < photos.count; i++)
         {
             btn = [UIButton buttonWithType:UIButtonTypeCustom];
