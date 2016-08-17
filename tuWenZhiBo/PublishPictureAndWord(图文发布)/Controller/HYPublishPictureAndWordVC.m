@@ -138,12 +138,23 @@
     [self.projectTitleTextView endEditing:YES];
     
     _selectedBtnTag = button.tag;
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片或视频"
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:@"照片", @"视频", nil];
-    [sheet showInView:self.view];
+    
+    if (button.x > _addPicBtn.width) {
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片或视频"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:@"照片", nil];
+        [sheet showInView:self.view];
+    } else {
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片或视频"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                             destructiveButtonTitle:nil
+                                                  otherButtonTitles:@"照片", @"视频", nil];
+        [sheet showInView:self.view];
+    }
+    
 }
 
 /**
@@ -266,11 +277,18 @@
  */
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0) { // 选择照片
-        [self pushImagePickerController];
-    } else if (buttonIndex == 1) {
-        [self pushVideoPickerController];
+    if (_addPicBtn.x > _addPicBtn.width) {
+        if (buttonIndex == 0) { // 选择照片
+            [self pushImagePickerController];
+        }
+    } else {
+        if (buttonIndex == 0) { // 选择照片
+            [self pushImagePickerController];
+        } else if (buttonIndex == 1) {
+            [self pushVideoPickerController];
+        }
     }
+    
 }
 
 #pragma mark UIImagePickerController
