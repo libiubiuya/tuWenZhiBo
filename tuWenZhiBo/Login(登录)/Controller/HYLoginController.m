@@ -58,60 +58,49 @@
 {
     [MBProgressHUD showMessage:@"正在登录"];
     
-    if ([self.userNameTextField.text isEqualToString:@"无线济南"] && [self.passwordTextField.text isEqualToString:@"newmedia"]) {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/login.php?username=%@&password=%@", [_userNameTextField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [_passwordTextField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/login.php?username=%%E6%%97%%A0%%E7%%BA%%BF%%E6%%B5%%8E%%E5%%8D%%97&password=newmedia"]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        HYUserInfo *userInfo = [[HYUserInfo alloc] init];
+        userInfo.state = dict[@"state"];
+        userInfo.reason = dict[@"reason"];
+        userInfo.userID = dict[@"userinfo"][@"id"];
+        userInfo.username = dict[@"userinfo"][@"username"];
+        userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
+        
+        if ([userInfo.state isEqualToString:@"success"]) {
             
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            
-            HYUserInfo *userInfo = [[HYUserInfo alloc] init];
-            userInfo.state = dict[@"state"];
-            userInfo.reason = dict[@"reason"];
-            userInfo.userID = dict[@"userinfo"][@"id"];
-            userInfo.username = dict[@"userinfo"][@"username"];
-            userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
-            
-            if ([userInfo.state isEqualToString:@"success"]) {
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
-                    [MBProgressHUD hideHUD];
-                    // 登录成功
-                    [MBProgressHUD showSuccess:@"登录成功"];
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        
-                        // 进入到主界面
-                        HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
-                        
-                        [HYUserManager sharedUserInfoManager].userInfo = userInfo;
-                        
-                        [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
-                        
-                    });
-                });
-                
-                
-            } else {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
                 [MBProgressHUD hideHUD];
-                // 登录失败
-                [MBProgressHUD showError:@"登录失败"];
+                // 登录成功
+                [MBProgressHUD showSuccess:@"登录成功"];
                 
-            }
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    // 进入到主界面
+                    HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
+                    
+                    [HYUserManager sharedUserInfoManager].userInfo = userInfo;
+                    
+                    [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
+                    
+                });
+            });
             
-        }];
+        } else {
+            
+            [MBProgressHUD hideHUD];
+            // 登录失败
+            [MBProgressHUD showError:@"账户或者密码错误"];
+            
+        }
         
-    } else {
-        
-        [MBProgressHUD hideHUD];
-        // 提示用户输入账户或者密码错误
-        [MBProgressHUD showError:@"账户或者密码错误"];
-        
-    }
+    }];
 }
 
 #pragma mark - ---------调整-----------
