@@ -76,6 +76,7 @@
     [self setUpTextViewDelegate];
     
     _currentMaxBtnTag = 99;
+    _selectedBtnTag = 10;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -302,7 +303,8 @@
  *  选择照片
  */
 - (void)pushImagePickerController {
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:3 delegate:self];
+    NSUInteger pickCount = _selectedBtnTag == 10 ? 3 - _selectedImageArray.count : 1;
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:pickCount delegate:self];
     imagePickerVc.allowPickingVideo = NO;
     
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
@@ -310,7 +312,7 @@
         CGRect startFrame = _addPicBtn.frame;
         UIButton *btn = nil;
         
-        if (_selectedImageArray != 0) {
+        if (_selectedBtnTag >= 100) {
             UIButton *selectedBtn = [_bgView viewWithTag:_selectedBtnTag];
             PHAsset *asset = [assets firstObject];
             [self imageWithAsset:asset button:selectedBtn];
