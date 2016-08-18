@@ -365,7 +365,8 @@
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
-- (void)imageWithAsset:(PHAsset *)asset button:(UIButton *)btn {
+- (void)imageWithAsset:(PHAsset *)asset button:(UIButton *)btn
+{
     [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(120, 120) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         [btn setImage:result forState:UIControlStateNormal];
         

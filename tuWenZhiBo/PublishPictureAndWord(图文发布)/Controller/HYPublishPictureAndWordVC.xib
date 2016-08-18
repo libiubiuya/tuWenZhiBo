@@ -108,7 +108,7 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="02-a-项目创建-7" translatesAutoresizingMaskIntoConstraints="NO" id="ptR-as-ESt">
                                     <rect key="frame" x="10" y="40" width="355" height="170"/>
                                 </imageView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GbC-II-Rt0">
+                                <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GbC-II-Rt0">
                                     <rect key="frame" x="10" y="220" width="60" height="60"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="60" id="e4P-R6-NiT"/>
