@@ -547,52 +547,53 @@ static CGFloat TZScreenScale;
     // You can compress the resolution to lower. Or you can support more higher resolution.
     if ([presets containsObject:AVAssetExportPreset640x480]) {
         AVAssetExportSession *session = [[AVAssetExportSession alloc]initWithAsset:videoAsset presetName:AVAssetExportPreset640x480];
-        
+        NSLog(@"%@", videoAsset.URL);
         NSDateFormatter *formater = [[NSDateFormatter alloc] init];
-        [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
-        NSString *outputPath = [NSHomeDirectory() stringByAppendingFormat:@"/tmp/output-%@.mp4", [formater stringFromDate:[NSDate date]]];
+        [formater setDateFormat:@"yyyyMMddHHmmss"];
+        NSString *suffix = [videoAsset.URL.absoluteString pathExtension];
+        NSString *outputPath = [NSHomeDirectory() stringByAppendingFormat:@"/tmp/shipin%@.%@", [formater stringFromDate:[NSDate date]], suffix];
         NSLog(@"video outputPath = %@",outputPath);
         session.outputURL = [NSURL fileURLWithPath:outputPath];
         
         // Optimize for network use.
         session.shouldOptimizeForNetworkUse = true;
         
-        NSArray *supportedTypeArray = session.supportedFileTypes;
-        if ([supportedTypeArray containsObject:AVFileTypeMPEG4]) {
-            session.outputFileType = AVFileTypeMPEG4;
-        } else if (supportedTypeArray.count == 0) {
-            NSLog(@"No supported file types 视频类型暂不支持导出");
-            return;
-        } else {
-            session.outputFileType = [supportedTypeArray objectAtIndex:0];
-        }
+//        NSArray *supportedTypeArray = session.supportedFileTypes;
+//        if ([supportedTypeArray containsObject:AVFileTypeMPEG4]) {
+//            session.outputFileType = AVFileTypeMPEG4;
+//        } else if (supportedTypeArray.count == 0) {
+//            NSLog(@"No supported file types 视频类型暂不支持导出");
+//            return;
+//        } else {
+//            session.outputFileType = [supportedTypeArray objectAtIndex:0];
+//        }
         
         if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingFormat:@"/tmp"]]) {
             [[NSFileManager defaultManager] createDirectoryAtPath:[NSHomeDirectory() stringByAppendingFormat:@"/tmp"] withIntermediateDirectories:YES attributes:nil error:nil];
         }
 
         // Begin to export video to the output path asynchronously.
-        [session exportAsynchronouslyWithCompletionHandler:^(void) {
-            switch (session.status) {
-                case AVAssetExportSessionStatusUnknown:
-                    NSLog(@"AVAssetExportSessionStatusUnknown"); break;
-                case AVAssetExportSessionStatusWaiting:
-                    NSLog(@"AVAssetExportSessionStatusWaiting"); break;
-                case AVAssetExportSessionStatusExporting:
-                    NSLog(@"AVAssetExportSessionStatusExporting"); break;
-                case AVAssetExportSessionStatusCompleted: {
-                    NSLog(@"AVAssetExportSessionStatusCompleted");
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (completion) {
-                            completion(outputPath);
-                        }
-                    });
-                }  break;
-                case AVAssetExportSessionStatusFailed:
-                    NSLog(@"AVAssetExportSessionStatusFailed"); break;
-                default: break;
-            }
-        }];
+//        [session exportAsynchronouslyWithCompletionHandler:^(void) {
+//            switch (session.status) {
+//                case AVAssetExportSessionStatusUnknown:
+//                    NSLog(@"AVAssetExportSessionStatusUnknown"); break;
+//                case AVAssetExportSessionStatusWaiting:
+//                    NSLog(@"AVAssetExportSessionStatusWaiting"); break;
+//                case AVAssetExportSessionStatusExporting:
+//                    NSLog(@"AVAssetExportSessionStatusExporting"); break;
+//                case AVAssetExportSessionStatusCompleted: {
+//                    NSLog(@"AVAssetExportSessionStatusCompleted");
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        if (completion) {
+//                            completion(outputPath);
+//                        }
+//                    });
+//                }  break;
+//                case AVAssetExportSessionStatusFailed:
+//                    NSLog(@"AVAssetExportSessionStatusFailed"); break;
+//                default: break;
+//            }
+//        }];
     }
 }
 

@@ -16,6 +16,7 @@
 #import "HYUserInfo.h"
 
 #import "TZImagePickerController.h"
+#import "TZImageManager.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVCaptureDevice.h>
@@ -52,6 +53,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *placeholderLabel;
 /** 返回responseObject的数组 */
 @property (nonatomic, assign) int responseObjects;
+/** 显示的图片 */
+@property (nonatomic, strong) NSString *fileName;
 
 @property (nonatomic, strong) NSMutableArray *selectedImageArray;
 @property (nonatomic, assign) NSInteger selectedBtnTag;
@@ -165,6 +168,47 @@
     //用post上传文件
     [MBProgressHUD showMessage:@"正在上传"];
     
+    if ([_fileName hasSuffix:@"jpg"]) {
+        
+        [self uploadImages];
+        
+    } else if ([_fileName hasSuffix:@"mov"]) {
+        
+        [self uploadVideo];
+    }
+    
+}
+
+/**
+ *  重置
+ */
+- (IBAction)reset
+{
+    self.projectTitleTextView.text = nil;
+    
+    [_selectedImageArray removeAllObjects];
+    
+    [_addPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
+    [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-1"] forState:UIControlStateNormal];
+    _currentMaxBtnTag = 99;
+    _btnLeftConstraint.constant = HYMargin;
+    for (UIView *btn in _bgView.subviews) {
+        if (btn.tag != 0) {
+            [btn removeFromSuperview];
+        }
+        else {
+            btn.hidden = NO;
+        }
+    }
+    [_bgView layoutIfNeeded];
+}
+
+#pragma mark 上传图片和视频
+/**
+ *  上传图片
+ */
+- (void)uploadImages
+{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     //设置请求超时时间：默认为60秒。
@@ -174,7 +218,6 @@
     
     NSString *fileName;
     NSMutableArray *fileNames = [[NSMutableArray alloc] init];
-    
     // 把图片都重新命名
     for (int i = 0; i < _images.count; i++) {
         
@@ -186,7 +229,6 @@
         
         [fileNames addObject:fileName];
         _fileNames = fileNames;
-        
     }
     
     NSString *spliceFilename;
@@ -238,33 +280,54 @@
                 }];
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传失败"];
+            [MBProgressHUD hideHUD];
         }];
     }
 }
 
 /**
- *  重置
+ *  上传视频
  */
-- (IBAction)reset
+- (void)uploadVideo
 {
-    self.projectTitleTextView.text = nil;
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    [_selectedImageArray removeAllObjects];
+    //设置请求超时时间：默认为60秒。
+    manager.requestSerializer.timeoutInterval = 10;
     
-    [_addPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
-    [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-1"] forState:UIControlStateNormal];
-    _currentMaxBtnTag = 99;
-    _btnLeftConstraint.constant = HYMargin;
-    for (UIView *btn in _bgView.subviews) {
-        if (btn.tag != 0) {
-            [btn removeFromSuperview];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/uploadvideo.php" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+        NSData *fileData = [NSData dataWithContentsOfFile:_fileName];
+        
+        NSLog(@"%@", fileData);
+        if (fileData != nil) {
+            
+            // application/octet-stream
+            [formData appendPartWithFileData:fileData name:@"upfile" fileName:_fileName mimeType:@"application/octet-stream"];
         }
-        else {
-            btn.hidden = NO;
-        }
-    }
-    [_bgView layoutIfNeeded];
+        
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID,  [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传成功"];
+            [MBProgressHUD hideHUD];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传失败"];
+            [MBProgressHUD hideHUD];
+        }];
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"上传失败"];
+        [MBProgressHUD hideHUD];
+    }];
 }
 
 #pragma mark - ------------ActionSheet------------
@@ -320,7 +383,8 @@
 /**
  *  选择照片
  */
-- (void)pushImagePickerController {
+- (void)pushImagePickerController
+{
     NSUInteger pickCount = _selectedBtnTag == 10 ? 3 - _selectedImageArray.count : 1;
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:pickCount delegate:self];
     imagePickerVc.allowPickingVideo = NO;
@@ -387,6 +451,21 @@
         
         [_addPicBtn setBackgroundImage:coverImage forState:UIControlStateNormal];
         [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-6"] forState:UIControlStateNormal];
+        
+        TZImageManager *manager = [[TZImageManager alloc] init];
+        [manager getVideoOutputPathWithAsset:asset completion:^(NSString *outputPath) {
+            
+            _fileName = [outputPath lastPathComponent];
+            
+            NSLog(@"%@", _fileName);
+            
+        }];
+        
+//        [manager getVideoWithAsset:asset completion:^(AVPlayerItem *playerItem, NSDictionary *info) {
+//            
+//            _fileName = info.;
+//            
+//        }];
     }];
     
     [self presentViewController:imagePickerVc animated:YES completion:nil];
