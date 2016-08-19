@@ -68,11 +68,13 @@
         HYUserInfo *userInfo = [[HYUserInfo alloc] init];
         userInfo.state = dict[@"state"];
         userInfo.reason = dict[@"reason"];
-        userInfo.userID = dict[@"userinfo"][@"id"];
-        userInfo.username = dict[@"userinfo"][@"username"];
-        userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
+        
         
         if ([userInfo.state isEqualToString:@"success"]) {
+            
+            userInfo.userID = dict[@"userinfo"][@"id"];
+            userInfo.username = dict[@"userinfo"][@"username"];
+            userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
