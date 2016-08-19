@@ -55,6 +55,8 @@
 @property (nonatomic, assign) int responseObjects;
 /** 显示的图片 */
 @property (nonatomic, strong) NSString *fileName;
+/** 视频保存在沙盒的路径 */
+@property (nonatomic, strong) NSString *videoPath;
 
 @property (nonatomic, strong) NSMutableArray *selectedImageArray;
 @property (nonatomic, assign) NSInteger selectedBtnTag;
@@ -172,11 +174,15 @@
         
         [self uploadImages];
         
-    } else if ([_fileName hasSuffix:@"mov"]) {
+    } else if ([_fileName hasSuffix:@"mp4"] || [_fileName hasSuffix:@"MP4"]) {
         
-        [self uploadVideo];
+        [self uploadVideoMP4];
+        
+    } else if ([_fileName hasSuffix:@"mov"] || [_fileName hasSuffix:@"MOV"]) {
+        
+        [self uploadVideoMOV];
+        
     }
-    
 }
 
 /**
@@ -269,7 +275,7 @@
             
             if (_responseObjects == _selectedImageArray.count) {
                 
-                [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID,  [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     [MBProgressHUD hideHUD];
                     [MBProgressHUD showMessage:@"上传成功"];
                     [MBProgressHUD hideHUD];
@@ -288,9 +294,49 @@
 }
 
 /**
- *  上传视频
+ *  上传视频MP4
  */
-- (void)uploadVideo
+- (void)uploadVideoMP4
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    //设置请求超时时间：默认为60秒。
+    manager.requestSerializer.timeoutInterval = 10;
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSLog(@"_videoPath = %@", _videoPath);
+    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/uploadvideo.php" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+        NSData *fileData = [NSData dataWithContentsOfFile:_videoPath];
+        
+        [formData appendPartWithFileData:fileData name:@"upfile" fileName:_fileName mimeType:@"video/mp4"];
+        
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传成功"];
+            [MBProgressHUD hideHUD];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传失败"];
+            [MBProgressHUD hideHUD];
+        }];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showMessage:@"上传失败"];
+        [MBProgressHUD hideHUD];
+    }];
+    
+    [MBProgressHUD hideHUD];
+}
+
+/**
+ *  上传视频MOV
+ */
+- (void)uploadVideoMOV
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
@@ -301,18 +347,13 @@
     
     [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/uploadvideo.php" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        NSData *fileData = [NSData dataWithContentsOfFile:_fileName];
+        NSData *fileData = [NSData dataWithContentsOfFile:_videoPath];
         
-        NSLog(@"%@", fileData);
-        if (fileData != nil) {
-            
-            // application/octet-stream
-            [formData appendPartWithFileData:fileData name:@"upfile" fileName:_fileName mimeType:@"application/octet-stream"];
-        }
+        [formData appendPartWithFileData:fileData name:@"upfile" fileName:_fileName mimeType:@"video/quicktime"];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID,  [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID,  [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [MBProgressHUD hideHUD];
             [MBProgressHUD showMessage:@"上传成功"];
             [MBProgressHUD hideHUD];
@@ -322,12 +363,12 @@
             [MBProgressHUD hideHUD];
         }];
         
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [MBProgressHUD hideHUD];
         [MBProgressHUD showMessage:@"上传失败"];
         [MBProgressHUD hideHUD];
     }];
+    
 }
 
 #pragma mark - ------------ActionSheet------------
@@ -455,17 +496,11 @@
         TZImageManager *manager = [[TZImageManager alloc] init];
         [manager getVideoOutputPathWithAsset:asset completion:^(NSString *outputPath) {
             
+            _videoPath = outputPath;
+            
             _fileName = [outputPath lastPathComponent];
             
-            NSLog(@"%@", _fileName);
-            
         }];
-        
-//        [manager getVideoWithAsset:asset completion:^(AVPlayerItem *playerItem, NSDictionary *info) {
-//            
-//            _fileName = info.;
-//            
-//        }];
     }];
     
     [self presentViewController:imagePickerVc animated:YES completion:nil];
