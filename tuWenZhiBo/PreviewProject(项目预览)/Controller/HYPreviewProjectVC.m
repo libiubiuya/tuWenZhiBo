@@ -11,6 +11,8 @@
 #import "HYPickerView.h"
 #import "HYPublishPicAndWordItem.h"
 #import "HYPickerViewInfoManager.h"
+#import "HYUserManager.h"
+#import "HYUserInfo.h"
 
 #import <WebKit/WebKit.h>
 
@@ -33,6 +35,8 @@
 @property (nonatomic ,strong) UIPickerView *pickerView;
 /** 进度条 */
 @property (nonatomic, weak) UIProgressView *progressView;
+/** 网页URL */
+@property (nonatomic, strong) NSURL *url;
 
 @end
 
@@ -121,8 +125,16 @@
  */
 - (void)loadHtml
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:previewProjectLoadWebViewLowPressionURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    HYUserInfo *userInfoItem = [HYUserManager sharedUserInfoManager].userInfo;
+    if ([userInfoItem.userperssion isEqualToString:@"1"]) {
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:previewProjectLoadWebViewLowPressionURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
+        _url = url;
+    } else {
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:previewProjectLoadWebViewHighPressionURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
+        _url = url;
+    }
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:_url];
     [self.webView loadRequest:request];
 }
 
@@ -206,8 +218,6 @@
     
     [self loadHtml];
 }
-
-
 
 /**
  *  点击显示下拉列表
