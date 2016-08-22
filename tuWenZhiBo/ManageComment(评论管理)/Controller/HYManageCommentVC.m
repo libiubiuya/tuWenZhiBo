@@ -157,8 +157,6 @@
 {
     // 进度条
     self.progressView.progress = self.webView.estimatedProgress;
-    
-    NSLog(@"%f", self.progressView.progress);
     if (self.progressView.progress == 1.0) {
         self.progressView.hidden = YES;
     }
