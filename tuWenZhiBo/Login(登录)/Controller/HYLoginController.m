@@ -75,6 +75,7 @@
             userInfo.userID = dict[@"userinfo"][@"id"];
             userInfo.username = dict[@"userinfo"][@"username"];
             userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
+            userInfo.userperssion = dict[@"userinfo"][@"userpression"];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 

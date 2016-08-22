@@ -25,4 +25,7 @@
 /** 图片 */
 @property (nonatomic, strong) NSString *userjpg;
 
+/** 用户权限 */
+@property (nonatomic, strong) NSString *userperssion;
+
 @end

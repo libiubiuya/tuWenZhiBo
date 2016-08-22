@@ -16,7 +16,8 @@
              @"reason":@"reason",
              @"userID":@"userinfo.id",
              @"username":@"userinfo.username",
-             @"userjpg":@"userinfo.userjpg"
+             @"userjpg":@"userinfo.userjpg",
+             @"userpression":@"userinfo.userpression"
              };
 }
 
