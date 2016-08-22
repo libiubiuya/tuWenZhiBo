@@ -9,6 +9,7 @@
 #pragma mark - ---------头文件----------
 
 #pragma mark category
+#import "HYGlobeConst.h"
 #import "UIView+HYFrame.h"
 #import "UIBarButtonItem+HYItem.h"
 #import "HYPickerView.h"

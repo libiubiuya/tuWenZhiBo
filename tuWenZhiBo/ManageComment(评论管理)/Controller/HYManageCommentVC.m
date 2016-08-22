@@ -122,7 +122,7 @@
  */
 - (void)loadHtml
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:manageCommentLoadWebViewURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
 }
@@ -248,14 +248,13 @@
 #pragma mark 加载数据
 - (void)loadData
 {
-    // http://ued.ijntv.cn/manage/huodonglist.php
     // 项目列表url
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
-    [manager GET:@"http://ued.ijntv.cn/manage/huodonglist.php" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:activityURL parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         _projectItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
         

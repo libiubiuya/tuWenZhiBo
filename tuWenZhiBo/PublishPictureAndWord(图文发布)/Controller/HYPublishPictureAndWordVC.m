@@ -284,7 +284,7 @@
         
         NSDictionary *paremeters1 = @{@"jpg":_fileNames[i]};
         
-        [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload.php" parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [manager POST:publishPicAndWordUploadImageURL parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             
             NSData *data = UIImageJPEGRepresentation(_selectedImageArray[i], 1.0);
             
@@ -298,7 +298,7 @@
             
             if (_responseObjects == _selectedImageArray.count) {
                 
-                [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                [manager GET:[NSString stringWithFormat:publishPicAndWordPublishPicAndWordURL, [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     [MBProgressHUD hideHUD];
                     [MBProgressHUD showMessage:@"上传成功"];
                     [MBProgressHUD hideHUD];
@@ -347,7 +347,7 @@
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/uploadvideo.php" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:publishPicAndWordUploadVideoURL parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         NSData *fileData = [NSData dataWithContentsOfFile:_videoPath];
         
@@ -355,7 +355,7 @@
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [manager GET:[NSString stringWithFormat:publishPicAndWordPublishVideoURL, [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [MBProgressHUD hideHUD];
             [MBProgressHUD showMessage:@"上传成功"];
             [MBProgressHUD hideHUD];
@@ -512,14 +512,13 @@
 #pragma mark 加载数据
 - (void)loadData
 {
-    // http://ued.ijntv.cn/manage/huodonglist.php
     // 项目列表url
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
-    [manager GET:@"http://ued.ijntv.cn/manage/huodonglist.php" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:activityURL parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         _projectItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
         

@@ -272,9 +272,7 @@
      *  这是图片上传完成后在浏览器查看是否存在的路径
      */
     
-    // http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php
-    
-    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload1.php" parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [manager POST:createProjectUploadImageURL parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         // 把图片转换成NSData类型的数据
         NSData *data = UIImageJPEGRepresentation(self.image, 1);
@@ -283,13 +281,13 @@
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [manager GET:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=f&jpg=%@&url=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, fileName, self.floatViewURLTextField.text] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [manager GET:[NSString stringWithFormat:manageProjectPublishPicAndWordURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, fileName, self.floatViewURLTextField.text] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [MBProgressHUD hideHUD];
             [MBProgressHUD showMessage:@"上传成功"];
             [MBProgressHUD hideHUD];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传失败1"];
+            [MBProgressHUD showMessage:@"上传失败"];
             [MBProgressHUD hideHUD];
         }];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -297,7 +295,7 @@
         NSLog(@"%@", error);
         
         [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传失败2"];
+        [MBProgressHUD showMessage:@"解析失败"];
         [MBProgressHUD hideHUD];
     }];
 }
@@ -369,15 +367,13 @@
 #pragma mark 加载数据
 - (void)loadData
 {
-    
-    // http://ued.ijntv.cn/manage/huodonglist.php
     // 项目列表url
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
-    [manager GET:@"http://ued.ijntv.cn/manage/huodonglist.php" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:activityURL parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         _projectItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
         

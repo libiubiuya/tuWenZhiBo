@@ -58,7 +58,7 @@
 {
     [MBProgressHUD showMessage:@"正在登录"];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/login.php?username=%@&password=%@", [_userNameTextField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [_passwordTextField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:loginURL, [_userNameTextField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [_passwordTextField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
