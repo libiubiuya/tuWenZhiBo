@@ -17,12 +17,12 @@
 #import <AFNetworking/AFNetworking.h>
 #import <MJExtension/MJExtension.h>
 
-@interface HYManageCommentVC () <UIPickerViewDelegate, UIPickerViewDataSource, WKUIDelegate>
+@interface HYManageCommentVC () <UIPickerViewDelegate, UIPickerViewDataSource, WKUIDelegate, WKNavigationDelegate>
 
 /** 网页 */
 @property (weak, nonatomic) WKWebView *webView;
 /** 进度条 */
-//@property (weak, nonatomic) UIProgressView *progressView;
+@property (weak, nonatomic) UIProgressView *progressView;
 /** 内容view */
 @property (weak, nonatomic) IBOutlet UIView *contentHtmlView;
 /** 项目选择按钮 */
@@ -48,10 +48,10 @@
     [self setUpHtml];
     
     // 添加进度条
-//    [self setUpProgressView];
+    [self setUpProgressView];
     
     // 添加监听
-//    [self setUpObserver];
+    [self setUpObserver];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -100,54 +100,7 @@
     [self.navigationController pushViewController:user animated:YES];
 }
 
-#pragma mark - 进度条相关
-///**
-// *  添加进度条
-// */
-//- (void)setUpProgressView
-//{
-//    UIProgressView *progressView = [[UIProgressView alloc] init];
-//    progressView.progress = 0.0;
-//    progressView.progressTintColor = [UIColor redColor];
-//    progressView.progressViewStyle = UIProgressViewStyleDefault;
-//    _progressView = progressView;
-//    [self.contentHtmlView addSubview:progressView];
-//}
-//
-///**
-// *  添加监听
-// */
-//- (void)setUpObserver
-//{
-//    // 进度条
-//    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
-//}
-//
-///**
-// *  监听
-// */
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
-//{
-//    // 进度条
-//    self.progressView.progress = self.webView.estimatedProgress;
-//    
-//    NSLog(@"%f", self.progressView.progress);
-//    
-//    if (self.progressView.progress == 1.0) {
-//        self.progressView.hidden = YES;
-//    }
-//}
-//
-///**
-// *  移除监听
-// */
-//- (void)dealloc
-//{
-//    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
-//}
-
 #pragma mark - 加载网页
-// http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@
 /**
  *  加载网页
  */
@@ -161,6 +114,7 @@
     
     // 与webview UI交互代理
     self.webView.UIDelegate = self;
+    self.webView.navigationDelegate = self;
 }
 
 /**
@@ -171,6 +125,71 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
+}
+
+#pragma mark - 进度条相关
+/**
+ *  添加进度条
+ */
+- (void)setUpProgressView
+{
+    UIProgressView *progressView = [[UIProgressView alloc] init];
+    progressView.frame = CGRectMake(0, 0, HYScreenW, 1);
+    progressView.progressTintColor = [UIColor blueColor];
+    progressView.progress = 0;
+    _progressView = progressView;
+    [self.contentHtmlView addSubview:progressView];
+}
+
+/**
+ *  添加监听
+ */
+- (void)setUpObserver
+{
+    // 进度条
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+/**
+ *  监听
+ */
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    // 进度条
+    self.progressView.progress = self.webView.estimatedProgress;
+    
+    NSLog(@"%f", self.progressView.progress);
+    if (self.progressView.progress == 1.0) {
+        self.progressView.hidden = YES;
+    }
+}
+
+/**
+ *  移除监听
+ */
+- (void)dealloc
+{
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+}
+
+//开始加载
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+    //开始加载网页时展示出progressView
+    self.progressView.hidden = NO;
+    //防止progressView被网页挡住
+    [self.view bringSubviewToFront:self.progressView];
+}
+
+//加载完成
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    //加载完成后隐藏progressView
+    self.progressView.hidden = YES;
+}
+
+//加载失败
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    //加载失败同样需要隐藏progressView
+    self.progressView.hidden = YES;
 }
 
 #pragma mark - iOS给js传数据
