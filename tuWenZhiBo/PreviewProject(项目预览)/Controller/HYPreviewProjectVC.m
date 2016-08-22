@@ -129,7 +129,7 @@
     if ([userInfoItem.userperssion isEqualToString:@"1"]) {
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:previewProjectLoadWebViewLowPressionURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
         _url = url;
-    } else {
+    } else if ([userInfoItem.userperssion isEqualToString:@"2"]){
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:previewProjectLoadWebViewHighPressionURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID]];
         _url = url;
     }
