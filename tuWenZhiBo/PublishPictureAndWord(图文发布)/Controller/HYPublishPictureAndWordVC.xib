@@ -14,6 +14,8 @@
                 <outlet property="projectSelectBtn" destination="cWR-e0-TZM" id="JNz-eT-4WJ"/>
                 <outlet property="projectSelectLabel" destination="iTY-no-dh8" id="b8j-vm-bG4"/>
                 <outlet property="projectTitleTextView" destination="Afg-Dh-MaL" id="Uyy-30-dCE"/>
+                <outlet property="publishBtn" destination="opa-mw-gn8" id="Axc-D7-qvg"/>
+                <outlet property="resetBtn" destination="ggL-4n-v5T" id="UYG-NF-2Ht"/>
                 <outlet property="view" destination="iN0-l3-epB" id="7Fw-8E-9iL"/>
             </connections>
         </placeholder>
@@ -102,7 +104,7 @@
                                     </constraints>
                                     <state key="normal" image="02-a-项目创建-4"/>
                                     <connections>
-                                        <action selector="reset" destination="-1" eventType="touchUpInside" id="z9c-3o-OVK"/>
+                                        <action selector="resetBtnClick" destination="-1" eventType="touchUpInside" id="UFQ-Dd-Blj"/>
                                     </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="02-a-项目创建-7" translatesAutoresizingMaskIntoConstraints="NO" id="ptR-as-ESt">

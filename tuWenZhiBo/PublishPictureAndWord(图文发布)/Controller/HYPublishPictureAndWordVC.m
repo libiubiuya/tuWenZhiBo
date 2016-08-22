@@ -57,6 +57,12 @@
 @property (nonatomic, strong) NSString *fileName;
 /** 视频保存在沙盒的路径 */
 @property (nonatomic, strong) NSString *videoPath;
+/** 选择视频后放在添加按钮上的图片 */
+@property (nonatomic, strong) UIImage *coverImage;
+/** 发布按钮 */
+@property (weak, nonatomic) IBOutlet UIButton *publishBtn;
+/** 重置按钮 */
+@property (weak, nonatomic) IBOutlet UIButton *resetBtn;
 
 @property (nonatomic, strong) NSMutableArray *selectedImageArray;
 @property (nonatomic, assign) NSInteger selectedBtnTag;
@@ -188,29 +194,42 @@
 /**
  *  重置
  */
-- (IBAction)reset
+- (IBAction)resetBtnClick
 {
     self.projectTitleTextView.text = nil;
     
-    [_selectedImageArray removeAllObjects];
-    
-    
-    _currentMaxBtnTag = 99;
-    _btnLeftConstraint.constant = HYMargin;
-    for (UIView *btn in _bgView.subviews) {
-        if (btn.tag != 0) {
-            
-//            [_addPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
-//            [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-1"] forState:UIControlStateNormal];
-            
-//            [btn removeFromSuperview];
+    if (_coverImage == nil) { // 重置图片
+        
+        [_selectedImageArray removeAllObjects];
+        
+        [_addPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
+        [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-1"] forState:UIControlStateNormal];
+        
+        _currentMaxBtnTag = 99;
+        _btnLeftConstraint.constant = HYMargin;
+        
+        for (UIButton *btn in _bgView.subviews) {
+            _addPicBtn.tag = 0;
+            if (btn.tag != 0) {
+                [btn removeFromSuperview];
+            }
+            else {
+                btn.hidden = NO;
+            }
         }
-        else {
-            btn.hidden = NO;
-        }
+        
+        _addPicBtn.tag = 10;
+        
+        [_bgView layoutIfNeeded];
+        
+    } else { // 重置视频
+        
+        _coverImage = nil;
+        
+        [_addPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
+        [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-1"] forState:UIControlStateNormal];
+        
     }
-    
-    [_bgView layoutIfNeeded];
 }
 
 #pragma mark 上传图片和视频
@@ -443,7 +462,7 @@
         [_bgView layoutIfNeeded];
         _images = photos;
         
-        if (_addPicBtn.x >= HYMargin + (HYMargin + _addPicBtn.width) * 3) {
+        if (_addPicBtn.x >= _addPicBtn.width * 3) {
             _addPicBtn.hidden = YES;
         }
         
@@ -472,6 +491,7 @@
     
     [imagePickerVc setDidFinishPickingVideoHandle:^(UIImage *coverImage,id asset) {
         
+        _coverImage = coverImage;
         [_addPicBtn setBackgroundImage:coverImage forState:UIControlStateNormal];
         [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-6"] forState:UIControlStateNormal];
         
