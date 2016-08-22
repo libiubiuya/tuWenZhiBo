@@ -194,18 +194,22 @@
     
     [_selectedImageArray removeAllObjects];
     
-    [_addPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
-    [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-1"] forState:UIControlStateNormal];
+    
     _currentMaxBtnTag = 99;
     _btnLeftConstraint.constant = HYMargin;
     for (UIView *btn in _bgView.subviews) {
         if (btn.tag != 0) {
-            [btn removeFromSuperview];
+            
+//            [_addPicBtn setBackgroundImage:nil forState:UIControlStateNormal];
+//            [_addPicBtn setImage:[UIImage imageNamed:@"02-b-图文发布-1"] forState:UIControlStateNormal];
+            
+//            [btn removeFromSuperview];
         }
         else {
             btn.hidden = NO;
         }
     }
+    
     [_bgView layoutIfNeeded];
 }
 
@@ -298,45 +302,24 @@
  */
 - (void)uploadVideoMP4
 {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    //设置请求超时时间：默认为60秒。
-    manager.requestSerializer.timeoutInterval = 10;
-    
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    NSLog(@"_videoPath = %@", _videoPath);
-    [manager POST:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/uploadvideo.php" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        
-        NSData *fileData = [NSData dataWithContentsOfFile:_videoPath];
-        
-        [formData appendPartWithFileData:fileData name:@"upfile" fileName:_fileName mimeType:@"video/mp4"];
-        
-    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        [manager GET:[NSString stringWithFormat:@"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@", [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传成功"];
-            [MBProgressHUD hideHUD];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传失败"];
-            [MBProgressHUD hideHUD];
-        }];
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传失败"];
-        [MBProgressHUD hideHUD];
-    }];
-    
-    [MBProgressHUD hideHUD];
+    [self uploadVideoWithMimeType:@"video/mp4"];
 }
 
 /**
  *  上传视频MOV
  */
 - (void)uploadVideoMOV
+{
+    [self uploadVideoWithMimeType:@"video/quicktime"];
+    
+}
+
+/**
+ *  上传视频
+ *
+ *  @param mimeType 上传视频的格式
+ */
+- (void)uploadVideoWithMimeType:(NSString *)mimeType
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
@@ -349,7 +332,7 @@
         
         NSData *fileData = [NSData dataWithContentsOfFile:_videoPath];
         
-        [formData appendPartWithFileData:fileData name:@"upfile" fileName:_fileName mimeType:@"video/quicktime"];
+        [formData appendPartWithFileData:fileData name:@"upfile" fileName:_fileName mimeType:mimeType];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -368,7 +351,6 @@
         [MBProgressHUD showMessage:@"上传失败"];
         [MBProgressHUD hideHUD];
     }];
-    
 }
 
 #pragma mark - ------------ActionSheet------------
