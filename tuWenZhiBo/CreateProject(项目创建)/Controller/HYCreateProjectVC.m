@@ -28,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *publishBtn;
 /** 重置按钮 */
 @property (weak, nonatomic) IBOutlet UIButton *resetBtn;
+/** 上传进度数据 */
+//@property (nonatomic, assign) CGFloat progressValue;
 
 @end
 
@@ -151,7 +153,6 @@
 
 - (IBAction)publishBtnClick
 {
-    //用post上传文件
     [MBProgressHUD showMessage:@"正在上传"];
     
     // 用时间来命名图片名
@@ -186,7 +187,14 @@
 
         [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"image/jpeg"];
         
-    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        [uploadProgress addObserver:self forKeyPath:@"completedUnitCount" options:NSKeyValueObservingOptionNew context:nil];
+        
+        //用post上传文件
+//        [MBProgressHUD showMessage:[NSString stringWithFormat:@"正在上传 %f%%", _progressValue]];
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [manager GET:[NSString stringWithFormat:createProjectPublishURL, [self.projectTitle.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
@@ -205,6 +213,14 @@
     }];
     
 }
+
+//获取并计算当前文件的上传进度
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(NSProgress *)progress change:(NSDictionary<NSString *,id> *)change context:(void *)context
+//{
+//    NSLog(@"%zd--%zd--%f",progress.completedUnitCount,progress.totalUnitCount,1.0 * progress.completedUnitCount/progress.totalUnitCount);
+//    _progressValue = 100 * progress.completedUnitCount / progress.totalUnitCount;
+//    
+//}
 
 #pragma mark - ----------重置-------------
 /**
