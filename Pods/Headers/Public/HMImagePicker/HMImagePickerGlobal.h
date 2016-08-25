@@ -1,1 +1,0 @@
-../../../HMImagePicker/HMImagePicker/HMImagePicker/HMImagePickerGlobal.h
