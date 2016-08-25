@@ -22,26 +22,69 @@
 #import <MJExtension/MJExtension.h>
 
 @interface HYManageProjectVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-/** 项目选择按钮 */
-@property (weak, nonatomic) IBOutlet UIButton *projectSelectBtn;
-/** 项目预览item */
-@property (nonatomic, strong) NSMutableArray *projectItem;
+
+/** 滚动视图 */
+@property (strong, nonatomic) UIScrollView *scrollView;
+/** 滚动视图的内容视图 */
+@property (strong, nonatomic) UIView *scrollContentView;
+
+/** 项目选择视图 */
+@property (strong, nonatomic) UIView *projectSelectView;
+/** 项目选择imageView */
+@property (weak, nonatomic) UIImageView *projectSelectImageView;
 /** 项目选择label */
-@property (weak, nonatomic) IBOutlet UILabel *projectSelectLabel;
+@property (weak, nonatomic) UILabel *projectSelectLabel;
+/** 项目选择按钮 */
+@property (weak, nonatomic) UIButton *projectSelectBtn;
+/** 项目预览item */
+@property (nonatomic, strong) NSMutableArray *projectPreviewItem;
+
+/** 项目头图和标题view */
+@property (strong, nonatomic) UIView *projectHeadPicAndTitleView;
+/** 项目头图imageView */
+@property (weak, nonatomic) UILabel *projectHeadPicImageView;
+/** 项目头图button */
+@property (weak, nonatomic) UIButton *projectHeadPicBtn;
+/** 显示的图片 */
+@property (nonatomic, strong, readonly) UIImage *projectHeadPicImage;
+/** 项目标题imageView */
+@property (weak, nonatomic) UILabel *projectTitleImageView;
+/** 项目标题textField */
+@property (weak, nonatomic) UITextField *projectTitleTextField;
+/** 修改头图和标题button */
+@property (weak, nonatomic) UIButton *projectHeadPicAndTitleReviseBtn;
+
+/** 图文直播状态view */
+@property (strong, nonatomic) UIView *livingStateView;
+/** 图文直播状态imageView */
+@property (weak, nonatomic) UIImageView *livingStateImageView;
+/** 图文直播状态开关 */
+@property (weak, nonatomic) UISwitch *livingStateSwitch;
+
+/** 用户评论框view */
+@property (strong, nonatomic) UIView *userCommentView;
+/** 用户评论框imageView */
+@property (weak, nonatomic) UILabel *userCommentImageView;
+/** 用户评论框开关 */
+@property (weak, nonatomic) UISwitch *userCommentSwitch;
+
+/** 浮窗图片和链接view */
+@property (strong, nonatomic) UIView *floatViewPicAndURLView;
+/** 浮窗图片imageView */
+@property (weak, nonatomic) UILabel *floatViewPicImageView;
+/** 浮窗图片button */
+@property (weak, nonatomic) UIButton *floatViewPicUploadBtn;
+/** 显示的图片 */
+@property (nonatomic, strong, readonly) UIImage *floatViewPicImage;
+/** 浮窗链接imageView */
+@property (weak, nonatomic) UILabel *floatViewURLImageView;
+/** 浮窗链接textField */
+@property (weak, nonatomic) UITextField *floatViewURLTextField;
+/** 发布浮窗按钮 */
+@property (weak, nonatomic) UIButton *publishFloatViewBtn;
+
 /** 底部pickerview */
 @property (nonatomic ,strong) UIPickerView *pickerView;
-/** 图文直播状态开关 */
-@property (weak, nonatomic) IBOutlet UISwitch *livingStateSwitch;
-/** 用户评论框开关 */
-@property (weak, nonatomic) IBOutlet UISwitch *userCommentSwitch;
-/** 上传浮窗图片按钮 */
-@property (weak, nonatomic) IBOutlet UIButton *uploadFloatViewPicBtn;
-/** 显示的图片 */
-@property (nonatomic, strong, readonly) UIImage *image;
-/** 浮窗链接 */
-@property (weak, nonatomic) IBOutlet UITextField *floatViewURLTextField;
-/** 发布按钮 */
-@property (weak, nonatomic) IBOutlet UIButton *publishBtn;
 
 @end
 
@@ -49,6 +92,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 设置scrollView
+    [self setUpScrollView];
     
     // 设置导航条
     [self setUpNavigationContent];
@@ -66,6 +112,33 @@
     
     // 改变直播状态开关和用户评论框开关状态
     [self changeLivingStateSwitchAndUserCommentSwitch];
+}
+
+#pragma mark - 添加视图
+/**
+ *  设置scrollView
+ */
+- (void)setUpScrollView
+{
+    UIScrollView *scrollView = [[UIScrollView alloc] init];
+    scrollView.contentSize = CGSizeMake(0, 1500);
+    scrollView.backgroundColor = [UIColor redColor];
+    
+    [self.view addSubview:scrollView];
+    _scrollView = scrollView;
+    
+}
+
+/**
+ *  scrollView的内容视图
+ */
+- (void)setUpScrollContentView
+{
+    UIView *scrollContentView = [[UIView alloc] init];
+    scrollContentView.frame = CGRectMake(0, 0, HYScreenW, 1500);
+    [self.scrollView addSubview:scrollContentView];
+    
+    _scrollContentView = scrollContentView;
 }
 
 /**
@@ -275,7 +348,7 @@
     [manager POST:createProjectUploadImageURL parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         // 把图片转换成NSData类型的数据
-        NSData *data = UIImageJPEGRepresentation(self.image, 1);
+        NSData *data = UIImageJPEGRepresentation(self.floatViewPicImage, 1);
         
         [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"image/jpeg"];
         
@@ -292,14 +365,11 @@
         }];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        NSLog(@"%@", error);
-        
         [MBProgressHUD hideHUD];
         [MBProgressHUD showMessage:@"解析失败"];
         [MBProgressHUD hideHUD];
     }];
 }
-
 
 #pragma mark - ActionSheet Delegate
 
@@ -351,10 +421,10 @@
     
     UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    [self.uploadFloatViewPicBtn setBackgroundImage:image forState:UIControlStateNormal];
-    [self.uploadFloatViewPicBtn setImage:nil forState:UIControlStateNormal];
+    [self.floatViewPicUploadBtn setBackgroundImage:image forState:UIControlStateNormal];
+    [self.floatViewPicUploadBtn setImage:nil forState:UIControlStateNormal];
     
-    _image = image;
+    _floatViewPicImage = image;
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -375,7 +445,7 @@
     
     [manager GET:activityURL parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        _projectItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
+        _projectPreviewItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -392,20 +462,20 @@
 //指定每个表盘上有几行数据
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return _projectItem.count;
+    return _projectPreviewItem.count;
 }
 #pragma mark UIPickerView Delegate Method
 //指定每行如何展示数据
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    HYPublishPicAndWordItem *item = _projectItem[row];
+    HYPublishPicAndWordItem *item = _projectPreviewItem[row];
     
     return item.projectTitle;
 }
 // 选中pickerview
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    HYPublishPicAndWordItem *item = _projectItem[row];
+    HYPublishPicAndWordItem *item = _projectPreviewItem[row];
     self.projectSelectLabel.text = item.projectTitle;
     
     [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;

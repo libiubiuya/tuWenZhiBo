@@ -5,18 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYManageProjectVC">
-            <connections>
-                <outlet property="floatViewURLTextField" destination="t7m-PD-4SK" id="huI-Le-c7v"/>
-                <outlet property="livingStateSwitch" destination="ZGp-5t-YA7" id="N3o-lB-wsl"/>
-                <outlet property="projectSelectBtn" destination="D7Z-cq-8Ij" id="wvC-bf-IVc"/>
-                <outlet property="projectSelectLabel" destination="vmF-Qs-Wuc" id="d0E-EK-r2R"/>
-                <outlet property="publishBtn" destination="idK-gk-H7x" id="kM9-P8-ehx"/>
-                <outlet property="uploadFloatViewPicBtn" destination="kKb-qs-3Rg" id="PZP-im-Atu"/>
-                <outlet property="userCommentSwitch" destination="kju-hl-i9u" id="OJN-JD-7ex"/>
-                <outlet property="view" destination="iN0-l3-epB" id="f48-g8-63y"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYManageProjectVC"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -43,9 +32,6 @@
                                         <constraint firstAttribute="width" constant="40" id="Cio-t0-1uu"/>
                                     </constraints>
                                     <state key="normal" image="02-b-图文发布-4"/>
-                                    <connections>
-                                        <action selector="projectSelectBtnClick" destination="-1" eventType="touchUpInside" id="DH1-tW-MCt"/>
-                                    </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="02-b-图文发布-5" translatesAutoresizingMaskIntoConstraints="NO" id="fCw-4Y-lSe">
                                     <rect key="frame" x="10" y="40" width="310" height="40"/>
@@ -99,9 +85,6 @@
                                         <constraint firstAttribute="height" constant="31" id="0AK-RF-HYn"/>
                                         <constraint firstAttribute="width" constant="49" id="WgN-Ew-ugo"/>
                                     </constraints>
-                                    <connections>
-                                        <action selector="livingStateSwitchClick" destination="-1" eventType="valueChanged" id="cZG-CS-bjO"/>
-                                    </connections>
                                 </switch>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -135,9 +118,6 @@
                                         <constraint firstAttribute="width" constant="49" id="MCT-M3-rEo"/>
                                         <constraint firstAttribute="height" constant="31" id="Vmf-ic-jdW"/>
                                     </constraints>
-                                    <connections>
-                                        <action selector="userCommentSwitchClick" destination="-1" eventType="valueChanged" id="TlM-Ho-uXD"/>
-                                    </connections>
                                 </switch>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -159,16 +139,6 @@
                                         <constraint firstAttribute="width" constant="100" id="fJ1-Qm-8LB"/>
                                     </constraints>
                                 </imageView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="idK-gk-H7x">
-                                    <rect key="frame" x="10" y="335" width="355" height="35"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="35" id="BVk-Hf-bU2"/>
-                                    </constraints>
-                                    <state key="normal" image="02-e-项目管理-2"/>
-                                    <connections>
-                                        <action selector="publishBtnClick" destination="-1" eventType="touchUpInside" id="Uac-cU-zcg"/>
-                                    </connections>
-                                </button>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t7m-PD-4SK">
                                     <rect key="frame" x="10" y="40" width="355" height="35"/>
                                     <constraints>
@@ -192,9 +162,6 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKb-qs-3Rg">
                                             <rect key="frame" x="0.0" y="0.0" width="355" height="210"/>
                                             <state key="normal" image="02-e-项目管理-1" backgroundImage="02-a-项目创建-7"/>
-                                            <connections>
-                                                <action selector="uploadFloatViewPicBtnClick" destination="-1" eventType="touchUpInside" id="uXb-op-TyP"/>
-                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -213,6 +180,13 @@
                                         </mask>
                                     </variation>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="idK-gk-H7x">
+                                    <rect key="frame" x="10" y="335" width="355" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="BVk-Hf-bU2"/>
+                                    </constraints>
+                                    <state key="normal" image="02-e-项目管理-2"/>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -281,14 +255,8 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="200.5" y="533.5"/>
+            <point key="canvasLocation" x="806.5" y="592.5"/>
         </view>
-        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QSE-GN-iFZ">
-            <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <state key="normal" title="Button"/>
-            <point key="canvasLocation" x="761" y="671"/>
-        </button>
     </objects>
     <resources>
         <image name="02-a-项目创建-7" width="340" height="170"/>
