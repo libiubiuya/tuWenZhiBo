@@ -20,68 +20,42 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import <MJExtension/MJExtension.h>
+#import <SDAutoLayout.h>
 
 @interface HYManageProjectVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-/** 滚动视图 */
-@property (strong, nonatomic) UIScrollView *scrollView;
-/** 滚动视图的内容视图 */
-@property (strong, nonatomic) UIView *scrollContentView;
-
-/** 项目选择视图 */
-@property (strong, nonatomic) UIView *projectSelectView;
-/** 项目选择imageView */
-@property (weak, nonatomic) UIImageView *projectSelectImageView;
 /** 项目选择label */
-@property (weak, nonatomic) UILabel *projectSelectLabel;
+@property (weak, nonatomic) IBOutlet UILabel *projectSelectLabel;
 /** 项目选择按钮 */
-@property (weak, nonatomic) UIButton *projectSelectBtn;
+@property (weak, nonatomic) IBOutlet UIButton *projectSelectBtn;
 /** 项目预览item */
 @property (nonatomic, strong) NSMutableArray *projectPreviewItem;
 
-/** 项目头图和标题view */
-@property (strong, nonatomic) UIView *projectHeadPicAndTitleView;
-/** 项目头图imageView */
-@property (weak, nonatomic) UILabel *projectHeadPicImageView;
 /** 项目头图button */
-@property (weak, nonatomic) UIButton *projectHeadPicBtn;
+@property (weak, nonatomic) IBOutlet UIButton *projectHeadPicBtn;
 /** 显示的图片 */
 @property (nonatomic, strong, readonly) UIImage *projectHeadPicImage;
-/** 项目标题imageView */
-@property (weak, nonatomic) UILabel *projectTitleImageView;
 /** 项目标题textField */
-@property (weak, nonatomic) UITextField *projectTitleTextField;
+@property (weak, nonatomic) IBOutlet UITextField *projectTitleTextField;
 /** 修改头图和标题button */
-@property (weak, nonatomic) UIButton *projectHeadPicAndTitleReviseBtn;
+@property (weak, nonatomic) IBOutlet UIButton *projectHeadPicAndTitleReviseBtn;
 
-/** 图文直播状态view */
-@property (strong, nonatomic) UIView *livingStateView;
-/** 图文直播状态imageView */
-@property (weak, nonatomic) UIImageView *livingStateImageView;
 /** 图文直播状态开关 */
-@property (weak, nonatomic) UISwitch *livingStateSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *livingStateSwitch;
 
-/** 用户评论框view */
-@property (strong, nonatomic) UIView *userCommentView;
-/** 用户评论框imageView */
-@property (weak, nonatomic) UILabel *userCommentImageView;
 /** 用户评论框开关 */
-@property (weak, nonatomic) UISwitch *userCommentSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *userCommentSwitch;
 
-/** 浮窗图片和链接view */
-@property (strong, nonatomic) UIView *floatViewPicAndURLView;
-/** 浮窗图片imageView */
-@property (weak, nonatomic) UILabel *floatViewPicImageView;
 /** 浮窗图片button */
-@property (weak, nonatomic) UIButton *floatViewPicUploadBtn;
+@property (weak, nonatomic) IBOutlet UIButton *floatViewPicUploadBtn;
 /** 显示的图片 */
 @property (nonatomic, strong, readonly) UIImage *floatViewPicImage;
-/** 浮窗链接imageView */
-@property (weak, nonatomic) UILabel *floatViewURLImageView;
 /** 浮窗链接textField */
-@property (weak, nonatomic) UITextField *floatViewURLTextField;
+@property (weak, nonatomic) IBOutlet UITextField *floatViewURLTextField;
 /** 发布浮窗按钮 */
-@property (weak, nonatomic) UIButton *publishFloatViewBtn;
+@property (weak, nonatomic) IBOutlet UIButton *publishFloatViewBtn;
+/** 重置浮窗按钮 */
+@property (weak, nonatomic) IBOutlet UIButton *resetFloatViewBtn;
 
 /** 底部pickerview */
 @property (nonatomic ,strong) UIPickerView *pickerView;
@@ -120,25 +94,7 @@
  */
 - (void)setUpScrollView
 {
-    UIScrollView *scrollView = [[UIScrollView alloc] init];
-    scrollView.contentSize = CGSizeMake(0, 1500);
-    scrollView.backgroundColor = [UIColor redColor];
     
-    [self.view addSubview:scrollView];
-    _scrollView = scrollView;
-    
-}
-
-/**
- *  scrollView的内容视图
- */
-- (void)setUpScrollContentView
-{
-    UIView *scrollContentView = [[UIView alloc] init];
-    scrollContentView.frame = CGRectMake(0, 0, HYScreenW, 1500);
-    [self.scrollView addSubview:scrollContentView];
-    
-    _scrollContentView = scrollContentView;
 }
 
 /**
@@ -321,7 +277,7 @@
 }
 
 /**
- *  点击发布按钮
+ *  点击发布浮窗图片按钮
  */
 - (IBAction)publishBtnClick
 {
