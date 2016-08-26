@@ -24,9 +24,8 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import <MJExtension/MJExtension.h>
-#import <HMImagePickerController.h>
 
-@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, HMImagePickerControllerDelegate, TZImagePickerControllerDelegate>
+@interface HYPublishPictureAndWordVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, TZImagePickerControllerDelegate>
 /** 项目文字功能view */
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 /** 添加图片按钮左边约束 */
