@@ -115,6 +115,9 @@
     [self.navigationController pushViewController:user animated:YES];
 }
 
+/**
+ *  设置修改按钮
+ */
 - (void)setUpReviseBtn
 {
     HYUserInfo *userInfoItem = [HYUserManager sharedUserInfoManager].userInfo;
@@ -292,6 +295,19 @@
  */
 - (IBAction)publishBtnClick
 {
+    [self uploadDataWithImage:self.floatViewPicUploadBtn.imageView.image URL:manageProjectPublishPicAndWordURL textField:self.floatViewURLTextField];
+}
+
+/**
+ *  点击修改按钮
+ */
+- (IBAction)reviseBtnClick
+{
+    [self uploadDataWithImage:self.projectHeadPicBtn.imageView.image URL:manageProjectRevisePicAndWordURL textField:self.projectTitleTextField];
+}
+
+- (void)uploadDataWithImage:(UIImage *)jpgRepresentationImage URL:(NSString *)showWebViewURL textField:(UITextField *)textField
+{
     //用post上传文件
     [MBProgressHUD showMessage:@"正在上传"];
     
@@ -315,13 +331,13 @@
     [manager POST:createProjectUploadImageURL parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         // 把图片转换成NSData类型的数据
-        NSData *data = UIImageJPEGRepresentation(self.clickBtn.imageView.image, 1);
+        NSData *data = UIImageJPEGRepresentation(jpgRepresentationImage, 1);
         
         [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"image/jpeg"];
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [manager GET:[NSString stringWithFormat:manageProjectPublishPicAndWordURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, fileName, self.floatViewURLTextField.text] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [manager GET:[NSString stringWithFormat:showWebViewURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, fileName, textField.text] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [MBProgressHUD hideHUD];
             [MBProgressHUD showMessage:@"上传成功"];
             [MBProgressHUD hideHUD];
@@ -331,7 +347,6 @@
             [MBProgressHUD hideHUD];
         }];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
         [MBProgressHUD hideHUD];
         [MBProgressHUD showMessage:@"解析失败"];
         [MBProgressHUD hideHUD];
@@ -399,7 +414,11 @@
     [_clickBtn setBackgroundImage:image forState:UIControlStateNormal];
     [_clickBtn setImage:nil forState:UIControlStateNormal];
     
-    _clickBtn.imageView.image = image;
+    if (_clickBtn == self.projectHeadPicBtn) {
+        _projectHeadPicBtn.imageView.image = _clickBtn.imageView.image;
+    } else if (_clickBtn == self.floatViewPicUploadBtn) {
+        _floatViewPicUploadBtn.imageView.image = _clickBtn.imageView.image;
+    }
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

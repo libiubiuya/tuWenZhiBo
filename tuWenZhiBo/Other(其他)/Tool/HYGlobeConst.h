@@ -45,5 +45,6 @@ UIKIT_EXTERN NSString *const manageCommentLoadWebViewURL;
 /** 项目管理模块 图片和文字发布URL */
 UIKIT_EXTERN NSString *const manageProjectPublishPicAndWordURL;
 
-
+/** 项目管理模块 项目标题图片修改URL */
+UIKIT_EXTERN NSString *const manageProjectRevisePicAndWordURL;
 

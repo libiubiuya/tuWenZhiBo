@@ -41,11 +41,11 @@ NSString *const previewProjectLoadWebViewHighPressionURL = @"http://bbs.ijntv.cn
 /** 评论管理模块 加载网页URL */
 NSString *const manageCommentLoadWebViewURL = @"http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@";
 
-/** 项目管理模块 图片和文字发布URL */
+/** 项目管理模块 浮窗的图片和文字发布URL */
 NSString *const manageProjectPublishPicAndWordURL = @"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=f&jpg=%@&url=%@";
 
 /** 项目管理模块 项目标题图片修改URL */
-// http://ued.ijntv.cn/manage/edit.php?huodongid=%@&title=%@&titlejpg=%@
+NSString *const manageProjectRevisePicAndWordURL = @"http://ued.ijntv.cn/manage/edit.php?huodongid=%@&title=%@&titlejpg=%@";
 
 
 
