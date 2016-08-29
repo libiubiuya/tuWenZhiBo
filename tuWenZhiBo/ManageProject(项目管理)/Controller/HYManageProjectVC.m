@@ -59,6 +59,8 @@
 
 /** 底部pickerview */
 @property (nonatomic ,strong) UIPickerView *pickerView;
+/** 上传头图或者上传浮窗图片的按钮 */
+@property (weak, nonatomic) UIButton *clickBtn;
 
 @end
 
@@ -263,8 +265,10 @@
 /**
  *  上传浮窗图片按钮点击
  */
-- (IBAction)uploadFloatViewPicBtnClick
+- (IBAction)uploadFloatViewPicBtnClickWithBtn:(UIButton *)btn
 {
+    _clickBtn = btn;
+    
     // 取消第一响应者
     [self.floatViewURLTextField endEditing:YES];
     
@@ -377,8 +381,8 @@
     
     UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    [self.floatViewPicUploadBtn setBackgroundImage:image forState:UIControlStateNormal];
-    [self.floatViewPicUploadBtn setImage:nil forState:UIControlStateNormal];
+    [_clickBtn setBackgroundImage:image forState:UIControlStateNormal];
+    [_clickBtn setImage:nil forState:UIControlStateNormal];
     
     _floatViewPicImage = image;
     
