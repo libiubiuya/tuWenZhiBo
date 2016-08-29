@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class HYPublishPicAndWordItem;
+@class HYPublishPicAndWordItem, HYUserInfo;
 @interface HYManageProjectVC : UIViewController
 
 /** 图文发布item */
 @property (strong, nonatomic) HYPublishPicAndWordItem *projectItems;
+
+/** 用户信息 */
+@property (strong, nonatomic) HYUserInfo *userInfoItem;
 
 @end

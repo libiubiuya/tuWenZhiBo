@@ -12,6 +12,8 @@
 #import "HYPublishPicAndWordItem.h"
 #import "HYPickerViewInfoManager.h"
 #import "MBProgressHUD+HYHUD.h"
+#import "HYUserManager.h"
+#import "HYUserInfo.h"
 
 #import <WebKit/WebKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -69,11 +71,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 设置scrollView
-    [self setUpScrollView];
-    
     // 设置导航条
     [self setUpNavigationContent];
+    
+    // 设置修改按钮
+    [self setUpReviseBtn];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -88,15 +90,6 @@
     
     // 改变直播状态开关和用户评论框开关状态
     [self changeLivingStateSwitchAndUserCommentSwitch];
-}
-
-#pragma mark - 添加视图
-/**
- *  设置scrollView
- */
-- (void)setUpScrollView
-{
-    
 }
 
 /**
@@ -120,6 +113,20 @@
     user.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:user animated:YES];
+}
+
+- (void)setUpReviseBtn
+{
+    HYUserInfo *userInfoItem = [HYUserManager sharedUserInfoManager].userInfo;
+    if ([userInfoItem.userperssion isEqualToString:@"1"]) {
+        
+        self.projectHeadPicAndTitleReviseBtn.enabled = NO;
+        
+    } else if ([userInfoItem.userperssion isEqualToString:@"2"]){
+        
+        self.projectHeadPicAndTitleReviseBtn.enabled = YES;
+        
+    }
 }
 
 #pragma mark - ----------click----------------
@@ -308,7 +315,7 @@
     [manager POST:createProjectUploadImageURL parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         // 把图片转换成NSData类型的数据
-        NSData *data = UIImageJPEGRepresentation(self.floatViewPicImage, 1);
+        NSData *data = UIImageJPEGRepresentation(self.clickBtn.imageView.image, 1);
         
         [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"image/jpeg"];
         
@@ -331,6 +338,14 @@
     }];
 }
 
+- (IBAction)resetBtnClick
+{
+    _floatViewURLTextField.text = nil;
+    self.clickBtn.imageView.image = nil;
+    
+    [self.clickBtn setImage:[UIImage imageNamed:@"02-e-项目管理-1"] forState:UIControlStateNormal];
+    [self.clickBtn setBackgroundImage:[UIImage imageNamed:@"02-a-项目创建-7"] forState:UIControlStateNormal];
+}
 #pragma mark - ActionSheet Delegate
 
 /**
@@ -384,7 +399,7 @@
     [_clickBtn setBackgroundImage:image forState:UIControlStateNormal];
     [_clickBtn setImage:nil forState:UIControlStateNormal];
     
-    _floatViewPicImage = image;
+    _clickBtn.imageView.image = image;
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

@@ -222,6 +222,9 @@
                                                 <constraint firstAttribute="height" constant="35" id="BVk-Hf-bU2"/>
                                             </constraints>
                                             <state key="normal" image="02-a-项目创建-4"/>
+                                            <connections>
+                                                <action selector="resetBtnClick" destination="-1" eventType="touchUpInside" id="LjD-hG-aao"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMj-0v-JGj">
                                             <rect key="frame" x="10" y="310" width="355" height="35"/>
