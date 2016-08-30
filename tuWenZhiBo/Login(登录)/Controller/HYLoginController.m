@@ -83,9 +83,6 @@
     //如果用户未登陆则把根视图控制器改变成登陆视图控制器
     if (username != nil)
     {
-        NSLog(@"%@", username);
-        NSLog(@"%@", password);
-        
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:loginURL, [username stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [password stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         

@@ -26,6 +26,11 @@
 
 @interface HYManageProjectVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+/** scrollContentView */
+@property (weak, nonatomic) IBOutlet UIView *scrollContentView;
+@property (weak, nonatomic) IBOutlet UIView *allView;
+
 /** 项目选择label */
 @property (weak, nonatomic) IBOutlet UILabel *projectSelectLabel;
 /** 项目选择按钮 */
@@ -76,6 +81,9 @@
     
     // 设置修改按钮
     [self setUpReviseBtn];
+    
+    // 设置取消键盘
+    [self setUpDismissKeyboard];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -130,6 +138,23 @@
         self.projectHeadPicAndTitleReviseBtn.enabled = YES;
         
     }
+}
+
+/**
+ *  设置取消键盘
+ */
+- (void)setUpDismissKeyboard
+{
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchScrollView)];
+    [recognizer setNumberOfTapsRequired:1];
+    [recognizer setNumberOfTouchesRequired:1];
+    [self.scrollView addGestureRecognizer:recognizer];
+}
+
+- (void)touchScrollView
+{
+    [self.projectTitleTextField resignFirstResponder];
+    [self.floatViewURLTextField resignFirstResponder];
 }
 
 #pragma mark - ----------click----------------
@@ -273,14 +298,14 @@
 }
 
 /**
- *  上传浮窗图片按钮点击
+ *  选择图片按钮点击
  */
 - (IBAction)uploadFloatViewPicBtnClickWithBtn:(UIButton *)btn
 {
     _clickBtn = btn;
     
     // 取消第一响应者
-    [self.floatViewURLTextField endEditing:YES];
+    [self touchScrollView];
     
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择照片"
                                                        delegate:self
@@ -295,7 +320,7 @@
  */
 - (IBAction)publishBtnClick
 {
-    [self uploadDataWithImage:self.floatViewPicUploadBtn.imageView.image URL:manageProjectPublishPicAndWordURL textField:self.floatViewURLTextField];
+    [self uploadDataWithImage:self.floatViewPicImage URL:manageProjectPublishPicAndWordURL textField:self.floatViewURLTextField];
 }
 
 /**
@@ -303,7 +328,7 @@
  */
 - (IBAction)reviseBtnClick
 {
-    [self uploadDataWithImage:self.projectHeadPicBtn.imageView.image URL:manageProjectRevisePicAndWordURL textField:self.projectTitleTextField];
+    [self uploadDataWithImage:self.projectHeadPicImage URL:manageProjectRevisePicAndWordURL textField:self.projectTitleTextField];
 }
 
 - (void)uploadDataWithImage:(UIImage *)jpgRepresentationImage URL:(NSString *)showWebViewURL textField:(UITextField *)textField
@@ -320,6 +345,8 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSLog(@"%@", fileName);
     
     NSDictionary *paremeters1 = @{@"jpg":fileName};
     
@@ -411,13 +438,15 @@
     
     UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
     
+    
+    
     [_clickBtn setBackgroundImage:image forState:UIControlStateNormal];
     [_clickBtn setImage:nil forState:UIControlStateNormal];
     
     if (_clickBtn == self.projectHeadPicBtn) {
-        _projectHeadPicBtn.imageView.image = _clickBtn.imageView.image;
+        _projectHeadPicImage = image;
     } else if (_clickBtn == self.floatViewPicUploadBtn) {
-        _floatViewPicUploadBtn.imageView.image = _clickBtn.imageView.image;
+        _floatViewPicImage = image;
     }
     
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -476,15 +505,6 @@
     
     // 改变直播状态开关和用户评论框开关状态
     [self changeLivingStateSwitchAndUserCommentSwitch];
-}
-
-#pragma mark - -----------other------------
-/**
- *  取消第一响应者
- */
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.view endEditing:YES];
 }
 
 @end
