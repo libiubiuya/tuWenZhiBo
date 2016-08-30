@@ -63,6 +63,12 @@
  */
 - (IBAction)loginOutBtnClick
 {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //移除UserDefaults中存储的用户信息
+    [userDefaults removeObjectForKey:@"name"];
+    [userDefaults removeObjectForKey:@"password"];
+    [userDefaults synchronize];
+    
     // 进入到登录界面
     HYLoginController *userC = [[HYLoginController alloc] init];
     

@@ -49,6 +49,14 @@
     [self setUpDelegate];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // 判断用户登录情况
+    [self judgeUserLoginCircumstance];
+}
+
 #pragma mark - ---------连线方法------------
 
 /**
@@ -57,6 +65,64 @@
 - (IBAction)loginClick
 {
     [MBProgressHUD showMessage:@"正在登录"];
+    
+    [self uploadData];
+}
+
+#pragma mark - ----------action----------
+/**
+ *  判断用户登录情况
+ */
+- (void)judgeUserLoginCircumstance
+{
+    //判断是否登陆，由登陆状态判断启动页面 //获取UserDefault
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *username = [userDefault objectForKey:@"username"];
+    NSString *password = [userDefault objectForKey:@"password"];
+    
+    //如果用户未登陆则把根视图控制器改变成登陆视图控制器
+    if (username != nil)
+    {
+        NSLog(@"%@", username);
+        NSLog(@"%@", password);
+        
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:loginURL, [username stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [password stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+            
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            
+            HYUserInfo *userInfo = [[HYUserInfo alloc] init];
+            userInfo.state = dict[@"state"];
+            userInfo.reason = dict[@"reason"];
+            
+            if ([userInfo.state isEqualToString:@"success"]) {
+                
+                userInfo.userID = dict[@"userinfo"][@"id"];
+                userInfo.username = dict[@"userinfo"][@"username"];
+                userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
+                userInfo.userperssion = dict[@"userinfo"][@"perssion"];
+                
+                // 进入到主界面
+                HYTabBarController *tabBarVc = [[HYTabBarController alloc] init];
+                
+                [HYUserManager sharedUserInfoManager].userInfo = userInfo;
+                
+                [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVc;
+            }
+        }];
+    }
+}
+
+/**
+ *  上传数据
+ */
+- (void)uploadData
+{
+    
+    NSString *username = self.userNameTextField.text;
+    NSString *password = self.passwordTextField.text;
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:loginURL, [_userNameTextField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [_passwordTextField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -76,6 +142,12 @@
             userInfo.username = dict[@"userinfo"][@"username"];
             userInfo.userjpg = dict[@"userinfo"][@"userjpg"];
             userInfo.userperssion = dict[@"userinfo"][@"perssion"];
+            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            //登陆成功后把用户名和密码存储到UserDefault
+            [userDefaults setObject:username forKey:@"username"];
+            [userDefaults setObject:password forKey:@"password"];
+            [userDefaults synchronize];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
