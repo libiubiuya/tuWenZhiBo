@@ -331,6 +331,13 @@
     [self uploadDataWithImage:self.projectHeadPicImage URL:manageProjectRevisePicAndWordURL textField:self.projectTitleTextField];
 }
 
+/**
+ *  上传方法
+ *
+ *  @param jpgRepresentationImage 需要转码的图片
+ *  @param showWebViewURL         展示界面的URL
+ *  @param textField              输入内容的文本框
+ */
 - (void)uploadDataWithImage:(UIImage *)jpgRepresentationImage URL:(NSString *)showWebViewURL textField:(UITextField *)textField
 {
     //用post上传文件
@@ -343,17 +350,9 @@
     NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    NSLog(@"%@", fileName);
-    
     NSDictionary *paremeters1 = @{@"jpg":fileName};
-    
-    /**
-     *  http://bbs.ijntv.cn/mobilejinan/graphic/images/你的文件名
-     *  这是图片上传完成后在浏览器查看是否存在的路径
-     */
     
     [manager POST:createProjectUploadImageURL parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
@@ -364,7 +363,7 @@
         
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [manager GET:[NSString stringWithFormat:showWebViewURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, fileName, textField.text] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [manager GET:[NSString stringWithFormat:showWebViewURL, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [textField.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [MBProgressHUD hideHUD];
             [MBProgressHUD showMessage:@"上传成功"];
             [MBProgressHUD hideHUD];
@@ -437,8 +436,6 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *image =  [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    
     
     [_clickBtn setBackgroundImage:image forState:UIControlStateNormal];
     [_clickBtn setImage:nil forState:UIControlStateNormal];

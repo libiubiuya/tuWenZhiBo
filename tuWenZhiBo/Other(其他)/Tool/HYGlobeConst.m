@@ -42,7 +42,7 @@ NSString *const previewProjectLoadWebViewHighPressionURL = @"http://bbs.ijntv.cn
 NSString *const manageCommentLoadWebViewURL = @"http://bbs.ijntv.cn/mobilejinan/graphic/manage/resource/saomiaom.php?id=%@";
 
 /** 项目管理模块 浮窗的图片和文字发布URL */
-NSString *const manageProjectPublishPicAndWordURL = @"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=f&jpg=%@&url=%@";
+NSString *const manageProjectPublishPicAndWordURL = @"http://ued.ijntv.cn/manage/set.php?huodongid=%@&set=f&url=%@&jpg=%@";
 
 /** 项目管理模块 项目标题图片修改URL */
 NSString *const manageProjectRevisePicAndWordURL = @"http://ued.ijntv.cn/manage/edit.php?huodongid=%@&title=%@&titlejpg=%@";

@@ -189,7 +189,7 @@
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
-        [uploadProgress addObserver:self forKeyPath:@"completedUnitCount" options:NSKeyValueObservingOptionNew context:nil];
+//        [uploadProgress addObserver:self forKeyPath:@"completedUnitCount" options:NSKeyValueObservingOptionNew context:nil];
         
         //用post上传文件
 //        [MBProgressHUD showMessage:[NSString stringWithFormat:@"正在上传 %f%%", _progressValue]];
