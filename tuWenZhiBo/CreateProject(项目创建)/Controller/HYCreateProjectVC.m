@@ -39,6 +39,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    _projectTitle.text = nil;
     
     // 设置导航条
     [self setUpNavigationContent];
@@ -151,7 +152,36 @@
 
 #pragma mark - ------------发布------------
 
+/**
+ *  点击发布按钮
+ */
 - (IBAction)publishBtnClick
+{
+    // 判断上传内容是否为空
+    [self judgeContentValue];
+}
+
+/**
+ *  判断上传内容是否为空
+ */
+- (void)judgeContentValue
+{
+    if (_projectTitle.text.length == 0 && _image == nil) {
+        [MBProgressHUD showMessage:@"图片和标题均为空"];
+        [MBProgressHUD hideHUD];
+    } else if (_projectTitle.text.length != 0 && _image == nil) {
+        NSLog(@"%@", self.projectTitle.text);
+        [MBProgressHUD showMessage:@"图片为空"];
+        [MBProgressHUD hideHUD];
+    } else if (_projectTitle.text.length == 0 && _image != nil) {
+        [MBProgressHUD showMessage:@"标题为空"];
+        [MBProgressHUD hideHUD];
+    } else if (_projectTitle.text.length != 0 && _image != nil) {
+        [self uploadData];
+    }
+}
+
+- (void)uploadData
 {
     [MBProgressHUD showMessage:@"正在上传"];
     
@@ -174,44 +204,36 @@
     
     [manager POST:createProjectUploadImageURL parameters:paremeters1 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        // 把图片转换成NSData类型的数据
         NSData *data = UIImageJPEGRepresentation(self.image, 1.0);
         
-        /*
-         //拼接二进制文件数据
-         第一个参数：要上传的文件的二进制数据
-         第二个参数：服务器接口规定的名称
-         第三个参数：这个参数上传到服务器之后用什么名字来进行保存
-         第四个参数：上传文件的MIMEType类型
-         */
-
         [formData appendPartWithFileData:data name:@"upfile" fileName:fileName mimeType:@"image/jpeg"];
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
-//        [uploadProgress addObserver:self forKeyPath:@"completedUnitCount" options:NSKeyValueObservingOptionNew context:nil];
+        //        [uploadProgress addObserver:self forKeyPath:@"completedUnitCount" options:NSKeyValueObservingOptionNew context:nil];
         
         //用post上传文件
-//        [MBProgressHUD showMessage:[NSString stringWithFormat:@"正在上传 %f%%", _progressValue]];
+        //        [MBProgressHUD showMessage:[NSString stringWithFormat:@"正在上传 %f%%", _progressValue]];
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [manager GET:[NSString stringWithFormat:createProjectPublishURL, [self.projectTitle.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传成功"];
+            [MBProgressHUD hideHUD];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showMessage:@"上传失败"];
+            [MBProgressHUD hideHUD];
         }];
         
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传成功"];
-        [MBProgressHUD hideHUD];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         [MBProgressHUD hideHUD];
         [MBProgressHUD showMessage:@"上传失败"];
         [MBProgressHUD hideHUD];
     }];
-    
 }
 
 //获取并计算当前文件的上传进度
