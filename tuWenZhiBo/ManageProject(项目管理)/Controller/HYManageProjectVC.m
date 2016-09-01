@@ -24,7 +24,14 @@
 #import <MJExtension/MJExtension.h>
 #import <SDAutoLayout.h>
 
-@interface HYManageProjectVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+static const CGFloat kSpacing = 8.0f;                       //间隔
+static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
+
+@interface HYManageProjectVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
+{
+    float _cursorHeight;                                    //光标距底部的高度
+    float _spacingWithKeyboardAndCursor;                    //光标与键盘之间的间隔
+}
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 /** scrollContentView */
@@ -84,6 +91,9 @@
     
     // 设置取消键盘
     [self setUpDismissKeyboard];
+    
+    // 给键盘添加监听
+    [self addObserverOnKeyboard];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -155,6 +165,48 @@
 {
     [self.projectTitleTextField resignFirstResponder];
     [self.floatViewURLTextField resignFirstResponder];
+}
+
+/**
+ *  给键盘添加监听
+ */
+- (void)addObserverOnKeyboard
+{
+    //增加监听，当键盘出现或改变时收出消息
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    //增加监听，当键退出时收出消息
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+//当键盘出现或改变时调用
+- (void)keyboardWillShow:(NSNotification *)aNotification {
+    //获取键盘的高度
+    NSDictionary *userInfo = [aNotification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    float keyboardHeight = keyboardRect.size.height;
+    _spacingWithKeyboardAndCursor = keyboardHeight - _cursorHeight;
+    if (_spacingWithKeyboardAndCursor > 0) {
+        [UIView animateWithDuration:kAnimationDuration animations:^{
+            //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+            self.view.frame = CGRectMake(0.0f, -(_spacingWithKeyboardAndCursor), self.view.frame.size.width, self.view.frame.size.height);
+        }];
+    }
+}
+//当键退出时调用
+- (void)keyboardWillHide:(NSNotification *)aNotification {
+    if (_spacingWithKeyboardAndCursor > 0) {
+        [UIView animateWithDuration:kAnimationDuration animations:^{
+            //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+            self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+    }
 }
 
 #pragma mark - ----------click----------------
@@ -531,6 +583,18 @@
     
     // 改变直播状态开关和用户评论框开关状态
     [self changeLivingStateSwitchAndUserCommentSwitch];
+}
+
+#pragma mark - --------UITextFieldDelegate-------
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if ([textField isEqual:self.projectTitleTextField]) {
+        _cursorHeight = self.view.frame.size.height - CGRectGetMaxY(textField.frame);
+    } else if ([textField isEqual:self.floatViewURLTextField]) {
+        _cursorHeight = self.view.frame.size.height - CGRectGetMaxY(textField.frame);
+    }
+    
+    return YES;
 }
 
 @end
