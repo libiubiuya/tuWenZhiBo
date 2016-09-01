@@ -167,14 +167,11 @@
 - (void)judgeContentValue
 {
     if (_projectTitle.text.length == 0 && _image == nil) {
-        [MBProgressHUD showMessage:@"图片和标题均为空"];
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"图片和标题均为空"];
     } else if (_projectTitle.text.length != 0 && _image == nil) {
-        [MBProgressHUD showMessage:@"图片为空"];
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"图片为空"];
     } else if (_projectTitle.text.length == 0 && _image != nil) {
-        [MBProgressHUD showMessage:@"标题为空"];
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"标题为空"];
     } else if (_projectTitle.text.length != 0 && _image != nil) {
         [self uploadData];
     }
@@ -217,21 +214,13 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [manager GET:[NSString stringWithFormat:createProjectPublishURL, [self.projectTitle.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传成功"];
-            [MBProgressHUD hideHUD];
+            [MBProgressHUD showSuccess:@"上传成功"];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传失败"];
-            [MBProgressHUD hideHUD];
+            [MBProgressHUD showError:@"上传失败"];
         }];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传失败"];
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"上传失败"];
     }];
 }
 
