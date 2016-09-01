@@ -172,12 +172,12 @@
  */
 - (IBAction)publishBtnClick
 {
-    if (_projectTitleTextView.text.length == 0 && _images == nil && _coverImage == nil) {
-        [MBProgressHUD showMessage:@"图片和标题均为空"];
-        [MBProgressHUD hideHUD];
+    if (self.projectSelectLabel.text.length == 0) {
+        [MBProgressHUD showError:@"未选择项目"];
+    } else if (_projectTitleTextView.text.length == 0 && _images == nil && _coverImage == nil) {
+        [MBProgressHUD showError:@"图片和标题均为空"];
     } else if (_projectTitleTextView.text.length != 0 && _images == nil && _coverImage == nil) {
-        [MBProgressHUD showMessage:@"图片或视频为空"];
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"图片或视频为空"];
     } else if (_images != nil) {
         [self uploadImages];
     } else if (_projectTitleTextView.text.length != 0 && _images != nil) {
@@ -310,19 +310,13 @@
             if (_responseObjects == _selectedImageArray.count) {
                 
                 [manager GET:[NSString stringWithFormat:publishPicAndWordPublishPicAndWordURL, [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _spliceFilename] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    [MBProgressHUD hideHUD];
-                    [MBProgressHUD showMessage:@"上传成功"];
-                    [MBProgressHUD hideHUD];
+                    [MBProgressHUD showSuccess:@"上传成功"];
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    [MBProgressHUD hideHUD];
-                    [MBProgressHUD showMessage:@"上传失败"];
-                    [MBProgressHUD hideHUD];
+                    [MBProgressHUD showError:@"上传失败"];
                 }];
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传失败"];
-            [MBProgressHUD hideHUD];
+            [MBProgressHUD showError:@"上传失败"];
         }];
     }
 }
@@ -367,19 +361,13 @@
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [manager GET:[NSString stringWithFormat:publishPicAndWordPublishVideoURL, [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], _fileName] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传成功"];
-            [MBProgressHUD hideHUD];
+            [MBProgressHUD showSuccess:@"上传成功"];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [MBProgressHUD hideHUD];
-            [MBProgressHUD showMessage:@"上传失败"];
-            [MBProgressHUD hideHUD];
+            [MBProgressHUD showError:@"上传失败"];
         }];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showMessage:@"上传失败"];
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"上传失败"];
     }];
 }
 
