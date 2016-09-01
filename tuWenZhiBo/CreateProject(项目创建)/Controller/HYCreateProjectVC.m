@@ -222,6 +222,8 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [MBProgressHUD showError:@"上传失败"];
     }];
+    
+    [MBProgressHUD hideHUD];
 }
 
 //获取并计算当前文件的上传进度
