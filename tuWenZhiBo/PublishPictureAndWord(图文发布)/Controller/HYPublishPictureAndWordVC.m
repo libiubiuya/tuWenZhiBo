@@ -172,22 +172,19 @@
  */
 - (IBAction)publishBtnClick
 {
-    //用post上传文件
-    [MBProgressHUD showMessage:@"正在上传"];
-    
-    if ([_fileName hasSuffix:@"jpg"]) {
-        
+    if (_projectTitleTextView.text.length == 0 && _images == nil && _coverImage == nil) {
+        [MBProgressHUD showMessage:@"图片和标题均为空"];
+        [MBProgressHUD hideHUD];
+    } else if (_projectTitleTextView.text.length != 0 && _images == nil && _coverImage == nil) {
+        [MBProgressHUD showMessage:@"图片或视频为空"];
+        [MBProgressHUD hideHUD];
+    } else if (_images != nil) {
         [self uploadImages];
-        
-    } else if ([_fileName hasSuffix:@"mp4"] || [_fileName hasSuffix:@"MP4"]) {
-        
-        [self uploadVideoMP4];
-        
-    } else if ([_fileName hasSuffix:@"mov"] || [_fileName hasSuffix:@"MOV"]) {
-        
-        [self uploadVideoMOV];
-        
+    } else if (_projectTitleTextView.text.length != 0 && _images != nil) {
+        [self judgeUploadVideoType];
     }
+    
+    
 }
 
 /**
@@ -232,16 +229,33 @@
 }
 
 #pragma mark 上传图片和视频
+
+/**
+ *  判断上传类型
+ */
+- (void)judgeUploadVideoType
+{
+    //用post上传文件
+    [MBProgressHUD showMessage:@"正在上传"];
+    
+    if ([_fileName hasSuffix:@"mp4"] || [_fileName hasSuffix:@"MP4"]) {
+        [self uploadVideoMP4];
+    } else if ([_fileName hasSuffix:@"mov"] || [_fileName hasSuffix:@"MOV"]) {
+        [self uploadVideoMOV];
+    }
+}
 /**
  *  上传图片
  */
 - (void)uploadImages
 {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
+    //用post上传文件
+    [MBProgressHUD showMessage:@"正在上传"];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //设置请求超时时间：默认为60秒。
     manager.requestSerializer.timeoutInterval = 10;
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSString *fileName;

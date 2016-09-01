@@ -170,7 +170,6 @@
         [MBProgressHUD showMessage:@"图片和标题均为空"];
         [MBProgressHUD hideHUD];
     } else if (_projectTitle.text.length != 0 && _image == nil) {
-        NSLog(@"%@", self.projectTitle.text);
         [MBProgressHUD showMessage:@"图片为空"];
         [MBProgressHUD hideHUD];
     } else if (_projectTitle.text.length == 0 && _image != nil) {
