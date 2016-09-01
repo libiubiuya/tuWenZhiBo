@@ -318,6 +318,8 @@
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [MBProgressHUD showError:@"上传失败"];
         }];
+        
+        [MBProgressHUD hideHUD];
     }
 }
 
@@ -369,6 +371,8 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [MBProgressHUD showError:@"上传失败"];
     }];
+    
+    [MBProgressHUD hideHUD];
 }
 
 #pragma mark - ------------ActionSheet------------
