@@ -183,8 +183,6 @@
     } else if (_projectTitleTextView.text.length != 0 && _images != nil) {
         [self judgeUploadVideoType];
     }
-    
-    
 }
 
 /**

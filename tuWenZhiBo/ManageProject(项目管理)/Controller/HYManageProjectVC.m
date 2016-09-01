@@ -124,7 +124,7 @@
 }
 
 /**
- *  设置修改按钮
+ *  设置修改按钮根据权限显示是否可用
  */
 - (void)setUpReviseBtn
 {
@@ -320,6 +320,9 @@
  */
 - (IBAction)publishBtnClick
 {
+    // 判断上传内容是否为空
+    [self judgeContentValue];
+    
     [self uploadDataWithImage:self.floatViewPicImage URL:manageProjectPublishPicAndWordURL textField:self.floatViewURLTextField];
 }
 
@@ -328,7 +331,23 @@
  */
 - (IBAction)reviseBtnClick
 {
+    // 判断上传内容是否为空
+    [self judgeContentValue];
+    
     [self uploadDataWithImage:self.projectHeadPicImage URL:manageProjectRevisePicAndWordURL textField:self.projectTitleTextField];
+}
+
+/**
+ *  判断项目头图是否有值
+ */
+- (void)judgeContentValue
+{
+    if (_projectTitleTextField.text.length == 0 && _projectHeadPicImage == nil) {
+        [MBProgressHUD showMessage:@"图片和标题均为空"];
+        [MBProgressHUD hideHUD];
+    } else if (_projectTitleTextField.text.length != 0 || _projectHeadPicImage != nil) {
+        return;
+    }
 }
 
 /**
@@ -379,6 +398,9 @@
     }];
 }
 
+/**
+ *  重置按钮点击
+ */
 - (IBAction)resetBtnClick
 {
     _floatViewURLTextField.text = nil;
