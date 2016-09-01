@@ -338,7 +338,10 @@
  */
 - (void)judgefloatViewContentValue
 {
-    if (_floatViewURLTextField.text.length == 0 && _floatViewPicImage == nil) {
+    if (self.projectSelectLabel.text.length == 0) {
+        [MBProgressHUD showError:@"未选择项目"];
+        [MBProgressHUD hideHUD];
+    } else if (_floatViewURLTextField.text.length == 0 && _floatViewPicImage == nil) {
         [MBProgressHUD showMessage:@"浮窗图片和链接均为空"];
         [MBProgressHUD hideHUD];
     } else if (_floatViewURLTextField.text.length != 0 || _floatViewPicImage != nil) {
@@ -351,7 +354,10 @@
  */
 - (void)judgeHeadViewContentValue
 {
-    if (_projectTitleTextField.text.length == 0 && _projectHeadPicImage == nil) {
+    if (self.projectSelectLabel.text.length == 0) {
+        [MBProgressHUD showError:@"未选择项目"];
+        [MBProgressHUD hideHUD];
+    } else if (_projectTitleTextField.text.length == 0 && _projectHeadPicImage == nil) {
         [MBProgressHUD showMessage:@"头图和标题均为空"];
         [MBProgressHUD hideHUD];
     } else if (_projectTitleTextField.text.length != 0 || _projectHeadPicImage != nil) {
