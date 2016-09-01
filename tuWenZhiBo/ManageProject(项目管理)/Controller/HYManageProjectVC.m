@@ -321,9 +321,7 @@
 - (IBAction)publishBtnClick
 {
     // 判断上传内容是否为空
-    [self judgeContentValue];
-    
-    [self uploadDataWithImage:self.floatViewPicImage URL:manageProjectPublishPicAndWordURL textField:self.floatViewURLTextField];
+    [self judgefloatViewContentValue];
 }
 
 /**
@@ -332,21 +330,32 @@
 - (IBAction)reviseBtnClick
 {
     // 判断上传内容是否为空
-    [self judgeContentValue];
-    
-    [self uploadDataWithImage:self.projectHeadPicImage URL:manageProjectRevisePicAndWordURL textField:self.projectTitleTextField];
+    [self judgeHeadViewContentValue];
+}
+
+/**
+ *  判断浮窗是否有值
+ */
+- (void)judgefloatViewContentValue
+{
+    if (_floatViewURLTextField.text.length == 0 && _floatViewPicImage == nil) {
+        [MBProgressHUD showMessage:@"浮窗图片和链接均为空"];
+        [MBProgressHUD hideHUD];
+    } else if (_floatViewURLTextField.text.length != 0 || _floatViewPicImage != nil) {
+        [self uploadDataWithImage:self.floatViewPicImage URL:manageProjectPublishPicAndWordURL textField:self.floatViewURLTextField];
+    }
 }
 
 /**
  *  判断项目头图是否有值
  */
-- (void)judgeContentValue
+- (void)judgeHeadViewContentValue
 {
     if (_projectTitleTextField.text.length == 0 && _projectHeadPicImage == nil) {
-        [MBProgressHUD showMessage:@"图片和标题均为空"];
+        [MBProgressHUD showMessage:@"头图和标题均为空"];
         [MBProgressHUD hideHUD];
     } else if (_projectTitleTextField.text.length != 0 || _projectHeadPicImage != nil) {
-        return;
+        [self uploadDataWithImage:self.projectHeadPicImage URL:manageProjectRevisePicAndWordURL textField:self.projectTitleTextField];
     }
 }
 
