@@ -401,6 +401,8 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [MBProgressHUD showError:@"解析失败"];
     }];
+    
+    [MBProgressHUD hideHUD];
 }
 
 /**
