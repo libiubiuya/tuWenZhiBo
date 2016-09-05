@@ -45,6 +45,8 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
 /** 项目预览item */
 @property (nonatomic, strong) NSMutableArray *projectPreviewItem;
 
+/** 项目标题视图 */
+@property (weak, nonatomic) IBOutlet UIView *projectTitleView;
 /** 项目头图button */
 @property (weak, nonatomic) IBOutlet UIButton *projectHeadPicBtn;
 /** 显示的图片 */
@@ -60,6 +62,8 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
 /** 用户评论框开关 */
 @property (weak, nonatomic) IBOutlet UISwitch *userCommentSwitch;
 
+/** 浮窗链接和图片View */
+@property (weak, nonatomic) IBOutlet UIView *floatViewPicAndURLView;
 /** 浮窗图片button */
 @property (weak, nonatomic) IBOutlet UIButton *floatViewPicUploadBtn;
 /** 显示的图片 */
@@ -172,6 +176,10 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
  */
 - (void)addObserverOnKeyboard
 {
+    // 给textfield设置代理
+    self.projectTitleTextField.delegate = self;
+    self.floatViewURLTextField.delegate = self;
+    
     //增加监听，当键盘出现或改变时收出消息
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -588,10 +596,13 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
 #pragma mark - --------UITextFieldDelegate-------
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    CGRect rect = [self.view convertRect:textField.frame toView:textField.superview];
+    
     if ([textField isEqual:self.projectTitleTextField]) {
-        _cursorHeight = self.view.frame.size.height - CGRectGetMaxY(textField.frame);
+        _cursorHeight = self.view.frame.size.height - CGRectGetMaxY(rect);
     } else if ([textField isEqual:self.floatViewURLTextField]) {
-        _cursorHeight = self.view.frame.size.height - CGRectGetMaxY(textField.frame);
+        _cursorHeight = self.view.frame.size.height - CGRectGetMaxY(rect);
     }
     
     return YES;

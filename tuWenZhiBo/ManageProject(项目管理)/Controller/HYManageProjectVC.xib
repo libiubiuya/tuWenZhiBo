@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYManageProjectVC">
             <connections>
                 <outlet property="allView" destination="Hov-Db-ONS" id="aBv-Rb-sGk"/>
+                <outlet property="floatViewPicAndURLView" destination="Xut-oi-LPi" id="IWZ-rR-c5Z"/>
                 <outlet property="floatViewPicUploadBtn" destination="kKb-qs-3Rg" id="GV6-Ab-qLP"/>
                 <outlet property="floatViewURLTextField" destination="t7m-PD-4SK" id="Prm-1b-V7j"/>
                 <outlet property="livingStateSwitch" destination="ZGp-5t-YA7" id="Kd7-FS-L9A"/>
@@ -16,6 +17,7 @@
                 <outlet property="projectSelectBtn" destination="D7Z-cq-8Ij" id="sx7-WY-zcB"/>
                 <outlet property="projectSelectLabel" destination="vmF-Qs-Wuc" id="an2-mp-kRt"/>
                 <outlet property="projectTitleTextField" destination="CtE-YS-CRF" id="Q7d-3x-K55"/>
+                <outlet property="projectTitleView" destination="Qvi-ti-xbQ" id="BLW-kv-5AG"/>
                 <outlet property="publishFloatViewBtn" destination="RMj-0v-JGj" id="hsS-P6-Xtm"/>
                 <outlet property="resetFloatViewBtn" destination="idK-gk-H7x" id="FVy-1z-R7b"/>
                 <outlet property="scrollContentView" destination="iN0-l3-epB" id="17p-RS-qAP"/>
