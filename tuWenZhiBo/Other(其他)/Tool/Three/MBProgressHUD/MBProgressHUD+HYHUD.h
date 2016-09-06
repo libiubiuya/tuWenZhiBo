@@ -24,4 +24,5 @@
 + (void)hideHUDForView:(UIView *)view;
 + (void)hideHUD;
 
++ (MBProgressHUD *)showLineProgressWithMessage:(NSString *)message andProgress:(CGFloat)progress toView:(UIView *)view;
 @end

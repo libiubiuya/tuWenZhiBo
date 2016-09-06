@@ -79,4 +79,21 @@
     [self hideHUDForView:nil];
 }
 
+#pragma mark 显示长条进度
++ (MBProgressHUD *)showLineProgressWithMessage:(NSString *)message andProgress:(CGFloat)progress toView:(UIView *)view {
+//    if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
+    // 快速显示一个提示信息
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.labelText = message;
+    hud.mode = MBProgressHUDModeDeterminateHorizontalBar;
+    hud.progress = progress;
+    // 隐藏时候从父控件中移除
+    hud.removeFromSuperViewOnHide = YES;
+    // YES代表需要蒙版效果
+    hud.dimBackground = YES;
+    
+    hud.minShowTime = 1;
+    return hud;
+}
+
 @end

@@ -206,10 +206,13 @@
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
-        //        [uploadProgress addObserver:self forKeyPath:@"completedUnitCount" options:NSKeyValueObservingOptionNew context:nil];
+//        [uploadProgress addObserver:self forKeyPath:@"completedUnitCount" options:NSKeyValueObservingOptionNew context:nil];
         
-        //用post上传文件
-        //        [MBProgressHUD showMessage:[NSString stringWithFormat:@"正在上传 %f%%", _progressValue]];
+        // 用post上传文件
+//        MBProgressHUD *hud = [MBProgressHUD showLineProgressWithMessage:@"loading" andProgress:_progressValue toView:self.view];
+//        if (_progressValue == 1.00000) {
+//            [hud hide:YES];
+//        }
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -227,7 +230,7 @@
 }
 
 //获取并计算当前文件的上传进度
-//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(NSProgress *)progress change:(NSDictionary<NSString *,id> *)change context:(void *)context
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(NSProgress *)progress change:(NSDictionary<NSString *,id> *)change context:(void *)context
 //{
 //    NSLog(@"%zd--%zd--%f",progress.completedUnitCount,progress.totalUnitCount,1.0 * progress.completedUnitCount/progress.totalUnitCount);
 //    _progressValue = 100 * progress.completedUnitCount / progress.totalUnitCount;
