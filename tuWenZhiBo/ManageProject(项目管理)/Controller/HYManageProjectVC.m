@@ -597,7 +597,7 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
-    CGRect rect = [self.view convertRect:textField.frame toView:textField.superview];
+    CGRect rect = [textField.superview convertRect:textField.frame toView:self.view];
     
     if ([textField isEqual:self.projectTitleTextField]) {
         _cursorHeight = self.view.frame.size.height - CGRectGetMaxY(rect);
