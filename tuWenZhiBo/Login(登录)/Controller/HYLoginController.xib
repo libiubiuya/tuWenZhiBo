@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HYLoginController">
@@ -23,27 +24,21 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="01-登录-1" translatesAutoresizingMaskIntoConstraints="NO" id="vbm-lQ-Cbe">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="01-登录-1" translatesAutoresizingMaskIntoConstraints="NO" id="vbm-lQ-Cbe"/>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jTm-my-Tm0">
-                    <rect key="frame" x="60" y="300" width="255" height="180"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bp6-Iz-Qy9">
-                            <rect key="frame" x="0.0" y="60" width="255" height="40"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="fwS-j1-T52">
-                                    <rect key="frame" x="50" y="5" width="190" height="30"/>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="HLa-2g-7vL"/>
                                     </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L2c-Im-WHE">
-                                    <rect key="frame" x="15" y="8" width="25" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="ChL-xK-iQZ"/>
                                         <constraint firstAttribute="width" constant="25" id="tZT-mv-U4z"/>
@@ -51,13 +46,12 @@
                                     <state key="normal" image="01-登录-2"/>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="01-登录-4" translatesAutoresizingMaskIntoConstraints="NO" id="Kxg-yW-Spd">
-                                    <rect key="frame" x="0.0" y="0.0" width="255" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="gLh-Q3-RWM"/>
                                     </constraints>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="fwS-j1-T52" firstAttribute="centerY" secondItem="Bp6-Iz-Qy9" secondAttribute="centerY" id="40X-Lc-R8U"/>
                                 <constraint firstItem="Kxg-yW-Spd" firstAttribute="leading" secondItem="Bp6-Iz-Qy9" secondAttribute="leading" id="4cL-DU-fME"/>
@@ -71,20 +65,17 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ErB-kJ-8ZJ">
-                            <rect key="frame" x="0.0" y="0.0" width="255" height="40"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入用户名" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Zd7-EL-mrT">
-                                    <rect key="frame" x="51" y="5" width="188" height="30"/>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="x0L-wK-pT8"/>
                                     </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSm-fV-bt5">
-                                    <rect key="frame" x="16" y="7" width="25" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="bDy-MK-1iK"/>
                                         <constraint firstAttribute="width" constant="25" id="hqI-Pw-UUq"/>
@@ -92,13 +83,12 @@
                                     <state key="normal" image="01-登录-3"/>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="01-登录-4" translatesAutoresizingMaskIntoConstraints="NO" id="7nO-5T-4dC">
-                                    <rect key="frame" x="0.0" y="0.0" width="255" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="ewW-lY-PUK"/>
                                     </constraints>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="nSm-fV-bt5" firstAttribute="centerY" secondItem="ErB-kJ-8ZJ" secondAttribute="centerY" id="30R-EH-ZRb"/>
                                 <constraint firstItem="Zd7-EL-mrT" firstAttribute="centerY" secondItem="ErB-kJ-8ZJ" secondAttribute="centerY" id="6e6-gH-2Bw"/>
@@ -112,7 +102,6 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EpD-7x-n10">
-                            <rect key="frame" x="0.0" y="140" width="255" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="Ou7-G4-bwb"/>
                             </constraints>
@@ -122,7 +111,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Bp6-Iz-Qy9" secondAttribute="trailing" id="73p-BZ-KfD"/>
                         <constraint firstItem="ErB-kJ-8ZJ" firstAttribute="leading" secondItem="jTm-my-Tm0" secondAttribute="leading" id="CVW-aw-J5X"/>
@@ -137,11 +126,11 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="jTm-my-Tm0" secondAttribute="trailing" constant="60" id="1W6-91-0QO"/>
+                <constraint firstAttribute="trailing" secondItem="jTm-my-Tm0" secondAttribute="trailing" constant="40" id="1W6-91-0QO"/>
                 <constraint firstAttribute="trailing" secondItem="vbm-lQ-Cbe" secondAttribute="trailing" id="48Q-YM-TzB"/>
-                <constraint firstItem="jTm-my-Tm0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="7Da-qJ-zYV"/>
+                <constraint firstItem="jTm-my-Tm0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="7Da-qJ-zYV"/>
                 <constraint firstAttribute="bottom" secondItem="vbm-lQ-Cbe" secondAttribute="bottom" id="Wic-b0-Nzp"/>
                 <constraint firstItem="vbm-lQ-Cbe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="heO-Ci-aa2"/>
                 <constraint firstItem="vbm-lQ-Cbe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nAl-ar-EGE"/>
