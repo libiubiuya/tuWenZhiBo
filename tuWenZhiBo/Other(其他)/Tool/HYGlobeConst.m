@@ -47,6 +47,7 @@ NSString *const manageProjectPublishPicAndWordURL = @"http://ued.ijntv.cn/manage
 /** 项目管理模块 项目标题图片修改URL */
 NSString *const manageProjectRevisePicAndWordURL = @"http://ued.ijntv.cn/manage/edit.php?huodongid=%@&title=%@&titlejpg=%@";
 
-
+/** 项目管理模块 直播信号列表URL */
+NSString *const livingSignalVideoListURL = @"http://ued.ijntv.cn/manage/videolist.php";
 
 

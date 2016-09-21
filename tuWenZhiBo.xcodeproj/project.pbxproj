@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C50F673B1D8FC4030004DF87 /* HYManageProjectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C50F673A1D8FC4030004DF87 /* HYManageProjectItem.m */; };
 		C510882C1D34E821006EF7C1 /* HYTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C510882B1D34E821006EF7C1 /* HYTabBarController.m */; };
 		C510882F1D34E97A006EF7C1 /* HYCreateProjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C510882E1D34E97A006EF7C1 /* HYCreateProjectVC.m */; };
 		C51088321D34E9AE006EF7C1 /* HYPublishPictureAndWordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C51088311D34E9AE006EF7C1 /* HYPublishPictureAndWordVC.m */; };
@@ -54,6 +55,8 @@
 /* Begin PBXFileReference section */
 		511F9BC4C6DE1DF47FB5BEB9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC9F7E651003E1DFA009687 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C50F67391D8FC4030004DF87 /* HYManageProjectItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYManageProjectItem.h; sourceTree = "<group>"; };
+		C50F673A1D8FC4030004DF87 /* HYManageProjectItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYManageProjectItem.m; sourceTree = "<group>"; };
 		C510882A1D34E821006EF7C1 /* HYTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTabBarController.h; sourceTree = "<group>"; };
 		C510882B1D34E821006EF7C1 /* HYTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTabBarController.m; sourceTree = "<group>"; };
 		C510882D1D34E97A006EF7C1 /* HYCreateProjectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYCreateProjectVC.h; sourceTree = "<group>"; };
@@ -359,6 +362,8 @@
 		C51088251D34E6A5006EF7C1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C50F67391D8FC4030004DF87 /* HYManageProjectItem.h */,
+				C50F673A1D8FC4030004DF87 /* HYManageProjectItem.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -725,6 +730,7 @@
 				C5FCDDB31D35D80400E283F9 /* AppDelegate.m in Sources */,
 				C51088411D34ECB8006EF7C1 /* HYNavigationController.m in Sources */,
 				C5D51BC91D5D6D5A00B87D23 /* TZPhotoPreviewController.m in Sources */,
+				C50F673B1D8FC4030004DF87 /* HYManageProjectItem.m in Sources */,
 				C52579BE1D46FB81006080D2 /* HYPublishPicAndWordItem.m in Sources */,
 				C5707EDC1D37779E00A4CA95 /* MBProgressHUD.m in Sources */,
 				C5FCDDB61D35D82D00E283F9 /* UIView+HYFrame.m in Sources */,
@@ -791,7 +797,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -829,7 +835,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

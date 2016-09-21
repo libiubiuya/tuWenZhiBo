@@ -48,3 +48,5 @@ UIKIT_EXTERN NSString *const manageProjectPublishPicAndWordURL;
 /** 项目管理模块 项目标题图片修改URL */
 UIKIT_EXTERN NSString *const manageProjectRevisePicAndWordURL;
 
+/** 项目管理模块 直播信号列表URL */
+UIKIT_EXTERN NSString *const livingSignalVideoListURL;

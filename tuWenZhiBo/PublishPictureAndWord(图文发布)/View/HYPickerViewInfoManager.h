@@ -8,12 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@class HYPublishPicAndWordItem;
+@class HYPublishPicAndWordItem, HYManageProjectItem;
 @interface HYPickerViewInfoManager : NSObject
 
 + (instancetype)sharedPickerViewInfoManager;
 
++ (instancetype)sharedPickerViewLivingSignalInfoManager;
+
 /** pickerView信息 */
+/** 项目选择item */
 @property (strong, nonatomic) HYPublishPicAndWordItem *pickerViewInfo;
+/** 直播信号item */
+@property (strong, nonatomic) HYManageProjectItem *pickerViewLivingSignalInfo;
 
 @end

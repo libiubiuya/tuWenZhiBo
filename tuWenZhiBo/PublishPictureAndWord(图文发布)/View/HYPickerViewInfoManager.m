@@ -7,10 +7,21 @@
 //
 
 #import "HYPickerViewInfoManager.h"
+#import "HYManageProjectItem.h"
 
 @implementation HYPickerViewInfoManager
 
 + (instancetype)sharedPickerViewInfoManager
+{
+    static HYPickerViewInfoManager *_manager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _manager = [[self alloc] init];
+    });
+    return _manager;
+}
+
++ (instancetype)sharedPickerViewLivingSignalInfoManager
 {
     static HYPickerViewInfoManager *_manager = nil;
     static dispatch_once_t onceToken;

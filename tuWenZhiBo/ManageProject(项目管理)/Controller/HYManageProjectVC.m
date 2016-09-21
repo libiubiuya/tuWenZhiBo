@@ -14,6 +14,7 @@
 #import "MBProgressHUD+HYHUD.h"
 #import "HYUserManager.h"
 #import "HYUserInfo.h"
+#import "HYManageProjectItem.h"
 
 #import <WebKit/WebKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -24,7 +25,7 @@
 #import <MJExtension/MJExtension.h>
 #import <SDAutoLayout.h>
 
-static const CGFloat kSpacing = 8.0f;                       //间隔
+// static const CGFloat kSpacing = 8.0f;                       //间隔
 static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
 
 @interface HYManageProjectVC () <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
@@ -62,6 +63,11 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
 /** 用户评论框开关 */
 @property (weak, nonatomic) IBOutlet UISwitch *userCommentSwitch;
 
+/** 直播信号label */
+@property (weak, nonatomic) IBOutlet UILabel *livingSignalLabel;
+/** 直播信号选择button */
+@property (weak, nonatomic) IBOutlet UIButton *livingSignalSelectBtn;
+
 /** 浮窗链接和图片View */
 @property (weak, nonatomic) IBOutlet UIView *floatViewPicAndURLView;
 /** 浮窗图片button */
@@ -79,6 +85,14 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
 @property (nonatomic ,strong) UIPickerView *pickerView;
 /** 上传头图或者上传浮窗图片的按钮 */
 @property (weak, nonatomic) UIButton *clickBtn;
+/** 下拉按钮 */
+@property (weak, nonatomic) UIButton *selectBtn;
+/** 下拉按钮item的count */
+@property (assign, nonatomic) NSInteger itemCount;
+/** 直播信号item */
+@property (nonatomic, strong) NSMutableArray *livingSignalItem;
+/** 展示的title */
+@property (strong, nonatomic) NSString *itemTitle;
 
 @end
 
@@ -112,6 +126,9 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
     
     // 改变直播状态开关和用户评论框开关状态
     [self changeLivingStateSwitchAndUserCommentSwitch];
+    
+    // 改变直播信号
+    [self changelivingSignalState];
 }
 
 /**
@@ -221,10 +238,16 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
 /**
  *  下拉列表
  */
-- (IBAction)projectSelectBtnClick
+- (IBAction)projectSelectBtnAndLivingSignalBtnClick:(UIButton*)btn
 {
     // 取消第一响应者
     [self.floatViewURLTextField endEditing:YES];
+    
+    if (btn.tag == 100) {
+        _selectBtn = _projectSelectBtn;
+    } else if (btn.tag == 101) {
+        _selectBtn = _livingSignalSelectBtn;
+    }
     
     HYPickerView *pv = [[HYPickerView alloc] init];
     [pv pickerViewAppear];
@@ -355,6 +378,22 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
     } else {
         [self.userCommentSwitch setOn:YES animated:YES];
     }
+}
+
+/**
+ *  改变直播信号
+ */
+- (void)changelivingSignalState
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    [manager GET:[NSString stringWithFormat:@"http://ued.ijntv.cn/manage/set.php?huodongid=%@&videoid=%@", [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [HYPickerViewInfoManager sharedPickerViewLivingSignalInfoManager].pickerViewLivingSignalInfo.livingSignalVideoID] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 /**
@@ -550,11 +589,21 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    NSMutableDictionary *parameter1 = [NSMutableDictionary dictionary];
     
-    [manager GET:activityURL parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:activityURL parameters:parameter1 progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         _projectPreviewItem = [HYPublishPicAndWordItem mj_objectArrayWithKeyValuesArray:responseObject];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+    
+    NSMutableDictionary *parameter2 = [NSMutableDictionary dictionary];
+    
+    [manager GET:livingSignalVideoListURL parameters:parameter2 progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        _livingSignalItem = [HYManageProjectItem mj_objectArrayWithKeyValuesArray:responseObject];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -564,33 +613,61 @@ static const NSTimeInterval kAnimationDuration = 1.0f;      //动画时间
 
 #pragma mark UIPickerView DataSource Method
 //指定pickerview有几个表盘
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
 }
 //指定每个表盘上有几行数据
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return _projectPreviewItem.count;
+    if (_selectBtn.tag == 100) {
+        _itemCount = _projectPreviewItem.count;
+    } else if (_selectBtn.tag == 101) {
+        _itemCount = _livingSignalItem.count;
+    }
+    return _itemCount;
 }
 #pragma mark UIPickerView Delegate Method
 //指定每行如何展示数据
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    HYPublishPicAndWordItem *item = _projectPreviewItem[row];
+    if (_selectBtn.tag == 100) {
+        
+        HYPublishPicAndWordItem *item = _projectPreviewItem[row];
+        _itemTitle = item.projectTitle;
+        
+    } else if (_selectBtn.tag == 101) {
+        
+        HYManageProjectItem *item = _livingSignalItem[row];
+        _itemTitle = item.livingSignalName;
+        
+    }
+    return _itemTitle;
     
-    return item.projectTitle;
 }
 // 选中pickerview
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    HYPublishPicAndWordItem *item = _projectPreviewItem[row];
-    self.projectSelectLabel.text = item.projectTitle;
-    
-    [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
-    
-    // 改变直播状态开关和用户评论框开关状态
-    [self changeLivingStateSwitchAndUserCommentSwitch];
+    if (_selectBtn.tag == 100) {
+        
+        HYPublishPicAndWordItem *item = _projectPreviewItem[row];
+        self.projectSelectLabel.text = item.projectTitle;
+        
+        [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo = item;
+        
+        // 改变直播状态开关和用户评论框开关状态
+        [self changeLivingStateSwitchAndUserCommentSwitch];
+        
+    } else if (_selectBtn.tag == 101) {
+        
+        HYManageProjectItem *item = _livingSignalItem[row];
+        self.livingSignalLabel.text = item.livingSignalName;
+        
+        [HYPickerViewInfoManager sharedPickerViewLivingSignalInfoManager].pickerViewLivingSignalInfo = item;
+        
+        // 改变直播信号
+        [self changelivingSignalState];
+    }
 }
 
 #pragma mark - --------UITextFieldDelegate-------
