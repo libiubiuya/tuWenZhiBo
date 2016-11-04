@@ -23,6 +23,9 @@ NSString *const createProjectPublishURL = @"http://bbs.ijntv.cn/mobilejinan/grap
 /** 图文发布模块 图片上传URL */
 NSString *const publishPicAndWordUploadImageURL = @"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/upload.php";
 
+/** 图文发布模块 文字发布URL */
+NSString *const publishPicAndWordPublishWordURL = @"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@";
+
 /** 图文发布模块 图片和文字发布URL */
 NSString *const publishPicAndWordPublishPicAndWordURL = @"http://bbs.ijntv.cn/mobilejinan/graphic/datainterface/twfb.php?userid=%@&huodongid=%@&content=%@&jpg=%@";
 

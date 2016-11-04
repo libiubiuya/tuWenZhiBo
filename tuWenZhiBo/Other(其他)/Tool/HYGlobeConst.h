@@ -24,6 +24,9 @@ UIKIT_EXTERN NSString *const createProjectPublishURL;
 /** 图文发布模块 图片上传URL */
 UIKIT_EXTERN NSString *const publishPicAndWordUploadImageURL;
 
+/** 图文发布模块 文字发布URL */
+UIKIT_EXTERN NSString *const publishPicAndWordPublishWordURL;
+
 /** 图文发布模块 图片和文字发布URL */
 UIKIT_EXTERN NSString *const publishPicAndWordPublishPicAndWordURL;
 

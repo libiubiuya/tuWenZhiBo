@@ -177,7 +177,8 @@
     } else if (_projectTitleTextView.text.length == 0 && _images == nil && _coverImage == nil) {
         [MBProgressHUD showError:@"图片和标题均为空"];
     } else if (_projectTitleTextView.text.length != 0 && _images == nil && _coverImage == nil) {
-        [MBProgressHUD showError:@"图片或视频为空"];
+//        [MBProgressHUD showError:@"图片或视频为空"];
+        [self uploadWords];
     } else if (_images != nil) {
         [self uploadImages];
     } else if (_projectTitleTextView.text.length != 0 && _images != nil) {
@@ -242,6 +243,29 @@
         [self uploadVideoMOV];
     }
 }
+
+/**
+ *  上传文字
+ */
+- (void)uploadWords
+{
+    //用post上传文件
+    [MBProgressHUD showMessage:@"正在上传"];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    //设置请求超时时间：默认为60秒。
+    manager.requestSerializer.timeoutInterval = 10;
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:[NSString stringWithFormat:publishPicAndWordPublishWordURL, [HYUserManager sharedUserInfoManager].userInfo.userID, [HYPickerViewInfoManager sharedPickerViewInfoManager].pickerViewInfo.projectID, [self.projectTitleTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [MBProgressHUD showSuccess:@"上传成功"];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD showError:@"上传失败"];
+    }];
+    
+    [MBProgressHUD hideHUD];
+}
+
 /**
  *  上传图片
  */
