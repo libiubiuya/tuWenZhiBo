@@ -181,7 +181,7 @@
         [self uploadWords];
     } else if (_images != nil) {
         [self uploadImages];
-    } else if (_projectTitleTextView.text.length != 0 && _images != nil) {
+    } else if (_coverImage != nil) {
         [self judgeUploadVideoType];
     }
 }

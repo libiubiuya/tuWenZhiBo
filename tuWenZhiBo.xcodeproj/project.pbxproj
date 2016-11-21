@@ -849,6 +849,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6LSV6665XR;
 				GCC_PREFIX_HEADER = ./tuWenZhiBo/HYTuWen.pch;
 				INFOPLIST_FILE = tuWenZhiBo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -866,6 +867,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6LSV6665XR;
 				GCC_PREFIX_HEADER = ./tuWenZhiBo/HYTuWen.pch;
 				INFOPLIST_FILE = tuWenZhiBo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
